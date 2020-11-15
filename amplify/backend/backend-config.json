@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "academyexcellence04837ae5": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}
