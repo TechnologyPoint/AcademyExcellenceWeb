@@ -1,0 +1,52 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-academyexcellence-dev-115125-authRole",
+      "UnauthRoleArn": "arn:aws:iam::978440663651:role/amplify-academyexcellence-dev-115125-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::978440663651:role/amplify-academyexcellence-dev-115125-authRole",
+      "Region": "ap-south-1",
+      "DeploymentBucketName": "amplify-academyexcellence-dev-115125-deployment",
+      "UnauthRoleName": "amplify-academyexcellence-dev-115125-unauthRole",
+      "StackName": "amplify-academyexcellence-dev-115125",
+      "StackId": "arn:aws:cloudformation:ap-south-1:978440663651:stack/amplify-academyexcellence-dev-115125/cb89bd10-270a-11eb-ba3e-02153b7bf71a",
+      "AmplifyAppId": "d6zmzyllu121y"
+    }
+  },
+  "auth": {
+    "academyexcellence04837ae5": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-academyexcellence-dev-115125-deployment/amplify-cfn-templates/auth/academyexcellence04837ae5-cloudformation-template.yml",
+        "logicalId": "authacademyexcellence04837ae5"
+      },
+      "lastPushTimeStamp": "2020-11-15T09:18:46.765Z",
+      "output": {
+        "AppClientSecret": "1lp4v5156i2um9ki10j3ng33003oov3sbcr5nbg6l6ii2lmjuj1j",
+        "UserPoolId": "ap-south-1_7PetQLyMJ",
+        "AppClientIDWeb": "329l2qkfk3uj7j8n3vm6vkjh5l",
+        "AppClientID": "7t1b86fg32vl3vnp4vpfpklifs",
+        "IdentityPoolId": "ap-south-1:90e99890-98d0-40f0-ac9b-868263befd9b",
+        "IdentityPoolName": "academyexcellence04837ae5_identitypool_04837ae5__dev",
+        "UserPoolName": "academyexcellence04837ae5_userpool_04837ae5"
+      },
+      "lastPushDirHash": "+e8bGEz10h1D2L7u2IBVMWviHsM="
+    }
+  },
+  "hosting": {
+    "amplifyhosting": {
+      "service": "amplifyhosting",
+      "providerPlugin": "awscloudformation",
+      "type": "manual",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-academyexcellence-dev-115125-deployment/amplify-cfn-templates/hosting/amplifyhosting-template.json",
+        "logicalId": "hostingamplifyhosting"
+      },
+      "lastPushTimeStamp": "2020-11-15T09:18:46.801Z",
+      "output": {},
+      "lastPushDirHash": "/+VZ33seFFqAr6wbtptwbINUfSA="
+    }
+  }
+}
