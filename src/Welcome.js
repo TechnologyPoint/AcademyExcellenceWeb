@@ -50,13 +50,17 @@ export class Welcome extends React.Component {
         return <div>Loading...</div>;
       } else {
         return (
-          <ul>
+          <div>
+          <div class="header">Academy Excellence</div>
+          <div class="list"><ul>
             {items.map(item => (
               <li key={item.boardId}>
-                {item.name} {item.boardName}
+                <a href="#">{item.name} {item.boardName}</a>
               </li>
             ))}
-          </ul>
+          </ul></div>
+          <div class="footer_main"><div class="footer"></div></div>
+          </div>
         );
       }
     }

@@ -27,7 +27,48 @@
 .App-link {
   color: #61dafb;
 }
-
+.App ul{
+  list-style: none;
+}
+.header{
+  width: 94%;
+    height: auto;
+    background-color: #25c3f57d;
+    margin: 20px auto;
+    border: 2px solid #000;
+    text-align: center;
+    color: #FFF;
+    font-size: 36px;
+    font-weight: 600;
+    padding: 0px 0px 11px 0px;
+    font-family: cursive;
+}
+.footer{
+  width: 94%;
+    height: auto;
+    background-color: #25c3f57d;
+    border: 2px solid #000;
+    text-align: center;
+    padding: 5px 0px 5px 0px;
+    font-family: cursive;
+    bottom: 34px;
+    margin: auto;
+}
+.footer_main{
+  width: 100%;
+    POSITION: ABSOLUTE;
+    BOTTOM: 34PX;
+}
+.list{
+  padding: 148px 0 0px 0;
+}
+.list ul li{
+  padding-bottom: 5px;
+}
+.list ul li a{
+  font-size: 15px;
+  font-weight: 500;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

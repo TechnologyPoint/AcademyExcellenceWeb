@@ -9,7 +9,7 @@ Amplify.configure(config);
 
 function App() {
   return (
-    <div className="App">
+  <div className="App">
       <Welcome/>
     </div>
 
