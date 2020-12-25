@@ -13,10 +13,6 @@ import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import FolderIcon from '@material-ui/icons/Folder';
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
@@ -123,20 +119,19 @@ export default function Question() {
   const [helperText, setHelperText] = React.useState('Choose wisely');
   const [questionIndex, setQuestionIndex] = React.useState(0);
   const [questionAnswer,setQuestionAnswer] = React.useState(['']);
-  const [valueBottomNavigation,setBottomNavigation] = React.useState('');
 
   const prevNextQuestion = (event, newValue) => {
-      if (newValue == 'next') {
+      if (newValue === 'next') {
         if (questionIndex + 1 < questionList.length){
           setQuestionIndex(questionIndex + 1);
         }
       }
-      if (newValue == 'previous') {
+      if (newValue === 'previous') {
         if (questionIndex > 0){
           setQuestionIndex(questionIndex - 1);
         }
       }
-      if (questionAnswer.length == questionIndex) {
+      if (questionAnswer.length === questionIndex) {
         questionAnswer[questionIndex] = '';
       }
 
@@ -150,7 +145,7 @@ export default function Question() {
     setQuestionAnswer(questionAnswer);
     var answered = 0;
     for (var i = 0; i<questionAnswer.length ; i++){
-      if (questionAnswer[i] != ''){
+      if (questionAnswer[i] !== ''){
         answered = answered + 1;
       }
     }
@@ -160,10 +155,10 @@ export default function Question() {
 
   const checkAnswer = (event) => {
     event.preventDefault();
-    if (value == 'Y') {
+    if (value === 'Y') {
       setHelperText('Correct!');
       setError(false);
-    } else if (value == 'N') {
+    } else if (value === 'N') {
       setHelperText('Sorry, wrong answer!');
       setError(true);
     } else {

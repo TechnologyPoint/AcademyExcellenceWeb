@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import AppTheme from './layout/AppTheme';
 import Paperbase from './layout/Paperbase';
