@@ -1,19 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
-import {Welcome} from './Welcome.js';
+import * as React from 'react';
+import { View, Text } from 'react-native';
 import { withAuthenticator } from '@aws-amplify/ui-react';
-import React, {Component,useEffect,useState } from 'react';
-import {API,Amplify} from 'aws-amplify';
-import config from './aws-exports';
-Amplify.configure(config);
+import AppTheme from './layout/AppTheme';
+import Paperbase from './layout/Paperbase';
+import './App.css';
 
 function App() {
   return (
-  <div className="App">
-      <Welcome/>
-    </div>
+    <AppTheme
+          title="Paperbase theme - Material-UI"
+          description={`A page that mimics Firebase.
+            This item includes theming using the theme provider component.`}
+        >
+          <Paperbase />
+          </AppTheme>
 
-  );
+);
 }
 
 export default withAuthenticator(App);
