@@ -29,25 +29,20 @@ export default function QuestionHeader() {
   const classes = useStyles();
   const [selectedSubject, setSelectedSubject] = React.useState('');
   const [category, setCategory] = React.useState('');
-  const [questionSet, setQuestionSet] = React.useState('');
   const [subjectDetails,setSubjectDetails] = React.useState([]);
   const [subjectData,setSubjectData] = React.useState([]);
   const [loaded, setLoaded] = React.useState(false);
   const [chapterLoaded, setChapterLoaded] = React.useState(false);
+  const [questionSetLoaded, setQuestionSetLoaded] = React.useState(false);
+  const [questionSet, setQuestionSet] = React.useState([]);
   const [subjectList, setSubjectList] = React.useState([]);
   const [chapterList, setChapterList] = React.useState([]);
   const [selectedChapter, setSelectedChapter] = React.useState([]);
   const loading = loaded && subjectList.length === 0;
   const chapterLoading = chapterLoaded && chapterList.length === 0;
+  const questionSetLoading = questionSetLoaded && questionSet != null && questionSet.length === 0;
 
-  const handleQuestionSet = (event) => {
-    setQuestionSet(event.target.value);
-  };
-  const handleCategory = (event) => {
-    setCategory(event.target.value);
-  };
-
-  const populateCategory = (subject,value) => {
+  const populateChapter = (subject,value) => {
    //alert(value.name);
    setSelectedSubject(value.id);
    for(var k in subjectList) {
@@ -57,9 +52,15 @@ export default function QuestionHeader() {
    }
    //setChapterList(subjectList[1].chapterList);
   };
-  const selectSubject = (event) => {
-    setSelectedSubject(event.target.value);
-  };
+
+  const populateQuestionSet = (chapter, value) => {
+    setSelectedChapter(value.id);
+    for(var k in chapterList) {
+       if (chapterList[k].id == selectedChapter){
+           setQuestionSet(chapterList[k].questionset);
+       }
+    }
+  }
 
   React.useEffect(() => {
   (async () => {
@@ -87,7 +88,7 @@ export default function QuestionHeader() {
       onClose={() => {
         setLoaded(false);
       }}
-      getOptionSelected={(subject, value) => {populateCategory(subject,value); return subject.id === value.id}}
+      getOptionSelected={(subject, value) => {populateChapter(subject,value); return subject.id === value.id}}
       getOptionLabel={(subject) => subject.name}
       options={subjectList}
       loading={loading}
@@ -120,10 +121,10 @@ export default function QuestionHeader() {
     onClose={() => {
       setChapterLoaded(false);
     }}
-    getOptionSelected={(chapter, value) => { return chapter.id === value.id}}
+    getOptionSelected={(chapter, value) => { populateQuestionSet(chapter,value); return chapter.id === value.id}}
     getOptionLabel={(chapter) => chapter.name}
     options={chapterList}
-    loading="true"
+    loading={chapterLoading}
     renderInput={(params) => (
       <TextField
         {...params}
@@ -143,22 +144,38 @@ export default function QuestionHeader() {
   />
   </FormControl>
   <FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel id="demo-simple-select-outlined-label">Question Paper</InputLabel>
-        <Select
-          labelId="demo-simple-select-outlined-label"
-          id="demo-simple-select-outlined"
-          value={questionSet}
-          onChange={handleQuestionSet}
-          label="QuestionPaper"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Question Set 1</MenuItem>
-          <MenuItem value={20}>Question Set 2</MenuItem>
-          <MenuItem value={30}>Question Set 3</MenuItem>
-        </Select>
-      </FormControl>
+  <Autocomplete
+  id="questionSet-list"
+  style={{ width: 250 }}
+  open={questionSetLoaded}
+  onOpen={() => {
+     setQuestionSetLoaded(true);
+  }}
+  onClose={() => {
+    setQuestionSetLoaded(false);
+  }}
+  getOptionSelected={(questionSet, value) => {return questionSet.id === value.id}}
+  getOptionLabel={(questionSet) => questionSet.name}
+  options={questionSet}
+  loading={questionSetLoading}
+  renderInput={(params) => (
+    <TextField
+      {...params}
+      label="Question Set"
+      variant="outlined"
+      InputProps={{
+        ...params.InputProps,
+        endAdornment: (
+          <React.Fragment>
+            {loading ? <CircularProgress color="inherit" size={10} /> : null}
+            {params.InputProps.endAdornment}
+          </React.Fragment>
+        ),
+      }}
+    />
+  )}
+/>
+</FormControl>
       <FormControl variant="outlined" className={classes.formControl}>
         <Button variant="contained" color="primary">Start</Button>
 
