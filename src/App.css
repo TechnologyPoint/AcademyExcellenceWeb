@@ -69,6 +69,14 @@
   font-size: 15px;
   font-weight: 500;
 }
+.MuiFormHelperText-root{
+  text-align: center;
+}
+.MuiFormControl-root {
+    margin: 0px !important;
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
