@@ -32,8 +32,18 @@ const styles = (theme) => ({
   },
 });
 
+
 function Content(props) {
   const { classes } = props;
+  const [headerPopulated, setHeaderPopulated] = React.useState(false);
+  const [questionSet, setQuestionSet] = React.useState(false);
+
+  const populateQuestion =  (changedValue,questionSet) => {
+     setHeaderPopulated(changedValue);
+     setQuestionSet(questionSet);
+  }
+
+  if(headerPopulated){
   return (
     <Paper className={classes.paper}>
       <AppBar
@@ -45,19 +55,40 @@ function Content(props) {
         <Toolbar>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs>
-            <QuestionHeader/>
+            <QuestionHeader onQuestionSetSelected = {populateQuestion}/>
             </Grid>
-
+        </Grid>
+        </Toolbar>
+      </AppBar>
+        <div className={classes.contentWrapper}>
+          <Typography color="textSecondary" align="center">
+             <Question questionSet = {questionSet}/>
+          </Typography>
+        </div>
+    </Paper>
+  );
+}else {
+  return (
+    <Paper className={classes.paper}>
+      <AppBar
+        className={classes.searchBar}
+        position="static"
+        color="default"
+        elevation={0}
+      >
+        <Toolbar>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs>
+            <QuestionHeader  onQuestionSetSelected = {populateQuestion}/>
+            </Grid>
           </Grid>
         </Toolbar>
       </AppBar>
-      <div className={classes.contentWrapper}>
-        <Typography color="textSecondary" align="center">
-           <Question />
-        </Typography>
-      </div>
+
     </Paper>
+
   );
+}
 }
 
 Content.propTypes = {

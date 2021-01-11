@@ -25,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function QuestionHeader() {
+
+export default function QuestionHeader(props) {
   const classes = useStyles();
   const [selectedSubject, setSelectedSubject] = React.useState('');
   const [category, setCategory] = React.useState('');
@@ -38,20 +39,31 @@ export default function QuestionHeader() {
   const [subjectList, setSubjectList] = React.useState([]);
   const [chapterList, setChapterList] = React.useState([]);
   const [selectedChapter, setSelectedChapter] = React.useState([]);
+  const [selectedQuestionSet, setSelectedQuestionSet] = React.useState([]);
+
   const loading = loaded && subjectList.length === 0;
   const chapterLoading = chapterLoaded && chapterList.length === 0;
   const questionSetLoading = questionSetLoaded && questionSet != null && questionSet.length === 0;
+  const [formData, setFormData] = React.useState({headerPopulated:false});
 
   const populateChapter = (subject,value) => {
-   //alert(value.name);
    setSelectedSubject(value.id);
    for(var k in subjectList) {
       if (subjectList[k].id == selectedSubject){
           setChapterList(subjectList[k].chapterList);
       }
    }
-   //setChapterList(subjectList[1].chapterList);
   };
+
+  function displayQuestionSet(e) {
+    e.preventDefault();
+    if (selectedQuestionSet != null && selectedQuestionSet != ''){
+      props.onQuestionSetSelected(true,selectedQuestionSet);
+    }else{
+      props.onQuestionSetSelected(false,selectedQuestionSet);
+
+    }
+  }
 
   const populateQuestionSet = (chapter, value) => {
     setSelectedChapter(value.id);
@@ -60,6 +72,11 @@ export default function QuestionHeader() {
            setQuestionSet(chapterList[k].questionset);
        }
     }
+    //setFormData({headerPopulated: true });
+  }
+
+  const selectQuestionSet = (question,value) => {
+   setSelectedQuestionSet(value.id);
   }
 
   React.useEffect(() => {
@@ -146,7 +163,7 @@ export default function QuestionHeader() {
   <FormControl variant="outlined" className={classes.formControl}>
   <Autocomplete
   id="questionSet-list"
-  style={{ width: 250 }}
+  style={{ width: 260 }}
   open={questionSetLoaded}
   onOpen={() => {
      setQuestionSetLoaded(true);
@@ -154,7 +171,7 @@ export default function QuestionHeader() {
   onClose={() => {
     setQuestionSetLoaded(false);
   }}
-  getOptionSelected={(questionSet, value) => {return questionSet.id === value.id}}
+  getOptionSelected={(questionSet, value) => {selectQuestionSet(questionSet,value); return questionSet.id === value.id}}
   getOptionLabel={(questionSet) => questionSet.name}
   options={questionSet}
   loading={questionSetLoading}
@@ -176,10 +193,8 @@ export default function QuestionHeader() {
   )}
 />
 </FormControl>
-      <FormControl variant="outlined" className={classes.formControl}>
-        <Button variant="contained" color="primary">Start</Button>
 
-      </FormControl>
+    <Button variant="contained" color="primary" onClick = {displayQuestionSet}>Start</Button>
     </div>
   );
 }

@@ -19,9 +19,6 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 const questionList = [
   {
     id: 'Q1',
-    class:'Class 1',
-    subject:'Mathmatics',
-    board:'WBBSE',
     question:'Please  find the correct answer 10 + 2 = ? ',
     options: [
       {
@@ -38,9 +35,6 @@ const questionList = [
   },
   {
     id: 'Q2',
-    class:'Class 1',
-    subject:'Mathmatics',
-    board:'WBBSE',
     question:'Please  find the correct answer 10 + 5 = ? ',
     options: [
       {
@@ -57,9 +51,6 @@ const questionList = [
   },
   {
     id: 'Q3',
-    class:'Class 1',
-    subject:'Mathmatics',
-    board:'WBBSE',
     question:'Please  find the correct answer 25 + 5 = ? ',
     options: [
       {
@@ -111,7 +102,7 @@ LinearProgressWithLabel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-export default function Question() {
+export default function Question(props) {
   const [progress, setProgress] = React.useState(0);
   const classes = useStyles();
   const [value, setValue] = React.useState('');
@@ -119,10 +110,36 @@ export default function Question() {
   const [helperText, setHelperText] = React.useState('Choose wisely');
   const [questionIndex, setQuestionIndex] = React.useState(0);
   const [questionAnswer,setQuestionAnswer] = React.useState(['']);
+  const [questionDetails, setQuestionDetails] = React.useState([]);
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+
+  React.useEffect(() => {
+    fetch("https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getQuestionSet?questionSet=" + props.questionSet)
+      .then(res => res.json())
+      .then(
+        (result) => {
+  setQuestionDetails(result.questionList);
+          setIsLoaded(true);
+
+
+          },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          setIsLoaded(false);
+          alert(error);
+          alert("https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getQuestionSet?questionSet=" + props.questionSet);
+          //setError(error);
+        }
+      )
+  }, [])
+
 
   const prevNextQuestion = (event, newValue) => {
       if (newValue === 'next') {
-        if (questionIndex + 1 < questionList.length){
+        if (questionIndex + 1 < questionDetails.length){
           setQuestionIndex(questionIndex + 1);
         }
       }
@@ -149,7 +166,7 @@ export default function Question() {
         answered = answered + 1;
       }
     }
-    setProgress((answered/questionList.length)*100);
+    setProgress((answered/questionDetails.length)*100);
 
   };
 
@@ -167,16 +184,19 @@ export default function Question() {
     }
   };
 
+ if (!isLoaded) {
+      return <div>Loading...</div>;
+    } else {
   return (
     <div className={classes.root}>
     <LinearProgressWithLabel value={progress} />
 
     <form onSubmit={checkAnswer}>
       <FormControl component="fieldset" error={error} className={classes.formControl}>
-        <FormLabel component="legend">{questionList[questionIndex].question}</FormLabel>
+        <FormLabel component="legend">{questionDetails[questionIndex].question}</FormLabel>
         <RadioGroup aria-label="quiz" name="quiz" value={questionAnswer[questionIndex]} onChange={selectAnswer}>
-          <FormControlLabel value={questionList[questionIndex].options[0].correct} control={<Radio />} label={questionList[questionIndex].options[0].option} />
-          <FormControlLabel value={questionList[questionIndex].options[1].correct} control={<Radio />} label={questionList[questionIndex].options[1].option} />
+          <FormControlLabel value={questionDetails[questionIndex].options[0].correct} control={<Radio />} label={questionDetails[questionIndex].options[0].option} />
+          <FormControlLabel value={questionDetails[questionIndex].options[1].correct} control={<Radio />} label={questionDetails[questionIndex].options[1].option} />
         </RadioGroup>
         <FormHelperText>{helperText}</FormHelperText>
         <Button type="submit" variant="outlined" color="primary" className={classes.button}>
@@ -188,8 +208,7 @@ export default function Question() {
         <BottomNavigationAction label="Previous" value="previous" icon={<ArrowBackIosIcon />}/>
         <BottomNavigationAction label="Next" value="next" icon={<ArrowForwardIosIcon />} />
       </BottomNavigation>
-
     </div>
-
   );
+}
 }
