@@ -16,58 +16,6 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
-const questionList = [
-  {
-    id: 'Q1',
-    question:'Please  find the correct answer 10 + 2 = ? ',
-    options: [
-      {
-        id: '1',
-        option: '12',
-        correct: 'Y',
-      },
-      {
-        id: '2',
-        option: '20',
-        correct: 'N',
-      },
-    ],
-  },
-  {
-    id: 'Q2',
-    question:'Please  find the correct answer 10 + 5 = ? ',
-    options: [
-      {
-        id: '1',
-        option: '10',
-        correct: 'N',
-      },
-      {
-        id: '2',
-        option: '15',
-        correct: 'Y',
-      }
-    ],
-  },
-  {
-    id: 'Q3',
-    question:'Please  find the correct answer 25 + 5 = ? ',
-    options: [
-      {
-        id: '1',
-        option: '30',
-        correct: 'Y',
-      },
-      {
-        id: '2',
-        option: '15',
-        correct: 'N',
-      }
-    ],
-  }
-];
-
-
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(3),
@@ -127,11 +75,9 @@ export default function Question(props) {
       .then(res => res.json())
       .then(
         (result) => {
-  setQuestionDetails(result.questionList);
+          setQuestionDetails(result.questionList);
           setIsLoaded(true);
-
-
-          },
+        },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
         // exceptions from actual bugs in components.
@@ -152,11 +98,7 @@ export default function Question(props) {
           setHelperText(' '); /** reset the value of setHelperText for next icon arrow*/
           setError(false);
         }
-
       }
-
-
-
       if (newValue === 'previous') {
         if (questionIndex > 0){
           setQuestionIndex(questionIndex - 1);
@@ -198,13 +140,13 @@ export default function Question(props) {
   const checkAnswer = (event) => {
     event.preventDefault();
     if (value === 'Y') {
-      if (correctAns + 1 <= questionList.length){
+      if (correctAns + 1 <= questionDetails.length){
             setCorrectAns(correctAns + 1);
           }
       setHelperText('Correct!');
       setError(false);
     } else if (value === 'N') {
-      if (wrongAns + 1 <= questionList.length){
+      if (wrongAns + 1 <= questionDetails.length){
            setWrongAns(wrongAns + 1);
          }
       setHelperText('Sorry, wrong answer!');
@@ -215,11 +157,6 @@ export default function Question(props) {
     }
   };
 
-<<<<<<< HEAD
- if (!isLoaded) {
-      return <div>Loading...</div>;
-    } else {
-=======
   const checkAnsweras = (event) => {
     event.preventDefault();
     setHelperTextone('Total Questions Attemt:');
@@ -228,8 +165,10 @@ export default function Question(props) {
     setShowText(false);
   };
 
->>>>>>> d21b5e0e435462ccf32d8ac26a7abb5ff07cc369
-  return (
+  if (!isLoaded) {
+       return <div>Loading...</div>;
+     } else {
+    return (
     <div className={classes.root}>
     {showText && <LinearProgressWithLabel value={progress} />}
 
@@ -256,15 +195,10 @@ export default function Question(props) {
     </Button>
     </FormControl>
     </form>
-      {showText && <BottomNavigation value={value} onChange={prevNextQuestion} className={classes.root}>
+    <BottomNavigation value={value} onChange={prevNextQuestion} className={classes.root}>
         <BottomNavigationAction label="Previous" value="previous" icon={<ArrowBackIosIcon />}/>
         <BottomNavigationAction label="Next" value="next" icon={<ArrowForwardIosIcon />} />
-<<<<<<< HEAD
       </BottomNavigation>
-=======
-      </BottomNavigation>}
-
->>>>>>> d21b5e0e435462ccf32d8ac26a7abb5ff07cc369
     </div>
   );
 }
