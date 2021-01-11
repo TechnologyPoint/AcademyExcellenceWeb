@@ -61,7 +61,7 @@ export default function QuestionOption(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(questionAnswer[1]);
+    //alert(questionAnswer[1]);
     if (value == 'Y') {
       setHelperText('You got it!');
       setError(false);
