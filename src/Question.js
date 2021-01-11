@@ -170,9 +170,9 @@ export default function Question(props) {
      } else {
     return (
     <div className={classes.root}>
-    {showText && <LinearProgressWithLabel value={progress} />}
+    <LinearProgressWithLabel value={progress} />
 
-    {showText && <form onSubmit={checkAnswer}>
+    <form onSubmit={checkAnswer}>
       <FormControl component="fieldset" error={error} className={classes.formControl}>
         <FormLabel component="legend">{questionDetails[questionIndex].question}</FormLabel>
         <RadioGroup aria-label="quiz" name="quiz" value={questionAnswer[questionIndex]} onChange={selectAnswer}>
@@ -180,20 +180,8 @@ export default function Question(props) {
           <FormControlLabel value={questionDetails[questionIndex].options[1].correct} control={<Radio />} label={questionDetails[questionIndex].options[1].option} />
         </RadioGroup>
         <FormHelperText>{helperText}</FormHelperText>
-        <Button type="submit" variant="outlined" color="primary" className={classes.button}>
-          Check Answer
-        </Button>
+        <Button type="submit" variant="outlined" color="primary" className={classes.button}>Check Answer</Button>
       </FormControl>
-    </form>}
-    <form onSubmit={checkAnsweras}>
-    <FormControl component="fieldset" className={classes.formControl}>
-    <FormHelperText>{helperTextone}{progress}</FormHelperText>
-    <FormHelperText>{helperTextcorrect}{correctAns}</FormHelperText>
-    <FormHelperText>{helperTextwrong}{wrongAns}</FormHelperText>
-    <Button type="submit" variant="outlined" color="primary" className={classes.button}>
-      Complete Test
-    </Button>
-    </FormControl>
     </form>
     <BottomNavigation value={value} onChange={prevNextQuestion} className={classes.root}>
         <BottomNavigationAction label="Previous" value="previous" icon={<ArrowBackIosIcon />}/>
