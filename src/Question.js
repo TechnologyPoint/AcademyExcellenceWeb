@@ -15,6 +15,8 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import DisplayStatus from './DisplayStatus.js';
+
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -85,7 +87,6 @@ export default function Question(props) {
           setIsLoaded(false);
           alert(error);
           alert("https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getQuestionSet?questionSet=" + props.questionSet);
-          //setError(error);
         }
       )
   }, [])
@@ -171,7 +172,6 @@ export default function Question(props) {
     return (
     <div className={classes.root}>
     <LinearProgressWithLabel value={progress} />
-
     <form onSubmit={checkAnswer}>
       <FormControl component="fieldset" error={error} className={classes.formControl}>
         <FormLabel component="legend">{questionDetails[questionIndex].question}</FormLabel>
@@ -180,8 +180,9 @@ export default function Question(props) {
           <FormControlLabel value={questionDetails[questionIndex].options[1].correct} control={<Radio />} label={questionDetails[questionIndex].options[1].option} />
         </RadioGroup>
         <FormHelperText>{helperText}</FormHelperText>
-        <Button type="submit" variant="outlined" color="primary" className={classes.button}>Check Answer</Button>
+        <DisplayStatus questionList = {questionDetails} currentIndex = {questionIndex}/>
       </FormControl>
+
     </form>
     <BottomNavigation value={value} onChange={prevNextQuestion} className={classes.root}>
         <BottomNavigationAction label="Previous" value="previous" icon={<ArrowBackIosIcon />}/>

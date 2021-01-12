@@ -1,9 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -29,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
 export default function QuestionHeader(props) {
   const classes = useStyles();
   const [selectedSubject, setSelectedSubject] = React.useState('');
-  const [category, setCategory] = React.useState('');
   const [subjectDetails,setSubjectDetails] = React.useState([]);
   const [subjectData,setSubjectData] = React.useState([]);
   const [loaded, setLoaded] = React.useState(false);
@@ -44,12 +40,12 @@ export default function QuestionHeader(props) {
   const loading = loaded && subjectList.length === 0;
   const chapterLoading = chapterLoaded && chapterList.length === 0;
   const questionSetLoading = questionSetLoaded && questionSet != null && questionSet.length === 0;
-  const [formData, setFormData] = React.useState({headerPopulated:false});
+
 
   const populateChapter = (subject,value) => {
    setSelectedSubject(value.id);
    for(var k in subjectList) {
-      if (subjectList[k].id == selectedSubject){
+      if (subjectList[k].id === selectedSubject){
           setChapterList(subjectList[k].chapterList);
       }
    }
@@ -57,7 +53,7 @@ export default function QuestionHeader(props) {
 
   function displayQuestionSet(e) {
     e.preventDefault();
-    if (selectedQuestionSet != null && selectedQuestionSet != ''){
+    if (selectedQuestionSet !== null && selectedQuestionSet !== ''){
       props.onQuestionSetSelected(true,selectedQuestionSet);
     }else{
       props.onQuestionSetSelected(false,selectedQuestionSet);
@@ -68,7 +64,7 @@ export default function QuestionHeader(props) {
   const populateQuestionSet = (chapter, value) => {
     setSelectedChapter(value.id);
     for(var k in chapterList) {
-       if (chapterList[k].id == selectedChapter){
+       if (chapterList[k].id === selectedChapter){
            setQuestionSet(chapterList[k].questionset);
        }
     }
@@ -81,7 +77,7 @@ export default function QuestionHeader(props) {
 
   React.useEffect(() => {
   (async () => {
-    if(subjectData != null && subjectData.length == 0){
+    if(subjectData != null && subjectData.length === 0){
     const response = await fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getAllClassDetails?board=1');
     await sleep(1e3);
     const subjectData = await response.json();
