@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Question(props) {
   const [seconds, setSeconds] = React.useState(0)
-  const [minutes, setMinutes] = React.useState(1)
+  const [minutes, setMinutes] = React.useState(30)
 
 
 
