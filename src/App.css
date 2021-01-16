@@ -75,7 +75,11 @@
 .MuiFormControl-root {
     margin: 0px !important;
 }
-
+.timer{
+  text-align: right;
+  color: #dd3f5b;
+  margin:0px;
+}
 
 @keyframes App-logo-spin {
   from {

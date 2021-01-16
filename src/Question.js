@@ -16,6 +16,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import DisplayStatus from './DisplayStatus.js';
+import DisplayTimer from './DisplayTimer.js';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -72,24 +73,25 @@ export default function Question(props) {
   const [isLoaded, setIsLoaded] = React.useState(false);
 
 
-  React.useEffect(() => {
-    fetch("https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getQuestionSet?questionSet=" + props.questionSet)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          setQuestionDetails(result.questionList);
-          setIsLoaded(true);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          setIsLoaded(false);
-          alert(error);
-          alert("https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getQuestionSet?questionSet=" + props.questionSet);
-        }
-      )
-  }, [])
+
+React.useEffect(() => {
+  fetch("https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getQuestionSet?questionSet=" + props.questionSet)
+    .then(res => res.json())
+    .then(
+      (result) => {
+        setQuestionDetails(result.questionList);
+        setIsLoaded(true);
+      },
+      // Note: it's important to handle errors here
+      // instead of a catch() block so that we don't swallow
+      // exceptions from actual bugs in components.
+      (error) => {
+        setIsLoaded(false);
+        alert(error);
+        alert("https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getQuestionSet?questionSet=" + props.questionSet);
+      }
+    )
+},[])
 
 
   const prevNextQuestion = (event, newValue) => {
@@ -171,6 +173,7 @@ export default function Question(props) {
      } else {
     return (
     <div className={classes.root}>
+    <DisplayTimer />
     <LinearProgressWithLabel value={progress} />
     <form onSubmit={checkAnswer}>
       <FormControl component="fieldset" error={error} className={classes.formControl}>

@@ -65,7 +65,7 @@ export default function Question(props) {
   ];
 
   React.useEffect(() => {
-  }, [])
+  },[])
 if(completedExam){
   return (
     <div className={classes.root}>
