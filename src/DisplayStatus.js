@@ -13,7 +13,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 
 
@@ -37,6 +36,12 @@ export default function Question(props) {
   const classes = useStyles();
   const [completedExam, setCompletedExam] = React.useState(false);
   const [openConfirmation, setOpenConfirmation] = React.useState(false);
+  const [answeredQuestion, setAnsweredQuestion] = React.useState(0);
+  const [correctAnswer, setCorrectAnswer] = React.useState(0);
+  const [wrongAnswer, setWrongAnswer] = React.useState(0);
+  const [skipAnswer, setSkipAnswer] = React.useState(0);
+
+  const [grade, setGrade] = React.useState("");
 
   const displayConfirmation = () => {
       setOpenConfirmation(true);
@@ -49,7 +54,34 @@ export default function Question(props) {
 
   const confirmExamSubmission = () =>{
      setCompletedExam(true);
-  }
+     var crctAnswer = 0;
+     var totalAnsweredQuestion = 0;
+     var wrngAnswer = 0;
+     var skippedAnswer = 0;
+     for(var k in props.questionAnswer) {
+       if(props.questionAnswer[k] === 'Y'){
+         crctAnswer = crctAnswer + 1;
+         totalAnsweredQuestion = totalAnsweredQuestion +1;
+
+              }
+       if(props.questionAnswer[k] === 'N'){
+         wrngAnswer = wrngAnswer + 1;
+         totalAnsweredQuestion = totalAnsweredQuestion +1;
+       }
+       if(props.questionAnswer[k] === ''){
+         skippedAnswer = skippedAnswer + 1;
+       }
+     }
+     setCorrectAnswer(crctAnswer);
+     setWrongAnswer(wrngAnswer);
+     setAnsweredQuestion(totalAnsweredQuestion);
+     setSkipAnswer(skippedAnswer);
+     if (((crctAnswer/props.questionList.length)*100) > 70){
+       setGrade("Pass");
+     }else {
+       setGrade("Fail");
+     }
+    }
 
   function createData(name, count) {
     return { name, count };
@@ -57,11 +89,11 @@ export default function Question(props) {
 
   const rows = [
     createData('Total Question', props.questionList.length),
-    createData('Question Answered',props.questionList.length),
-    createData('Question Skipped', props.questionList.length),
-    createData('Correct Answer', props.questionList.length),
-    createData('Wrong Answer', 0),
-    createData("Grade", 'Pass')
+    createData('Question Answered',answeredQuestion),
+    createData('Question Skipped', skipAnswer),
+    createData('Correct Answer', correctAnswer),
+    createData('Wrong Answer', wrongAnswer),
+    createData("Grade", grade)
   ];
 
   React.useEffect(() => {
@@ -93,7 +125,7 @@ if(completedExam){
    </div>
  );
 }
-if ((props.currentIndex + 1== props.questionList.length) && !completedExam ) {
+if ((props.currentIndex + 1=== props.questionList.length) && !completedExam ) {
 return (
     <div className={classes.root}>
     <form>

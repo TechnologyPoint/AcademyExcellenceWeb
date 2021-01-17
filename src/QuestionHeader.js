@@ -5,6 +5,11 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 function sleep(delay = 0) {
   return new Promise((resolve) => {
@@ -40,7 +45,23 @@ export default function QuestionHeader(props) {
   const loading = loaded && subjectList.length === 0;
   const chapterLoading = chapterLoaded && chapterList.length === 0;
   const questionSetLoading = questionSetLoaded && questionSet != null && questionSet.length === 0;
+  const [startedExam, setStartedExam] = React.useState(false);
+  const [openConfirmation, setOpenConfirmation] = React.useState(false);
 
+  const displayConfirmation = () => {
+      setOpenConfirmation(true);
+    };
+
+    const closeConfirmation = () => {
+      setOpenConfirmation(false);
+    };
+
+
+  const confirmExamStart = () =>{
+     setStartedExam(true);
+     setOpenConfirmation(false);
+     displayQuestionSet();
+  }
 
   const populateChapter = (subject,value) => {
    setSelectedSubject(value.id);
@@ -51,8 +72,7 @@ export default function QuestionHeader(props) {
    }
   };
 
-  function displayQuestionSet(e) {
-    e.preventDefault();
+  function displayQuestionSet() {
     if (selectedQuestionSet !== null && selectedQuestionSet !== ''){
       props.onQuestionSetSelected(true,selectedQuestionSet);
     }else{
@@ -93,11 +113,13 @@ export default function QuestionHeader(props) {
       <FormControl variant="outlined" className={classes.formControl}>
       <Autocomplete
       id="subject-list"
-      style={{ width: 200 }}
+      style={{ width: 200}}
       open={loaded}
       onOpen={() => {
         setLoaded(true);
       }}
+      disableClearable
+      disabled = {startedExam}
       onClose={() => {
         setLoaded(false);
       }}
@@ -134,7 +156,9 @@ export default function QuestionHeader(props) {
     onClose={() => {
       setChapterLoaded(false);
     }}
-    getOptionSelected={(chapter, value) => { populateQuestionSet(chapter,value); return chapter.id === value.id}}
+    disableClearable
+    disabled = {startedExam}
+    getOptionSelected={(chapter, value) => { populateQuestionSet(chapter,value); return ((chapter.id === value.id) && selectedSubject != null)}}
     getOptionLabel={(chapter) => chapter.name}
     options={chapterList}
     loading={chapterLoading}
@@ -167,6 +191,8 @@ export default function QuestionHeader(props) {
   onClose={() => {
     setQuestionSetLoaded(false);
   }}
+  disableClearable
+  disabled = {startedExam}
   getOptionSelected={(questionSet, value) => {selectQuestionSet(questionSet,value); return questionSet.id === value.id}}
   getOptionLabel={(questionSet) => questionSet.name}
   options={questionSet}
@@ -189,8 +215,23 @@ export default function QuestionHeader(props) {
   )}
 />
 </FormControl>
+<Button variant="contained" color="primary" onClick = {displayConfirmation} disabled = {startedExam}>Start</Button>
+<Dialog
+    open={openConfirmation}
+    onClose={closeConfirmation}
+    aria-labelledby="alert-dialog-title"
+    aria-describedby="alert-dialog-description"
+  >
+    <DialogTitle id="alert-dialog-title">{"Confirmation - Submission"}</DialogTitle>
+    <DialogContent>
+      <DialogContentText id="alert-dialog-description">Ary you sure to start the examination?</DialogContentText>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={confirmExamStart} color="primary">Confirm</Button>
+      <Button onClick={closeConfirmation} color="primary" autoFocus>Cancel</Button>
+    </DialogActions>
+  </Dialog>
 
-    <Button variant="contained" color="primary" onClick = {displayQuestionSet}>Start</Button>
     </div>
   );
 }

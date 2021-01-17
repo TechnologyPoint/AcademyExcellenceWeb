@@ -6,7 +6,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormLabel from '@material-ui/core/FormLabel';
-import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -59,15 +58,9 @@ export default function Question(props) {
   const [value, setValue] = React.useState('');
   const [error, setError] = React.useState(false);
   const [helperText, setHelperText] = React.useState('Choose wisely');
-  const [helperTextone, setHelperTextone] = React.useState(' ');
-  const [helperTextcorrect, setHelperTextcorrect] = React.useState(' ');
-  const [helperTextwrong, setHelperTextwrong] = React.useState(' ');
-  //const [state, setState] = React.useState(true);
-  const [showText, setShowText] = React.useState(true);
   const [questionIndex, setQuestionIndex] = React.useState(0);
   const [correctAns, setCorrectAns] = React.useState(0);
   const [wrongAns, setWrongAns] = React.useState(0);
-  const [selected, setSelected] = React.useState();
   const [questionAnswer,setQuestionAnswer] = React.useState(['']);
   const [questionDetails, setQuestionDetails] = React.useState([]);
   const [isLoaded, setIsLoaded] = React.useState(false);
@@ -160,14 +153,6 @@ React.useEffect(() => {
     }
   };
 
-  const checkAnsweras = (event) => {
-    event.preventDefault();
-    setHelperTextone('Total Questions Attemt:');
-    setHelperTextcorrect('Correct Answer:');
-    setHelperTextwrong('Wrong Answer:');
-    setShowText(false);
-  };
-
   if (!isLoaded) {
        return <div>Loading...</div>;
      } else {
@@ -183,7 +168,7 @@ React.useEffect(() => {
           <FormControlLabel value={questionDetails[questionIndex].options[1].correct} control={<Radio />} label={questionDetails[questionIndex].options[1].option} />
         </RadioGroup>
         <FormHelperText>{helperText}</FormHelperText>
-        <DisplayStatus questionList = {questionDetails} currentIndex = {questionIndex}/>
+        <DisplayStatus questionList = {questionDetails} currentIndex = {questionIndex} questionAnswer = {questionAnswer}/>
       </FormControl>
 
     </form>
