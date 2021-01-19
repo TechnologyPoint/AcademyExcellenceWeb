@@ -35,15 +35,22 @@ const styles = (theme) => ({
 
 function Content(props) {
   const { classes } = props;
-  const [headerPopulated, setHeaderPopulated] = React.useState(false);
+  const [questionHeaderPopulated, setQuestionHeaderPopulated] = React.useState(false);
   const [questionSet, setQuestionSet] = React.useState(false);
 
   const populateQuestion =  (changedValue,questionSet) => {
-     setHeaderPopulated(changedValue);
+     setQuestionHeaderPopulated(changedValue);
      setQuestionSet(questionSet);
   }
+  if(!props.headerPopulated) {
+return (
+  <Paper className={classes.paper}>
+  </Paper>
 
-  if(headerPopulated){
+)
+  }
+  else{
+  if(questionHeaderPopulated){
   return (
     <Paper className={classes.paper}>
       <AppBar
@@ -55,7 +62,7 @@ function Content(props) {
         <Toolbar>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs>
-            <QuestionHeader onQuestionSetSelected = {populateQuestion}/>
+            <QuestionHeader onQuestionSetSelected = {populateQuestion} selectedBoard = {props.selectedBoard} selectedClass = {props.selectedClass}/>
             </Grid>
         </Grid>
         </Toolbar>
@@ -79,7 +86,7 @@ function Content(props) {
         <Toolbar>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs>
-            <QuestionHeader  onQuestionSetSelected = {populateQuestion}/>
+            <QuestionHeader  onQuestionSetSelected = {populateQuestion} selectedBoard = {props.selectedBoard} selectedClass = {props.selectedClass}/>
             </Grid>
           </Grid>
         </Toolbar>
@@ -90,7 +97,7 @@ function Content(props) {
   );
 }
 }
-
+}
 Content.propTypes = {
   classes: PropTypes.object.isRequired,
 };

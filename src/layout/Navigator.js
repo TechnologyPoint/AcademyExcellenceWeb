@@ -27,23 +27,7 @@ const categories = [
       { id: 'CBSE', icon: <DnsRoundedIcon /> },
       { id: 'ICSE', icon: <PermMediaOutlinedIcon /> },
     ],
-  },
-  {
-    id: 'Class',
-    children: [
-      { id: 'Class I', icon: <SettingsIcon />,  active :true},
-      { id: 'Class II', icon: <SettingsIcon /> },
-      { id: 'Class III', icon: <SettingsIcon /> },
-      { id: 'Class IV', icon: <SettingsIcon /> },
-      { id: 'Class V', icon: <SettingsIcon /> },
-      { id: 'Class VI', icon: <SettingsIcon /> },
-      { id: 'Class VI', icon: <SettingsIcon /> },
-      { id: 'Class VII', icon: <SettingsIcon /> },
-      { id: 'Class VIII', icon: <SettingsIcon /> },
-      { id: 'Class IX', icon: <SettingsIcon /> },
-      { id: 'Class X', icon: <TimerIcon /> },
-    ],
-  },
+  }
 ];
 
 const styles = (theme) => ({

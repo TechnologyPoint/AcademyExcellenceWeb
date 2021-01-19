@@ -98,7 +98,7 @@ export default function QuestionHeader(props) {
   React.useEffect(() => {
   (async () => {
     if(subjectData != null && subjectData.length === 0){
-    const response = await fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getAllClassDetails?board=1');
+    const response = await fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getAllClassDetails?board=' + props.selectedBoard + '&class=' + props.selectedClass);
     await sleep(1e3);
     const subjectData = await response.json();
     if (subjectData.length > 0){

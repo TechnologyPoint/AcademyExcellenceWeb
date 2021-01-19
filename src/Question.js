@@ -59,13 +59,15 @@ export default function Question(props) {
   const [error, setError] = React.useState(false);
   const [helperText, setHelperText] = React.useState('Choose wisely');
   const [questionIndex, setQuestionIndex] = React.useState(0);
-  const [correctAns, setCorrectAns] = React.useState(0);
-  const [wrongAns, setWrongAns] = React.useState(0);
   const [questionAnswer,setQuestionAnswer] = React.useState(['']);
   const [questionDetails, setQuestionDetails] = React.useState([]);
   const [isLoaded, setIsLoaded] = React.useState(false);
+  const [examCompleted,setExamCompleted] = React.useState(false);
 
-
+  const populateExamCompleteStatus =  (examStatus) => {
+     setExamCompleted(examStatus);
+     showAnswerStatus(questionAnswer[questionIndex]);
+  }
 
 React.useEffect(() => {
   fetch("https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getQuestionSet?questionSet=" + props.questionSet)
@@ -88,33 +90,25 @@ React.useEffect(() => {
 
 
   const prevNextQuestion = (event, newValue) => {
+    var curIndex = questionIndex;
       if (newValue === 'next') {
         if (questionIndex + 1 < questionDetails.length){
           setQuestionIndex(questionIndex + 1);
-          setHelperText(' '); /** reset the value of setHelperText for next icon arrow*/
-          setError(false);
+          curIndex = questionIndex + 1;
         }
       }
       if (newValue === 'previous') {
         if (questionIndex > 0){
           setQuestionIndex(questionIndex - 1);
+          curIndex = questionIndex - 1;
         }
-        if (value === 'Y'){
-          if (correctAns > 0){
-            setCorrectAns(correctAns - 1);
-          }
-        }
-        if (value === 'N'){
-          if (wrongAns > 0){
-            setWrongAns(wrongAns - 1);
-          }
-        }
-
       }
       if (questionAnswer.length === questionIndex) {
         questionAnswer[questionIndex] = '';
       }
-
+      if(examCompleted){
+      showAnswerStatus(questionAnswer[curIndex]);
+    }
     };
 
   const selectAnswer = (event) => {
@@ -133,18 +127,11 @@ React.useEffect(() => {
 
   };
 
-  const checkAnswer = (event) => {
-    event.preventDefault();
+  const showAnswerStatus = (value) => {
     if (value === 'Y') {
-      if (correctAns + 1 <= questionDetails.length){
-            setCorrectAns(correctAns + 1);
-          }
       setHelperText('Correct!');
       setError(false);
     } else if (value === 'N') {
-      if (wrongAns + 1 <= questionDetails.length){
-           setWrongAns(wrongAns + 1);
-         }
       setHelperText('Sorry, wrong answer!');
       setError(true);
     } else {
@@ -160,15 +147,18 @@ React.useEffect(() => {
     <div className={classes.root}>
     <DisplayTimer />
     <LinearProgressWithLabel value={progress} />
-    <form onSubmit={checkAnswer}>
+    <form>
       <FormControl component="fieldset" error={error} className={classes.formControl}>
         <FormLabel component="legend">{questionDetails[questionIndex].question}</FormLabel>
-        <RadioGroup aria-label="quiz" name="quiz" value={questionAnswer[questionIndex]} onChange={selectAnswer}>
-          <FormControlLabel value={questionDetails[questionIndex].options[0].correct} control={<Radio />} label={questionDetails[questionIndex].options[0].option} />
-          <FormControlLabel value={questionDetails[questionIndex].options[1].correct} control={<Radio />} label={questionDetails[questionIndex].options[1].option} />
+        <RadioGroup  aria-label="quiz" name="quiz" value={questionAnswer[questionIndex]} onChange={selectAnswer}>
+        {questionDetails[questionIndex].options.map(({ id, correct,option }) => (
+        <React.Fragment key={id}>
+          <FormControlLabel value={correct} control={<Radio disabled = {examCompleted}/>} label={option} />
+          </React.Fragment>
+        ))}
         </RadioGroup>
         <FormHelperText>{helperText}</FormHelperText>
-        <DisplayStatus questionList = {questionDetails} currentIndex = {questionIndex} questionAnswer = {questionAnswer}/>
+        <DisplayStatus questionList = {questionDetails} currentIndex = {questionIndex} questionAnswer = {questionAnswer} setExamStatus = {populateExamCompleteStatus}/>
       </FormControl>
 
     </form>

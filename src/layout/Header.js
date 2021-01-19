@@ -13,6 +13,10 @@ import Tabs from '@material-ui/core/Tabs';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import FormControl from '@material-ui/core/FormControl';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
@@ -38,6 +42,31 @@ const styles = (theme) => ({
 
 function Header(props) {
   const { classes, onDrawerToggle } = props;
+  const [loaded, setLoaded] = React.useState(false);
+  const [classList, setClassList] = React.useState([]);
+  const [selectedClass, setSelectedClass] = React.useState("");
+  const loading = loaded && classList.length === 0;
+
+  const populateQuestionHeader = (classValue,value) => {
+    props.setHeaderStatus(true,classValue.classId,"1");
+  }
+
+  function sleep(delay = 0) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, delay);
+    });
+  }
+  React.useEffect(() => {
+  (async () => {
+    if(classList != null && classList.length === 0){
+    const response = await fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getClassList?board=1');
+    await sleep(1e3);
+    const classListData = await response.json();
+    if (classListData.length > 0){
+      setClassList(classListData);
+    }
+  }})();
+}, [loading]);
 
   return (
     <React.Fragment>
@@ -84,6 +113,45 @@ function Header(props) {
             <Grid item xs>
               <Typography color="inherit" variant="h5" component="h1">
                 West Bengal Board of Secondary Education
+              </Typography>
+              <Typography color="inherit" variant="h6" component="h1">
+              <Grid item xs>
+                Class&nbsp;&nbsp;
+                  <FormControl variant="outlined" className={classes.formControl}>
+                  <Autocomplete
+                  id="subject-list"
+                  style={{ width: 200}}
+                  open={loaded}
+                  onOpen={() => {
+                    setLoaded(true);
+                  }}
+                  disableClearable
+                  onClose={() => {
+                    setLoaded(false);
+                  }}
+                  getOptionSelected={(classValue, value) => {populateQuestionHeader(classValue,value); return classValue.classId === value.classId}}
+                  getOptionLabel={(classValue) => classValue.className}
+                  options={classList}
+                  loading={loading}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label=""
+                      variant="outlined"
+                      InputProps={{
+                        ...params.InputProps,
+                        endAdornment: (
+                          <React.Fragment>
+                            {loading ? <CircularProgress color="inherit" size={10} /> : null}
+                            {params.InputProps.endAdornment}
+                          </React.Fragment>
+                        ),
+                      }}
+                    />
+                  )}
+                />
+                </FormControl>
+                </Grid>
               </Typography>
             </Grid>
 

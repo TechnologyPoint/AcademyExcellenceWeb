@@ -185,11 +185,19 @@ const styles = {
 function Paperbase(props) {
   const { classes } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [headerPopulated, setHeaderPopulated] = React.useState(false);
+  const [selectedClass,setSelectedClass] = React.useState("");
+  const [selectedBoard,setSelectedBoard] = React.useState("");
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const setHeaderStatus = (headerStatus,selectedClass,selectedBoard) => {
+    setHeaderPopulated(headerStatus);
+    setSelectedBoard(selectedBoard);
+    setSelectedClass(selectedClass);
+  }
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
@@ -200,9 +208,9 @@ function Paperbase(props) {
           </Hidden>
         </nav>
         <div className={classes.app}>
-          <Header onDrawerToggle={handleDrawerToggle} />
+          <Header onDrawerToggle={handleDrawerToggle}  setHeaderStatus = {setHeaderStatus}/>
           <main className={classes.main}>
-            <Content />
+            <Content headerPopulated = {headerPopulated} selectedBoard = {selectedBoard} selectedClass = {selectedClass}/>
           </main>
           <footer className={classes.footer}>
             <Copyright />

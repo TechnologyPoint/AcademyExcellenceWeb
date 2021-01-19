@@ -54,6 +54,7 @@ export default function Question(props) {
 
   const confirmExamSubmission = () =>{
      setCompletedExam(true);
+     props.setExamStatus(true);
      var crctAnswer = 0;
      var totalAnsweredQuestion = 0;
      var wrngAnswer = 0;
@@ -122,6 +123,9 @@ if(completedExam){
        </TableBody>
      </Table>
    </TableContainer>
+   <form>
+     <Button variant="outlined" color="primary" className={classes.button} onClick={displayConfirmation}>Start New Test</Button>
+   </form>
    </div>
  );
 }
