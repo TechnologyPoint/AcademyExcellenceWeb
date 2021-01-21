@@ -47,8 +47,8 @@ function Header(props) {
   const [selectedClass, setSelectedClass] = React.useState("");
   const loading = loaded && classList.length === 0;
 
-  const populateQuestionHeader = (classValue,value) => {
-    props.setHeaderStatus(true,classValue.classId,"1");
+  const populateQuestionHeader = (value) => {
+    props.setHeaderStatus(true,value.classId,"1");
   }
 
   function sleep(delay = 0) {
@@ -129,7 +129,10 @@ function Header(props) {
                   onClose={() => {
                     setLoaded(false);
                   }}
-                  getOptionSelected={(classValue, value) => {populateQuestionHeader(classValue,value); return classValue.classId === value.classId}}
+                  onChange={(event, newValue) => {
+                      populateQuestionHeader(newValue);
+                    }}
+                  getOptionSelected={(classValue, value) => {return classValue.classId === value.classId}}
                   getOptionLabel={(classValue) => classValue.className}
                   options={classList}
                   loading={loading}

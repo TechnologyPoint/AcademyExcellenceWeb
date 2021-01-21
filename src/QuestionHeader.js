@@ -63,11 +63,11 @@ export default function QuestionHeader(props) {
      displayQuestionSet();
   }
 
-  const populateChapter = (subject,value) => {
-   setSelectedSubject(value.id);
+  const populateChapter = (value) => {
    for(var k in subjectList) {
-      if (subjectList[k].id === selectedSubject){
+      if (subjectList[k].id === value.id){
           setChapterList(subjectList[k].chapterList);
+          setSelectedSubject(value.id);
       }
    }
   };
@@ -81,17 +81,18 @@ export default function QuestionHeader(props) {
     }
   }
 
-  const populateQuestionSet = (chapter, value) => {
-    setSelectedChapter(value.id);
+  const populateQuestionSet = ( value) => {
     for(var k in chapterList) {
-       if (chapterList[k].id === selectedChapter){
+       if (chapterList[k].id === value.id){
            setQuestionSet(chapterList[k].questionset);
+           setSelectedChapter(value.id);
+
        }
     }
     //setFormData({headerPopulated: true });
   }
 
-  const selectQuestionSet = (question,value) => {
+  const selectQuestionSet = (value) => {
    setSelectedQuestionSet(value.id);
   }
 
@@ -123,7 +124,10 @@ export default function QuestionHeader(props) {
       onClose={() => {
         setLoaded(false);
       }}
-      getOptionSelected={(subject, value) => {populateChapter(subject,value); return subject.id === value.id}}
+      onChange={(event, newValue) => {
+          populateChapter(newValue);
+        }}
+      getOptionSelected={(subject, value) => {return subject.id === value.id}}
       getOptionLabel={(subject) => subject.name}
       options={subjectList}
       loading={loading}
@@ -151,6 +155,7 @@ export default function QuestionHeader(props) {
     style={{ width: 200 }}
     open={chapterLoaded}
     onOpen={() => {
+       populateChapter(selectedSubject);
        setChapterLoaded(true);
     }}
     onClose={() => {
@@ -158,7 +163,10 @@ export default function QuestionHeader(props) {
     }}
     disableClearable
     disabled = {startedExam}
-    getOptionSelected={(chapter, value) => { populateQuestionSet(chapter,value); return ((chapter.id === value.id) && selectedSubject != null)}}
+    onChange={(event, newValue) => {
+        populateQuestionSet(newValue);
+      }}
+    getOptionSelected={(chapter, value) => { return ((chapter.id === value.id) && selectedSubject != null)}}
     getOptionLabel={(chapter) => chapter.name}
     options={chapterList}
     loading={chapterLoading}
@@ -171,7 +179,7 @@ export default function QuestionHeader(props) {
           ...params.InputProps,
           endAdornment: (
             <React.Fragment>
-              {loading ? <CircularProgress color="inherit" size={10} /> : null}
+              {chapterLoading ? <CircularProgress color="inherit" size={10} /> : null}
               {params.InputProps.endAdornment}
             </React.Fragment>
           ),
@@ -186,6 +194,7 @@ export default function QuestionHeader(props) {
   style={{ width: 260 }}
   open={questionSetLoaded}
   onOpen={() => {
+    populateQuestionSet(selectedChapter);
      setQuestionSetLoaded(true);
   }}
   onClose={() => {
@@ -193,7 +202,10 @@ export default function QuestionHeader(props) {
   }}
   disableClearable
   disabled = {startedExam}
-  getOptionSelected={(questionSet, value) => {selectQuestionSet(questionSet,value); return questionSet.id === value.id}}
+  onChange={(event, newValue) => {
+      selectQuestionSet(newValue);
+    }}
+  getOptionSelected={(questionSet, value) => { return questionSet.id === value.id}}
   getOptionLabel={(questionSet) => questionSet.name}
   options={questionSet}
   loading={questionSetLoading}
@@ -206,7 +218,7 @@ export default function QuestionHeader(props) {
         ...params.InputProps,
         endAdornment: (
           <React.Fragment>
-            {loading ? <CircularProgress color="inherit" size={10} /> : null}
+            {questionSetLoading ? <CircularProgress color="inherit" size={10} /> : null}
             {params.InputProps.endAdornment}
           </React.Fragment>
         ),
