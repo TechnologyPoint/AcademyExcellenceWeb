@@ -14,6 +14,8 @@ import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
 import PermMediaOutlinedIcon from '@material-ui/icons/PhotoSizeSelectActual';
 import TimerIcon from '@material-ui/icons/Timer';
 import SettingsIcon from '@material-ui/icons/Settings';
+import Header from './Header';
+import App from '../App.css';
 
 const categories = [
   {
@@ -22,7 +24,6 @@ const categories = [
       {
         id: 'WBBSE',
         icon: <PeopleIcon />,
-        active: true,
       },
       { id: 'CBSE', icon: <DnsRoundedIcon /> },
       { id: 'ICSE', icon: <PermMediaOutlinedIcon /> },
@@ -76,8 +77,10 @@ const styles = (theme) => ({
 
 function Navigator(props) {
   const { classes, ...other } = props;
+  const [data,setData] = React.useState('');
 
   return (
+    <>
     <Drawer variant="permanent" {...other}>
       <List disablePadding>
         <ListItem
@@ -109,7 +112,14 @@ function Navigator(props) {
               </ListItemText>
             </ListItem>
             {children.map(({ id: childId, icon, active }) => (
-              <ListItem
+              <ListItem onClick={(e)=>{
+                setData(childId);
+                var elems = document.querySelectorAll('.itemActiveItem');
+                [].forEach.call(elems, function(el) {
+                  el.classList.remove('itemActiveItem');
+                });
+                e.target.className = 'itemActiveItem';
+              }}
                 key={childId}
                 button
                 className={clsx(classes.item, active && classes.itemActiveItem)}
@@ -130,6 +140,8 @@ function Navigator(props) {
         ))}
       </List>
     </Drawer>
+    <Header boardName = {data} />
+    </>
   );
 }
 

@@ -112,7 +112,7 @@ function Header(props) {
           <Grid container alignItems="center" spacing={1}>
             <Grid item xs>
               <Typography color="inherit" variant="h5" component="h1">
-                West Bengal Board of Secondary Education
+                West Bengal Board of Secondary Education{console.log(props.boardName)}
               </Typography>
               <Typography color="inherit" variant="h6" component="h1">
               <Grid item xs>
