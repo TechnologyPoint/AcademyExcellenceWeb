@@ -80,7 +80,9 @@
   color: #dd3f5b;
   margin:0px;
 }
-
+.itemActiveItem{
+  color:#4fc3f7;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

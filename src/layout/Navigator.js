@@ -15,7 +15,8 @@ import PermMediaOutlinedIcon from '@material-ui/icons/PhotoSizeSelectActual';
 import TimerIcon from '@material-ui/icons/Timer';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Link from '@material-ui/core/Link';
-
+import Header from './Header';
+import App from '../App.css';
 
 const categories = [
   {
@@ -107,7 +108,6 @@ const styles = (theme) => ({
   },
 });
 
-
 function Navigator(props) {
   const { classes, ...other } = props;
   const [activeLink, setActiveLink] = React.useState("WBBSE");
@@ -119,7 +119,6 @@ function Navigator(props) {
              categories[header].subCategoryList[child].active = true;
              setActiveLink(childId);
              props.setNavigation(childId,categories[header].subCategoryList[child].subCategoryDescription);
-
            }else {
              categories[header].subCategoryList[child].active = false;
            }
@@ -128,6 +127,7 @@ function Navigator(props) {
   }
 }
   return (
+    <>
     <Drawer variant="permanent" {...other}>
       <List disablePadding>
         <ListItem className={clsx(classes.firebase, classes.item, classes.itemCategory)}>
@@ -169,6 +169,7 @@ function Navigator(props) {
         ))}
       </List>
     </Drawer>
+    </>
   );
 }
 
