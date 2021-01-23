@@ -68,6 +68,9 @@ export default function Question(props) {
      setExamCompleted(examStatus);
      showAnswerStatus(questionAnswer[questionIndex]);
   }
+  const startNewExam = () => {
+    props.startNewExam();
+  }
 
 React.useEffect(() => {
   fetch("https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getQuestionSet?questionSet=" + props.questionSet)
@@ -158,7 +161,7 @@ React.useEffect(() => {
         ))}
         </RadioGroup>
         <FormHelperText>{helperText}</FormHelperText>
-        <DisplayStatus questionList = {questionDetails} currentIndex = {questionIndex} questionAnswer = {questionAnswer} setExamStatus = {populateExamCompleteStatus}/>
+        <DisplayStatus startNewExam = {startNewExam} questionList = {questionDetails} currentIndex = {questionIndex} questionAnswer = {questionAnswer} setExamStatus = {populateExamCompleteStatus}/>
       </FormControl>
 
     </form>

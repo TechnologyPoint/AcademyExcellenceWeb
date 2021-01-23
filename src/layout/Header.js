@@ -47,10 +47,6 @@ function Header(props) {
   const [selectedClass, setSelectedClass] = React.useState("");
   const loading = loaded && classList.length === 0;
 
-  const populateQuestionHeader = (value) => {
-    props.setHeaderStatus(true,value.classId,"1");
-  }
-
   function sleep(delay = 0) {
     return new Promise((resolve) => {
       setTimeout(resolve, delay);
@@ -110,51 +106,12 @@ function Header(props) {
       >
         <Toolbar>
           <Grid container alignItems="center" spacing={1}>
-            <Grid item xs>
+            <Grid item xs alignItems="center">
               <Typography color="inherit" variant="h5" component="h1">
-                West Bengal Board of Secondary Education
+                {props.selectedLeftNavigation}
               </Typography>
               <Typography color="inherit" variant="h6" component="h1">
-              <Grid item xs>
-                Class&nbsp;&nbsp;
-                  <FormControl variant="outlined" className={classes.formControl}>
-                  <Autocomplete
-                  id="subject-list"
-                  style={{ width: 200}}
-                  open={loaded}
-                  onOpen={() => {
-                    setLoaded(true);
-                  }}
-                  disableClearable
-                  onClose={() => {
-                    setLoaded(false);
-                  }}
-                  onChange={(event, newValue) => {
-                      populateQuestionHeader(newValue);
-                    }}
-                  getOptionSelected={(classValue, value) => {return classValue.classId === value.classId}}
-                  getOptionLabel={(classValue) => classValue.className}
-                  options={classList}
-                  loading={loading}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label=""
-                      variant="outlined"
-                      InputProps={{
-                        ...params.InputProps,
-                        endAdornment: (
-                          <React.Fragment>
-                            {loading ? <CircularProgress color="inherit" size={10} /> : null}
-                            {params.InputProps.endAdornment}
-                          </React.Fragment>
-                        ),
-                      }}
-                    />
-                  )}
-                />
-                </FormControl>
-                </Grid>
+
               </Typography>
             </Grid>
 

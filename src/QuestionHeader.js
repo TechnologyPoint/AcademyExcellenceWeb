@@ -31,20 +31,29 @@ const useStyles = makeStyles((theme) => ({
 export default function QuestionHeader(props) {
   const classes = useStyles();
   const [selectedSubject, setSelectedSubject] = React.useState('');
+  const [selectedClass, setSelectedClass] = React.useState('');
   const [subjectDetails,setSubjectDetails] = React.useState([]);
   const [subjectData,setSubjectData] = React.useState([]);
   const [loaded, setLoaded] = React.useState(false);
   const [chapterLoaded, setChapterLoaded] = React.useState(false);
   const [questionSetLoaded, setQuestionSetLoaded] = React.useState(false);
+  const [classListLoaded, setClassListLoaded] = React.useState(false);
   const [questionSet, setQuestionSet] = React.useState([]);
   const [subjectList, setSubjectList] = React.useState([]);
   const [chapterList, setChapterList] = React.useState([]);
+  const [classList, setClassList] = React.useState([]);
+  const [inputSubjectValue, setInputSubjectValue] = React.useState([]);
+  const [inputChapterValue, setInputChapterValue] = React.useState([]);
+  const [inputQuestionSetValue, setInputQuestionSetValue] = React.useState([]);
+
   const [selectedChapter, setSelectedChapter] = React.useState([]);
   const [selectedQuestionSet, setSelectedQuestionSet] = React.useState([]);
 
   const loading = loaded && subjectList.length === 0;
   const chapterLoading = chapterLoaded && chapterList.length === 0;
   const questionSetLoading = questionSetLoaded && questionSet != null && questionSet.length === 0;
+  const classListLoading = classListLoaded && classList != null && classList.length === 0;
+
   const [startedExam, setStartedExam] = React.useState(false);
   const [openConfirmation, setOpenConfirmation] = React.useState(false);
 
@@ -96,38 +105,102 @@ export default function QuestionHeader(props) {
    setSelectedQuestionSet(value.id);
   }
 
+  const loadClassList = () => {
+    setClassListLoaded(true);
+    (async () => {
+      if(classList != null && classList.length === 0){
+      const response = await fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getClassList?board=1');
+      await sleep(1e3);
+      const classListData = await response.json();
+      if (classListData.length > 0){
+        setClassList(classListData);
+        setClassListLoaded(true);
+      }
+    }})();
+  }
+const selectClass = (classValue) => {
+  setSelectedClass(classValue.classId);
+  setInputSubjectValue(null);
+  setInputChapterValue(null);
+  setInputQuestionSetValue(null);
+  populateSubject();
+}
+const populateSubject = () => {
+setLoaded(true);
+
+    (async () => {
+      if(subjectData.length === 0){
+      const response = await fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getAllClassDetails?board=1&class=' + selectedClass);
+
+      await sleep(1e3);
+      const subjectData = await response.json();
+        setSubjectDetails(subjectData);
+        setSubjectList(subjectData[0].subjectList);
+
+    }})();
+}
   React.useEffect(() => {
-  (async () => {
-    if(subjectData != null && subjectData.length === 0){
-    const response = await fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getAllClassDetails?board=' + props.selectedBoard + '&class=' + props.selectedClass);
-    await sleep(1e3);
-    const subjectData = await response.json();
-    if (subjectData.length > 0){
-      setSubjectDetails(subjectData);
-      setSubjectList(subjectData[0].subjectList);
-    }
-  }})();
-}, [loading]);
+  },[]);
+
 
   return (
     <div>
+    <FormControl variant="outlined" className={classes.formControl}>
+    <Autocomplete
+    id="subject-list"
+    style={{ width: 150}}
+    open={classListLoaded}
+    onOpen={() => {loadClassList()}}
+    disableClearable
+    onChange={(event, newValue) => {
+        selectClass(newValue);
+      }}
+    onClose={() => {
+      setClassListLoaded(false);
+    }}
+    disabled = {(startedExam && !props.retestStarted) ? true : false  }
+    getOptionSelected={(classValue, value) => {return classValue.classId === value.classId}}
+    getOptionLabel={(classValue) => classValue.className}
+    options={classList}
+    loading={classListLoading}
+    renderInput={(params) => (
+      <TextField
+        {...params}
+        label="Class"
+        variant="outlined"
+        InputProps={{
+          ...params.InputProps,
+          endAdornment: (
+            <React.Fragment>
+              {classListLoading ? <CircularProgress color="inherit" size={10} /> : null}
+              {params.InputProps.endAdornment}
+            </React.Fragment>
+          ),
+        }}
+      />
+    )}
+  />
+  </FormControl>
       <FormControl variant="outlined" className={classes.formControl}>
       <Autocomplete
       id="subject-list"
-      style={{ width: 200}}
+      style={{ width: 150}}
       open={loaded}
       onOpen={() => {
-        setLoaded(true);
+        populateSubject();
       }}
+      value={inputSubjectValue}
       disableClearable
-      disabled = {startedExam}
+      disabled = {(startedExam && !props.retestStarted) ? true : false  }
       onClose={() => {
         setLoaded(false);
       }}
       onChange={(event, newValue) => {
           populateChapter(newValue);
+          setInputChapterValue(null);
+          setInputSubjectValue(newValue);
         }}
-      getOptionSelected={(subject, value) => {return subject.id === value.id}}
+      getOptionSelected={(subject, value) => {setInputSubjectValue(value); return subject.id === value.id}}
       getOptionLabel={(subject) => subject.name}
       options={subjectList}
       loading={loading}
@@ -162,9 +235,12 @@ export default function QuestionHeader(props) {
       setChapterLoaded(false);
     }}
     disableClearable
-    disabled = {startedExam}
+    disabled = {(startedExam && !props.retestStarted) ? true : false  }
+    value = {inputChapterValue}
     onChange={(event, newValue) => {
         populateQuestionSet(newValue);
+        setInputQuestionSetValue(null);
+        setInputChapterValue(newValue);
       }}
     getOptionSelected={(chapter, value) => { return ((chapter.id === value.id) && selectedSubject != null)}}
     getOptionLabel={(chapter) => chapter.name}
@@ -201,9 +277,11 @@ export default function QuestionHeader(props) {
     setQuestionSetLoaded(false);
   }}
   disableClearable
-  disabled = {startedExam}
+  disabled = {(startedExam && !props.retestStarted) ? true : false  }
+  value = {inputQuestionSetValue}
   onChange={(event, newValue) => {
       selectQuestionSet(newValue);
+      setInputQuestionSetValue(newValue);
     }}
   getOptionSelected={(questionSet, value) => { return questionSet.id === value.id}}
   getOptionLabel={(questionSet) => questionSet.name}
@@ -227,7 +305,7 @@ export default function QuestionHeader(props) {
   )}
 />
 </FormControl>
-<Button variant="contained" color="primary" onClick = {displayConfirmation} disabled = {startedExam}>Start</Button>
+<Button variant="contained" color="primary" onClick = {displayConfirmation} disabled = {(startedExam && !props.retestStarted) ? true : false  }>Start</Button>
 <Dialog
     open={openConfirmation}
     onClose={closeConfirmation}

@@ -14,18 +14,51 @@ import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
 import PermMediaOutlinedIcon from '@material-ui/icons/PhotoSizeSelectActual';
 import TimerIcon from '@material-ui/icons/Timer';
 import SettingsIcon from '@material-ui/icons/Settings';
+import Link from '@material-ui/core/Link';
+
 
 const categories = [
   {
-    id: 'Academy Board',
-    children: [
+    categoryId: 'AcademyBoard',
+    categoryDescription: 'Academy Board',
+    subCategoryList: [
       {
-        id: 'WBBSE',
-        icon: <PeopleIcon />,
-        active: true,
+        subCategoryId: 'WBBSE',
+        subCategory:'WBBSE',
+        subCategoryDescription: 'West Bengal of Secondary Education',
+        active:true
       },
-      { id: 'CBSE', icon: <DnsRoundedIcon /> },
-      { id: 'ICSE', icon: <PermMediaOutlinedIcon /> },
+      {
+        subCategoryId: 'CBSE',
+        subCategory:'CBSE',
+        subCategoryDescription: 'Central Board of Secondary Education',
+      },
+      {
+        subCategoryId: 'ICSE',
+        subCategory:'ICSE',
+        subCategoryDescription: 'Indian Certificate of Secondary Education',
+      },
+    ],
+  },
+  {
+    categoryId: 'Olympiad',
+    categoryDescription: 'Olympiad',
+    subCategoryList: [
+      {
+        subCategoryId: 'Olympiad_Mathmatics',
+        subCategory:'Mathmatics',
+        subCategoryDescription: 'Olympiad - Mathmatics',
+      },
+      {
+        subCategoryId: 'Olympiad_Science',
+        subCategory:'Science',
+        subCategoryDescription: 'Olympiad - Science',
+      },
+      {
+        subCategoryId: 'Olympiad_Computer',
+        subCategory:'Computer',
+        subCategoryDescription: 'Olympiad - Computer',
+      },
     ],
   }
 ];
@@ -74,57 +107,63 @@ const styles = (theme) => ({
   },
 });
 
+
 function Navigator(props) {
   const { classes, ...other } = props;
+  const [activeLink, setActiveLink] = React.useState("WBBSE");
+  const setLeftNavigation = (parentId, childId) => {
+  for(var header in categories) {
+       if(categories[header].categoryId === parentId){
+         for(var child in categories[header].subCategoryList) {
+           if (categories[header].subCategoryList[child].subCategoryId === childId){
+             categories[header].subCategoryList[child].active = true;
+             setActiveLink(childId);
+             props.setNavigation(childId,categories[header].subCategoryList[child].subCategoryDescription);
 
+           }else {
+             categories[header].subCategoryList[child].active = false;
+           }
+       }
+    }
+  }
+}
   return (
     <Drawer variant="permanent" {...other}>
       <List disablePadding>
-        <ListItem
-          className={clsx(classes.firebase, classes.item, classes.itemCategory)}
-        >
+        <ListItem className={clsx(classes.firebase, classes.item, classes.itemCategory)}>
           Academy
         </ListItem>
-        <ListItem className={clsx(classes.item, classes.itemCategory)}>
-          <ListItemIcon className={classes.itemIcon}>
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText
-            classes={{
-              primary: classes.itemPrimary,
-            }}
-          >
-            Home
-          </ListItemText>
-        </ListItem>
-        {categories.map(({ id, children }) => (
-          <React.Fragment key={id}>
+        {categories.map(({ categoryId, categoryDescription,subCategoryList }) => (
+          <React.Fragment key={categoryId}>
             <ListItem className={classes.categoryHeader}>
               <ListItemText
                 classes={{
                   primary: classes.categoryHeaderPrimary,
                 }}
               >
-                {id}
+                {categoryDescription}
               </ListItemText>
             </ListItem>
-            {children.map(({ id: childId, icon, active }) => (
+            {subCategoryList.map(({ subCategoryId,subCategory,active }) => (
               <ListItem
-                key={childId}
+                key={subCategoryId}
                 button
                 className={clsx(classes.item, active && classes.itemActiveItem)}
               >
-
                 <ListItemText
                   classes={{
                     primary: classes.itemPrimary,
                   }}
                 >
-                  {childId}
+
+                <Link color="inherit"
+                    onClick={() => {
+                      setLeftNavigation(categoryId,subCategoryId);
+                }}>
+                {subCategory}</Link>
                 </ListItemText>
               </ListItem>
             ))}
-
             <Divider className={classes.divider} />
           </React.Fragment>
         ))}

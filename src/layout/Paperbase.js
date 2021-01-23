@@ -153,7 +153,7 @@ theme = {
   },
 };
 
-const drawerWidth = 256;
+const drawerWidth = 150;
 
 const styles = {
   root: {
@@ -187,16 +187,17 @@ function Paperbase(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [headerPopulated, setHeaderPopulated] = React.useState(false);
   const [selectedClass,setSelectedClass] = React.useState("");
-  const [selectedBoard,setSelectedBoard] = React.useState("");
+  const [selectedLeftNavigation,setSelectedLeftNavigation] = React.useState("WBBSE");
+  const [selectedLeftNavigationDescription,setSelectedLeftNavigationDescription] = React.useState("West Bengal of Secondary Education");
+
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const setHeaderStatus = (headerStatus,selectedClass,selectedBoard) => {
-    setHeaderPopulated(headerStatus);
-    setSelectedBoard(selectedBoard);
-    setSelectedClass(selectedClass);
+  const setNavigation = (navigation,navigationDescription) => {
+    setSelectedLeftNavigation(navigation);
+    setSelectedLeftNavigationDescription(navigationDescription);
   }
   return (
     <ThemeProvider theme={theme}>
@@ -204,13 +205,13 @@ function Paperbase(props) {
         <CssBaseline />
         <nav className={classes.drawer}>
           <Hidden smDown implementation="css">
-            <Navigator PaperProps={{ style: { width: drawerWidth } }} />
+            <Navigator PaperProps={{ style: { width: drawerWidth } }} setNavigation = {setNavigation}/>
           </Hidden>
         </nav>
         <div className={classes.app}>
-          <Header onDrawerToggle={handleDrawerToggle}  setHeaderStatus = {setHeaderStatus}/>
+          <Header onDrawerToggle={handleDrawerToggle}  selectedLeftNavigation = {selectedLeftNavigationDescription} />
           <main className={classes.main}>
-            <Content headerPopulated = {headerPopulated} selectedBoard = {selectedBoard} selectedClass = {selectedClass}/>
+            <Content headerPopulated = {headerPopulated} selectedBoard = {selectedLeftNavigation}  selectedClass = {selectedClass}/>
           </main>
           <footer className={classes.footer}>
             <Copyright />

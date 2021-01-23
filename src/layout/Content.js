@@ -37,19 +37,19 @@ function Content(props) {
   const { classes } = props;
   const [questionHeaderPopulated, setQuestionHeaderPopulated] = React.useState(false);
   const [questionSet, setQuestionSet] = React.useState(false);
+  const [retestStarted, setRetestStarted] = React.useState(false);
 
   const populateQuestion =  (changedValue,questionSet) => {
      setQuestionHeaderPopulated(changedValue);
      setQuestionSet(questionSet);
+     setRetestStarted(false);
   }
-  if(!props.headerPopulated) {
-return (
-  <Paper className={classes.paper}>
-  </Paper>
 
-)
+  const startNewExam = () => {
+    setQuestionHeaderPopulated(false);
+    setRetestStarted(true);
   }
-  else{
+
   if(questionHeaderPopulated){
   return (
     <Paper className={classes.paper}>
@@ -62,14 +62,14 @@ return (
         <Toolbar>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs>
-            <QuestionHeader onQuestionSetSelected = {populateQuestion} selectedBoard = {props.selectedBoard} selectedClass = {props.selectedClass}/>
+            <QuestionHeader retestStarted = {retestStarted} onQuestionSetSelected = {populateQuestion} selectedBoard = {props.selectedBoard} selectedClass = {props.selectedClass}/>
             </Grid>
         </Grid>
         </Toolbar>
       </AppBar>
         <div className={classes.contentWrapper}>
           <Typography color="textSecondary" align="center">
-             <Question questionSet = {questionSet}/>
+             <Question startNewExam = {startNewExam} questionSet = {questionSet}/>
           </Typography>
         </div>
     </Paper>
@@ -86,7 +86,7 @@ return (
         <Toolbar>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs>
-            <QuestionHeader  onQuestionSetSelected = {populateQuestion} selectedBoard = {props.selectedBoard} selectedClass = {props.selectedClass}/>
+            <QuestionHeader retestStarted = {retestStarted}  onQuestionSetSelected = {populateQuestion} selectedBoard = {props.selectedBoard} selectedClass = {props.selectedClass}/>
             </Grid>
           </Grid>
         </Toolbar>
@@ -97,7 +97,7 @@ return (
   );
 }
 }
-}
+
 Content.propTypes = {
   classes: PropTypes.object.isRequired,
 };

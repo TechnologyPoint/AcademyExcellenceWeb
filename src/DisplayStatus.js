@@ -40,8 +40,11 @@ export default function Question(props) {
   const [correctAnswer, setCorrectAnswer] = React.useState(0);
   const [wrongAnswer, setWrongAnswer] = React.useState(0);
   const [skipAnswer, setSkipAnswer] = React.useState(0);
-
   const [grade, setGrade] = React.useState("");
+
+  const startNewExam = () => {
+    props.startNewExam();
+  }
 
   const displayConfirmation = () => {
       setOpenConfirmation(true);
@@ -124,7 +127,7 @@ if(completedExam){
      </Table>
    </TableContainer>
    <form>
-     <Button variant="outlined" color="primary" className={classes.button} onClick={displayConfirmation}>Start New Test</Button>
+     <Button variant="outlined" color="primary" className={classes.button} onClick={startNewExam}>Start New Test</Button>
    </form>
    </div>
  );
