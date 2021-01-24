@@ -24,9 +24,10 @@ const categories = [
     categoryDescription: 'Academy Board',
     subCategoryList: [
       {
+
         subCategoryId: 'WBBSE',
         subCategory:'WBBSE',
-        subCategoryDescription: 'West Bengal of Secondary Education',
+        subCategoryDescription: 'West Bengal Board of Secondary Education',
         active:true
       },
       {
@@ -155,7 +156,6 @@ function Navigator(props) {
                     primary: classes.itemPrimary,
                   }}
                 >
-
                 <Link color="inherit"
                     onClick={() => {
                       setLeftNavigation(categoryId,subCategoryId);

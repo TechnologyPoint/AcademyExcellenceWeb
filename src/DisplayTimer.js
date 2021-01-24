@@ -36,7 +36,10 @@ export default function Question(props) {
   })
 
 
-  return (<p className="timer">
-Time: {minutes}:{seconds}
-</p>);
+  return (
+    <div>
+          <p>Total Question:{props.totalQuestion}</p>
+          <p className="timer">Time: {minutes}:{seconds}</p>
+
+    </div>);
 }

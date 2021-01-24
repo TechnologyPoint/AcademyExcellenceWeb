@@ -109,6 +109,9 @@ if(completedExam){
     <hr/>
       <Typography gutterBottom variant="body1">
           <b>Result</b>
+
+            <p>Please click on "Previous" and "Next" to check the answers</p>
+
         </Typography>
    <TableContainer component={Paper}>
      <Table className={classes.table} size="small" aria-label="a dense table">

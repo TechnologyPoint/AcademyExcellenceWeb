@@ -45,26 +45,45 @@ export default function QuestionHeader(props) {
   const [inputSubjectValue, setInputSubjectValue] = React.useState([]);
   const [inputChapterValue, setInputChapterValue] = React.useState([]);
   const [inputQuestionSetValue, setInputQuestionSetValue] = React.useState([]);
-
+  const [inputClassValue, setInputClassValue] = React.useState([]);
   const [selectedChapter, setSelectedChapter] = React.useState([]);
   const [selectedQuestionSet, setSelectedQuestionSet] = React.useState([]);
-
   const loading = loaded && subjectList.length === 0;
   const chapterLoading = chapterLoaded && chapterList.length === 0;
   const questionSetLoading = questionSetLoaded && questionSet != null && questionSet.length === 0;
   const classListLoading = classListLoaded && classList != null && classList.length === 0;
-
   const [startedExam, setStartedExam] = React.useState(false);
   const [openConfirmation, setOpenConfirmation] = React.useState(false);
+  const [previousBoard, setPreviousBoard] = React.useState("");
+  const [changeNavigation, setChangeNavigation] = React.useState(false);
+  const [readyToCancel, setReadyToCancel] = React.useState(true);
 
   const displayConfirmation = () => {
       setOpenConfirmation(true);
-    };
+  };
 
     const closeConfirmation = () => {
       setOpenConfirmation(false);
     };
 
+    const closeCancelExamnation = () => {
+      setChangeNavigation(false);
+      setReadyToCancel(false);
+    };
+
+    const cancelExamination = () =>{
+       setInputClassValue(null);
+       setClassListLoaded(false);
+       //setClassList({blankLis : []});
+       setChangeNavigation(false);
+       setReadyToCancel(true);
+       setPreviousBoard(props.selectedBoard);
+       setInputSubjectValue(null);
+       setInputChapterValue(null);
+       setInputQuestionSetValue(null);
+       setStartedExam(false);
+       props.onQuestionSetSelected(false,null);
+      };
 
   const confirmExamStart = () =>{
      setStartedExam(true);
@@ -106,32 +125,32 @@ export default function QuestionHeader(props) {
   }
 
   const loadClassList = () => {
-    setClassListLoaded(true);
     (async () => {
-      if(classList != null && classList.length === 0){
-      const response = await fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getClassList?board=1');
+      if(!classListLoaded){
+      const response = await fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getClassList?board=' + props.selectedBoard);
       await sleep(1e3);
       const classListData = await response.json();
       if (classListData.length > 0){
         setClassList(classListData);
         setClassListLoaded(true);
       }
-    }})();
+    }}
+  )();
+  setClassListLoaded(true);
+
   }
 const selectClass = (classValue) => {
   setSelectedClass(classValue.classId);
   setInputSubjectValue(null);
   setInputChapterValue(null);
   setInputQuestionSetValue(null);
-  populateSubject();
+  //populateSubject();
 }
 const populateSubject = () => {
-setLoaded(true);
-
+    setLoaded(true);
     (async () => {
       if(subjectData.length === 0){
-      const response = await fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getAllClassDetails?board=1&class=' + selectedClass);
-
+      const response = await fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getAllClassDetails?board=' + props.selectedBoard + '&class=' + selectedClass);
       await sleep(1e3);
       const subjectData = await response.json();
         setSubjectDetails(subjectData);
@@ -139,8 +158,14 @@ setLoaded(true);
 
     }})();
 }
+
   React.useEffect(() => {
-  },[]);
+    if(previousBoard === ""){
+      setPreviousBoard(props.selectedBoard);
+    }else if (previousBoard != "" && previousBoard !== props.selectedBoard) {
+      cancelExamination();
+    }
+  });
 
 
   return (
@@ -152,8 +177,10 @@ setLoaded(true);
     open={classListLoaded}
     onOpen={() => {loadClassList()}}
     disableClearable
+    value = {inputClassValue}
     onChange={(event, newValue) => {
         selectClass(newValue);
+        setInputClassValue(newValue);
       }}
     onClose={() => {
       setClassListLoaded(false);
@@ -314,14 +341,28 @@ setLoaded(true);
   >
     <DialogTitle id="alert-dialog-title">{"Confirmation - Submission"}</DialogTitle>
     <DialogContent>
-      <DialogContentText id="alert-dialog-description">Ary you sure to start the examination?</DialogContentText>
+      <DialogContentText id="alert-dialog-description">Are you sure to start the examination?</DialogContentText>
     </DialogContent>
     <DialogActions>
       <Button onClick={confirmExamStart} color="primary">Confirm</Button>
       <Button onClick={closeConfirmation} color="primary" autoFocus>Cancel</Button>
     </DialogActions>
   </Dialog>
-
+  <Dialog
+      open={changeNavigation}
+      onClose={closeCancelExamnation}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-nav-title">{"Confirmation"}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-nav-description">The examination is already in progress. Do you really want to cancel the examination ? </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={cancelExamination} color="primary">Confirm</Button>
+        <Button onClick={closeCancelExamnation} color="primary" autoFocus>Cancel</Button>
+      </DialogActions>
+    </Dialog>
     </div>
   );
 }

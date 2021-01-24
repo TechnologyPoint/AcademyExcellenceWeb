@@ -148,11 +148,11 @@ React.useEffect(() => {
      } else {
     return (
     <div className={classes.root}>
-    <DisplayTimer />
+    <DisplayTimer totalQuestion = {questionDetails.length}/>
     <LinearProgressWithLabel value={progress} />
     <form>
       <FormControl component="fieldset" error={error} className={classes.formControl}>
-        <FormLabel component="legend">{questionDetails[questionIndex].question}</FormLabel>
+        <FormLabel component="legend">Q{questionIndex + 1}. {questionDetails[questionIndex].question}</FormLabel>
         <RadioGroup  aria-label="quiz" name="quiz" value={questionAnswer[questionIndex]} onChange={selectAnswer}>
         {questionDetails[questionIndex].options.map(({ id, correct,option }) => (
         <React.Fragment key={id}>
@@ -165,7 +165,7 @@ React.useEffect(() => {
       </FormControl>
 
     </form>
-    <BottomNavigation value={value} onChange={prevNextQuestion} className={classes.root}>
+    <BottomNavigation value={value} onChange={prevNextQuestion} className={classes.root} showLabels>
         <BottomNavigationAction label="Previous" value="previous" icon={<ArrowBackIosIcon />}/>
         <BottomNavigationAction label="Next" value="next" icon={<ArrowForwardIosIcon />} />
       </BottomNavigation>

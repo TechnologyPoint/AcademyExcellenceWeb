@@ -188,7 +188,7 @@ function Paperbase(props) {
   const [headerPopulated, setHeaderPopulated] = React.useState(false);
   const [selectedClass,setSelectedClass] = React.useState("");
   const [selectedLeftNavigation,setSelectedLeftNavigation] = React.useState("WBBSE");
-  const [selectedLeftNavigationDescription,setSelectedLeftNavigationDescription] = React.useState("West Bengal of Secondary Education");
+  const [selectedLeftNavigationDescription,setSelectedLeftNavigationDescription] = React.useState("West Bengal Board of Secondary Education");
 
 
   const handleDrawerToggle = () => {
