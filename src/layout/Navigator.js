@@ -15,8 +15,7 @@ import PermMediaOutlinedIcon from '@material-ui/icons/PhotoSizeSelectActual';
 import TimerIcon from '@material-ui/icons/Timer';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Link from '@material-ui/core/Link';
-import Header from './Header';
-import App from '../App.css';
+
 
 const categories = [
   {
@@ -119,7 +118,7 @@ function Navigator(props) {
            if (categories[header].subCategoryList[child].subCategoryId === childId){
              categories[header].subCategoryList[child].active = true;
              setActiveLink(childId);
-             props.setNavigation(childId,categories[header].subCategoryList[child].subCategoryDescription);
+             props.setNavigation(childId,parentId,categories[header].subCategoryList[child].subCategoryDescription);
            }else {
              categories[header].subCategoryList[child].active = false;
            }

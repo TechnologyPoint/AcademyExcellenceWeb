@@ -38,6 +38,7 @@ function Content(props) {
   const [questionHeaderPopulated, setQuestionHeaderPopulated] = React.useState(false);
   const [questionSet, setQuestionSet] = React.useState(false);
   const [retestStarted, setRetestStarted] = React.useState(false);
+  //console.log(props.boardHeaderName);
 
   const populateQuestion =  (changedValue,questionSet) => {
      setQuestionHeaderPopulated(changedValue);
@@ -86,7 +87,7 @@ function Content(props) {
         <Toolbar>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs>
-            <QuestionHeader retestStarted = {retestStarted}  onQuestionSetSelected = {populateQuestion} selectedBoard = {props.selectedBoard} selectedClass = {props.selectedClass}/>
+            <QuestionHeader boardHeaderName={props.boardHeaderName} retestStarted = {retestStarted}  onQuestionSetSelected = {populateQuestion} selectedBoard = {props.selectedBoard} selectedClass = {console.log(props.selectedClass)}/>
             </Grid>
           </Grid>
         </Toolbar>

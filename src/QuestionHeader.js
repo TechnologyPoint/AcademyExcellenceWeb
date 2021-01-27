@@ -57,6 +57,7 @@ export default function QuestionHeader(props) {
   const [previousBoard, setPreviousBoard] = React.useState("");
   const [changeNavigation, setChangeNavigation] = React.useState(false);
   const [readyToCancel, setReadyToCancel] = React.useState(true);
+  const [chpterInactive,setChapterInactive] = React.useState(false);
 
   const displayConfirmation = () => {
       setOpenConfirmation(true);
@@ -92,6 +93,7 @@ export default function QuestionHeader(props) {
   }
 
   const populateChapter = (value) => {
+
    for(var k in subjectList) {
       if (subjectList[k].id === value.id){
           setChapterList(subjectList[k].chapterList);
@@ -131,6 +133,7 @@ export default function QuestionHeader(props) {
       await sleep(1e3);
       const classListData = await response.json();
       if (classListData.length > 0){
+        //console.log(classListData);
         setClassList(classListData);
         setClassListLoaded(true);
       }
@@ -153,9 +156,9 @@ const populateSubject = () => {
       const response = await fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getAllClassDetails?board=' + props.selectedBoard + '&class=' + selectedClass);
       await sleep(1e3);
       const subjectData = await response.json();
+      //console.log(subjectData);
         setSubjectDetails(subjectData);
-        setSubjectList(subjectData[0].subjectList);
-
+        //setSubjectList(subjectData[0].subjectList);
     }})();
 }
 
@@ -173,7 +176,7 @@ const populateSubject = () => {
     <FormControl variant="outlined" className={classes.formControl}>
     <Autocomplete
     id="subject-list"
-    style={{ width: 150}}
+    style={{width: 150}}
     open={classListLoaded}
     onOpen={() => {loadClassList()}}
     disableClearable
@@ -185,7 +188,7 @@ const populateSubject = () => {
     onClose={() => {
       setClassListLoaded(false);
     }}
-    disabled = {(startedExam && !props.retestStarted) ? true : false  }
+    disabled = {(startedExam && !props.retestStarted) ? true : false}
     getOptionSelected={(classValue, value) => {return classValue.classId === value.classId}}
     getOptionLabel={(classValue) => classValue.className}
     options={classList}
@@ -263,6 +266,7 @@ const populateSubject = () => {
     }}
     disableClearable
     disabled = {(startedExam && !props.retestStarted) ? true : false  }
+    hidden={(props.boardHeaderName === "Olympiad") ? true : false }
     value = {inputChapterValue}
     onChange={(event, newValue) => {
         populateQuestionSet(newValue);

@@ -189,14 +189,16 @@ function Paperbase(props) {
   const [selectedClass,setSelectedClass] = React.useState("");
   const [selectedLeftNavigation,setSelectedLeftNavigation] = React.useState("WBBSE");
   const [selectedLeftNavigationDescription,setSelectedLeftNavigationDescription] = React.useState("West Bengal Board of Secondary Education");
+  const [selectHeaderName, setSelectHeaderName] = React.useState('');
 
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const setNavigation = (navigation,navigationDescription) => {
+  const setNavigation = (navigation,headerName,navigationDescription) => {
     setSelectedLeftNavigation(navigation);
+    setSelectHeaderName(headerName);
     setSelectedLeftNavigationDescription(navigationDescription);
   }
   return (
@@ -211,7 +213,7 @@ function Paperbase(props) {
         <div className={classes.app}>
           <Header onDrawerToggle={handleDrawerToggle}  selectedLeftNavigation = {selectedLeftNavigationDescription} />
           <main className={classes.main}>
-            <Content headerPopulated = {headerPopulated} selectedBoard = {selectedLeftNavigation}  selectedClass = {selectedClass}/>
+            <Content boardHeaderName={selectHeaderName} headerPopulated = {headerPopulated} selectedBoard = {selectedLeftNavigation}  selectedClass = {selectedClass}/>
           </main>
           <footer className={classes.footer}>
             <Copyright />
