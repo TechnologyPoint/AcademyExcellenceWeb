@@ -153,7 +153,7 @@ theme = {
   },
 };
 
-const drawerWidth = 150;
+const drawerWidth = 256;
 
 const styles = {
   root: {
@@ -190,28 +190,37 @@ function Paperbase(props) {
   const [selectedLeftNavigation,setSelectedLeftNavigation] = React.useState("WBBSE");
   const [selectedLeftNavigationDescription,setSelectedLeftNavigationDescription] = React.useState("West Bengal Board of Secondary Education");
   const [selectHeaderName, setSelectHeaderName] = React.useState('');
-
+  const setNavigation = (navigation,headerName,navigationDescription) => {
+      setSelectedLeftNavigation(navigation);
+      setSelectHeaderName(headerName);
+      setSelectedLeftNavigationDescription(navigationDescription);
+      setMobileOpen(false);
+    }
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const setNavigation = (navigation,headerName,navigationDescription) => {
-    setSelectedLeftNavigation(navigation);
-    setSelectHeaderName(headerName);
-    setSelectedLeftNavigationDescription(navigationDescription);
-  }
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
         <CssBaseline />
         <nav className={classes.drawer}>
+          <Hidden smUp implementation="js">
+            <Navigator
+              PaperProps={{ style: { width: drawerWidth } }}
+              variant="temporary"
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              setNavigation = {setNavigation}
+            />
+          </Hidden>
           <Hidden smDown implementation="css">
             <Navigator PaperProps={{ style: { width: drawerWidth } }} setNavigation = {setNavigation}/>
           </Hidden>
         </nav>
         <div className={classes.app}>
-          <Header onDrawerToggle={handleDrawerToggle}  selectedLeftNavigation = {selectedLeftNavigationDescription} />
+          <Header onDrawerToggle={handleDrawerToggle} selectedLeftNavigation = {selectedLeftNavigationDescription} loggedInUser = {props.loggedInUser}/>
           <main className={classes.main}>
             <Content boardHeaderName={selectHeaderName} headerPopulated = {headerPopulated} selectedBoard = {selectedLeftNavigation}  selectedClass = {selectedClass}/>
           </main>

@@ -90,9 +90,7 @@ function Header(props) {
               </Tooltip>
             </Grid>
             <Grid item>
-              <IconButton color="inherit" className={classes.iconButtonAvatar}>
-                <Avatar src="/static/images/avatar/1.jpg" alt="My Avatar" />
-              </IconButton>
+              {props.loggedInUser}
             </Grid>
           </Grid>
         </Toolbar>
