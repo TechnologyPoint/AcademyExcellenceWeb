@@ -63,6 +63,8 @@ export default function Question(props) {
   const [questionDetails, setQuestionDetails] = React.useState([]);
   const [isLoaded, setIsLoaded] = React.useState(false);
   const [examCompleted,setExamCompleted] = React.useState(false);
+  const totalTime = (questionDetails.length) * 3;
+  console.log(questionDetails.length);
 
   const populateExamCompleteStatus =  (examStatus) => {
      setExamCompleted(examStatus);
@@ -148,7 +150,7 @@ React.useEffect(() => {
      } else {
     return (
     <div className={classes.root}>
-    <DisplayTimer totalQuestion = {questionDetails.length}/>
+    <DisplayTimer totalTime={totalTime} totalQuestion = {questionDetails.length}/>
     <LinearProgressWithLabel value={progress} />
     <form>
       <FormControl component="fieldset" error={error} className={classes.formControl}>

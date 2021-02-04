@@ -155,9 +155,9 @@ const populateSubject = () => {
       const response = await fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getAllClassDetails?board=' + props.selectedBoard + '&class=' + selectedClass);
       await sleep(1e3);
       const subjectData = await response.json();
-      //console.log(subjectData);
+      console.log(subjectData);
         setSubjectDetails(subjectData);
-        //setSubjectList(subjectData[0].subjectList);
+        setSubjectList(subjectData[0].subjectList);
     }})();
 }
 
