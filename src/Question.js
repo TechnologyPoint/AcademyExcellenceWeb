@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
+  activeClass:{
+    color:'green',
+  },
 }));
 
 function LinearProgressWithLabel(props) {
@@ -63,6 +66,8 @@ export default function Question(props) {
   const [questionDetails, setQuestionDetails] = React.useState([]);
   const [isLoaded, setIsLoaded] = React.useState(false);
   const [examCompleted,setExamCompleted] = React.useState(false);
+  const [add, setAdd] = React.useState('');
+
   const totalTime = (questionDetails.length) * 3;
   console.log(questionDetails.length);
 
@@ -136,6 +141,7 @@ React.useEffect(() => {
       if (value != null && value.startsWith("Y")) {
         setHelperText('Correct!');
         setError(false);
+        setAdd(classes.activeClass);
       } else if (value != null && value.startsWith("N")) {
         setHelperText('Sorry, wrong answer!');
         setError(true);
@@ -162,7 +168,7 @@ React.useEffect(() => {
           </React.Fragment>
         ))}
         </RadioGroup>
-        <FormHelperText>{helperText}</FormHelperText>
+        <FormHelperText className={add}>{helperText}</FormHelperText>
         <DisplayStatus startNewExam = {startNewExam} questionList = {questionDetails} currentIndex = {questionIndex} questionAnswer = {questionAnswer} setExamStatus = {populateExamCompleteStatus}/>
       </FormControl>
 
