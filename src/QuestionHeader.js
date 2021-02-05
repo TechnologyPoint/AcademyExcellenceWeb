@@ -74,6 +74,15 @@ export default function QuestionHeader(props) {
     const cancelExamination = () =>{
        setInputClassValue(null);
        setClassListLoaded(false);
+       setSelectedClass(null);
+       setSelectedSubject(null);
+       setSelectedChapter(null);
+       setSelectedQuestionSet(null);
+       setClassList([]);
+       setSubjectDetails([]);
+       setChapterList([]);
+       setQuestionSet([]);
+       setLoaded(false);
        //setClassList({blankLis : []});
        setChangeNavigation(false);
        setReadyToCancel(true);
@@ -120,6 +129,8 @@ export default function QuestionHeader(props) {
        }
     }
   }else{
+    //setQuestionSet(['']);
+    //setQuestionSetLoaded(false);
     populateSubject();
   }
     //setFormData({headerPopulated: true });
@@ -133,13 +144,13 @@ export default function QuestionHeader(props) {
     setStartedExam(false);
     (async () => {
       if(!classListLoaded){
+        setClassListLoaded(true);
       const response = await fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getClassList?board=' + props.selectedBoard);
       await sleep(1e3);
       const classListData = await response.json();
       if (classListData.length > 0){
         //console.log(classListData);
         setClassList(classListData);
-        setClassListLoaded(true);
       }
     }}
   )();
@@ -155,18 +166,17 @@ const selectClass = (classValue) => {
 const populateSubject = () => {
     setLoaded(true);
     (async () => {
-      if(subjectDetails.length === 0){
       const response = await fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getAllClassDetails?board=' + props.selectedBoard + '&class=' + selectedClass);
       await sleep(1e3);
       const subjectData = await response.json();
-      //console.log(subjectData);
+      console.log(subjectData);
         setSubjectDetails(subjectData);
         setSubjectList(subjectData[0].subjectList);
         if (props.boardHeaderName === "Olympiad") {
           setSelectedSubject(subjectData[0].subjectList[0].id);
           setQuestionSet(subjectData[0].subjectList[0].questionset);
         }
-    }})();
+    })();
 }
 
   React.useEffect(() => {
@@ -228,7 +238,7 @@ const populateSubject = () => {
       }}
       value={inputSubjectValue}
       disableClearable
-      disabled = {(startedExam && !props.retestStarted) ? true : false  }
+      disabled = {(selectedClass === null || selectedClass === '' || (startedExam && !props.retestStarted)) ? true : false  }
       hidden={(props.boardHeaderName === "Olympiad") ? true : false }
       onClose={() => {
         setLoaded(false);
@@ -273,7 +283,7 @@ const populateSubject = () => {
       setChapterLoaded(false);
     }}
     disableClearable
-    disabled = {(startedExam && !props.retestStarted) ? true : false  }
+    disabled = {(selectedSubject === null || selectedSubject === ''|| (startedExam && !props.retestStarted)) ? true : false  }
     hidden={(props.boardHeaderName === "Olympiad") ? true : false }
     value = {inputChapterValue}
     onChange={(event, newValue) => {
@@ -316,7 +326,7 @@ const populateSubject = () => {
     setQuestionSetLoaded(false);
   }}
   disableClearable
-  disabled = {(startedExam && !props.retestStarted) ? true : false  }
+  disabled = {((props.boardHeaderName === "Olympiad" && selectedClass === null || selectedClass === '') || (props.boardHeaderName !== "Olympiad" && selectedChapter === null || selectedChapter === '') || (startedExam && !props.retestStarted)) ? true : false  }
   value = {inputQuestionSetValue}
   onChange={(event, newValue) => {
       selectQuestionSet(newValue);

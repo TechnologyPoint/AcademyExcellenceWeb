@@ -4,8 +4,7 @@ import './App.css';
 
 export default function Question(props) {
   const [seconds, setSeconds] = React.useState(0)
-  const [minutes, setMinutes] = React.useState(30)
-
+  const [minutes, setMinutes] = React.useState(props.totalTime)
 
 
   function updateTime() {
