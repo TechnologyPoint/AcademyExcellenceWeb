@@ -63,7 +63,7 @@ function Content(props) {
         <Toolbar>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs>
-            <QuestionHeader retestStarted = {retestStarted} onQuestionSetSelected = {populateQuestion} selectedBoard = {props.selectedBoard} selectedClass = {props.selectedClass}/>
+            <QuestionHeader boardHeaderName={props.boardHeaderName} retestStarted = {retestStarted} onQuestionSetSelected = {populateQuestion} selectedBoard = {props.selectedBoard} selectedClass = {props.selectedClass}/>
             </Grid>
         </Grid>
         </Toolbar>

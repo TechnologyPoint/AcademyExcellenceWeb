@@ -131,17 +131,17 @@ React.useEffect(() => {
   };
 
   const showAnswerStatus = (value) => {
-    if (value === 'Y') {
-      setHelperText('Correct!');
-      setError(false);
-    } else if (value === 'N') {
-      setHelperText('Sorry, wrong answer!');
-      setError(true);
-    } else {
-      setHelperText('Please select an option.');
-      setError(true);
-    }
-  };
+      if (value != null && value.startsWith("Y")) {
+        setHelperText('Correct!');
+        setError(false);
+      } else if (value != null && value.startsWith("N")) {
+        setHelperText('Sorry, wrong answer!');
+        setError(true);
+      } else {
+        setHelperText('Please select an option.');
+        setError(true);
+      }
+   };
 
   if (!isLoaded) {
        return <div>Loading...</div>;
@@ -156,7 +156,7 @@ React.useEffect(() => {
         <RadioGroup  aria-label="quiz" name="quiz" value={questionAnswer[questionIndex]} onChange={selectAnswer}>
         {questionDetails[questionIndex].options.map(({ id, correct,option }) => (
         <React.Fragment key={id}>
-          <FormControlLabel value={correct} control={<Radio disabled = {examCompleted}/>} label={option} />
+          <FormControlLabel value={correct + id} control={<Radio disabled = {examCompleted}/>} label={option} />
           </React.Fragment>
         ))}
         </RadioGroup>

@@ -63,12 +63,11 @@ export default function Question(props) {
      var wrngAnswer = 0;
      var skippedAnswer = 0;
      for(var k in props.questionAnswer) {
-       if(props.questionAnswer[k] === 'Y'){
+       if(props.questionAnswer[k] != null && props.questionAnswer[k].startsWith("Y")) {
          crctAnswer = crctAnswer + 1;
          totalAnsweredQuestion = totalAnsweredQuestion +1;
-
-              }
-       if(props.questionAnswer[k] === 'N'){
+        }
+       if(props.questionAnswer[k] != null && props.questionAnswer[k].startsWith("N")){
          wrngAnswer = wrngAnswer + 1;
          totalAnsweredQuestion = totalAnsweredQuestion +1;
        }
@@ -80,8 +79,12 @@ export default function Question(props) {
      setWrongAnswer(wrngAnswer);
      setAnsweredQuestion(totalAnsweredQuestion);
      setSkipAnswer(skippedAnswer);
-     if (((crctAnswer/props.questionList.length)*100) > 70){
-       setGrade("Pass");
+     if (((crctAnswer/props.questionList.length)*100) > 90){
+       setGrade("Pass. Excellent!!!");
+     }if (((crctAnswer/props.questionList.length)*100) > 80){
+       setGrade("Pass.Very Good!!!");
+     }if (((crctAnswer/props.questionList.length)*100) > 80){
+       setGrade("Pass.Good!!!");
      }else {
        setGrade("Fail");
      }
@@ -146,6 +149,7 @@ if(completedExam){
      </Table>
    </TableContainer>
    <form>
+        <p>Please click on "Previous" and "Next" to check the answers</p>
      <Button variant="outlined" color="primary" className={classes.button} onClick={startNewExam}>Start New Test</Button>
    </form>
    </div>
