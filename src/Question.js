@@ -169,7 +169,7 @@ React.useEffect(() => {
         ))}
         </RadioGroup>
         <FormHelperText className={add}>{helperText}</FormHelperText>
-        <DisplayStatus startNewExam = {startNewExam} questionList = {questionDetails} currentIndex = {questionIndex} questionAnswer = {questionAnswer} setExamStatus = {populateExamCompleteStatus}/>
+        <DisplayStatus subject = {props.subject} chapter = {props.chapter} boardHeaderName={props.selectedBoard} loggedInUser = {props.loggedInUser} startNewExam = {startNewExam} questionList = {questionDetails} currentIndex = {questionIndex} questionAnswer = {questionAnswer} setExamStatus = {populateExamCompleteStatus}/>
       </FormControl>
 
     </form>

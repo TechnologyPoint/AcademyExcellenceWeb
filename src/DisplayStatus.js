@@ -88,18 +88,17 @@ export default function Question(props) {
      }else {
        setGrade("Fail");
      }
-
-
-     fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/submitExamResult/', {
+       fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/submitExamResult/', {
        method: 'POST',
        headers: {
        Accept: 'application/json',
                   'Content-Type': 'application/json'
                 },
        body: JSON.stringify({
-         board: 'WBBSE',
-         subject: 'Mathmatics',
-         chapter:"Addition",
+         user:props.loggedInUser,
+         board:props.boardHeaderName,
+         subject:props.subject,
+         chapter:props.chapter,
          questionList:props.questionList,
          questionAnswer:props.questionAnswer
        })

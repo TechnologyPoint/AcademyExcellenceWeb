@@ -38,12 +38,16 @@ function Content(props) {
   const [questionHeaderPopulated, setQuestionHeaderPopulated] = React.useState(false);
   const [questionSet, setQuestionSet] = React.useState(false);
   const [retestStarted, setRetestStarted] = React.useState(false);
+  const [subject, setSubject] = React.useState("");
+  const [chapter, setChapter] = React.useState("");
   //console.log(props.boardHeaderName);
 
-  const populateQuestion =  (changedValue,questionSet) => {
+  const populateQuestion =  (changedValue,questionSet,subject,chapter) => {
      setQuestionHeaderPopulated(changedValue);
      setQuestionSet(questionSet);
      setRetestStarted(false);
+     setSubject(subject);
+     setChapter(chapter);
   }
 
   const startNewExam = () => {
@@ -70,7 +74,7 @@ function Content(props) {
       </AppBar>
         <div className={classes.contentWrapper}>
           <Typography color="textSecondary" align="center">
-             <Question startNewExam = {startNewExam} questionSet = {questionSet}/>
+             <Question startNewExam = {startNewExam} questionSet = {questionSet} loggedInUser = {props.loggedInUser} boardHeaderName={props.boardHeaderName} subject = {subject} chapter = {chapter} selectedBoard = {props.selectedBoard}/>
           </Typography>
         </div>
     </Paper>
