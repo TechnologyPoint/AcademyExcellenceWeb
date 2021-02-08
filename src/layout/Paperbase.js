@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Navigator from './Navigator';
 import Content from './Content';
+import ManagedQuestionContent from '../managedQuestion/ManagedQuestionContent';
+
 import Header from './Header';
 
 function Copyright() {
@@ -190,6 +192,8 @@ function Paperbase(props) {
   const [selectedLeftNavigation,setSelectedLeftNavigation] = React.useState("WBBSE");
   const [selectedLeftNavigationDescription,setSelectedLeftNavigationDescription] = React.useState("West Bengal Board of Secondary Education");
   const [selectHeaderName, setSelectHeaderName] = React.useState('');
+  const [selectedTab, setSelectedTab] = React.useState("knowledgeTest");
+
   const setNavigation = (navigation,headerName,navigationDescription) => {
       setSelectedLeftNavigation(navigation);
       setSelectHeaderName(headerName);
@@ -197,10 +201,14 @@ function Paperbase(props) {
       setMobileOpen(false);
     }
 
+  const setTab = (tab) => {
+    setSelectedTab(tab);
+  }
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
+  if (selectedTab === "knowledgeTest"){
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
@@ -220,7 +228,7 @@ function Paperbase(props) {
           </Hidden>
         </nav>
         <div className={classes.app}>
-          <Header onDrawerToggle={handleDrawerToggle} selectedLeftNavigation = {selectedLeftNavigationDescription} loggedInUser = {props.loggedInUser}/>
+          <Header onDrawerToggle={handleDrawerToggle} selectedLeftNavigation = {selectedLeftNavigationDescription} loggedInUser = {props.loggedInUser} setTab = {setTab}/>
           <main className={classes.main}>
             <Content boardHeaderName={selectHeaderName} headerPopulated = {headerPopulated} selectedBoard = {selectedLeftNavigation}  selectedClass = {selectedClass} loggedInUser = {props.loggedInUser}/>
           </main>
@@ -231,6 +239,39 @@ function Paperbase(props) {
       </div>
     </ThemeProvider>
   );
+}
+if (selectedTab === "manageQuestion"){
+     return (
+       <ThemeProvider theme={theme}>
+         <div className={classes.root}>
+           <CssBaseline />
+           <nav className={classes.drawer}>
+             <Hidden smUp implementation="js">
+               <Navigator
+                 PaperProps={{ style: { width: drawerWidth } }}
+                 variant="temporary"
+                 open={mobileOpen}
+                 onClose={handleDrawerToggle}
+                 setNavigation = {setNavigation}
+               />
+             </Hidden>
+             <Hidden smDown implementation="css">
+               <Navigator PaperProps={{ style: { width: drawerWidth } }} setNavigation = {setNavigation}/>
+             </Hidden>
+           </nav>
+           <div className={classes.app}>
+             <Header onDrawerToggle={handleDrawerToggle} selectedLeftNavigation = {selectedLeftNavigationDescription} loggedInUser = {props.loggedInUser} setTab = {setTab}/>
+             <main className={classes.main}>
+             <ManagedQuestionContent boardHeaderName={selectHeaderName} headerPopulated = {headerPopulated} selectedBoard = {selectedLeftNavigation}  selectedClass = {selectedClass} loggedInUser = {props.loggedInUser}/>
+             </main>
+             <footer className={classes.footer}>
+               <Copyright />
+             </footer>
+           </div>
+         </div>
+       </ThemeProvider>
+     );
+}
 }
 
 Paperbase.propTypes = {

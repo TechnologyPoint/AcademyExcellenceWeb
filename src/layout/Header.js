@@ -45,6 +45,7 @@ function Header(props) {
   const [loaded, setLoaded] = React.useState(false);
   const [classList, setClassList] = React.useState([]);
   const [selectedClass, setSelectedClass] = React.useState("");
+  const [selectedTab, setSelectedTab] = React.useState("knowledgeTest");
   const loading = loaded && classList.length === 0;
 
   function sleep(delay = 0) {
@@ -63,6 +64,11 @@ function Header(props) {
     }
   }})();
 }, [loading]);
+
+const handleChange = (event, newValue) => {
+    setSelectedTab(newValue);
+    props.setTab(newValue);
+  };
 
   return (
     <React.Fragment>
@@ -129,9 +135,9 @@ function Header(props) {
         position="static"
         elevation={0}
       >
-        <Tabs value={0} textColor="inherit">
-          <Tab label="Knowledge Test" />
-          <Tab label="Study Material" />
+        <Tabs value={selectedTab} textColor="inherit" onChange={handleChange}>
+          <Tab label="Knowledge Test" value = "knowledgeTest"/>
+          <Tab label="Managed Question" value = "manageQuestion"/>
         </Tabs>
       </AppBar>
     </React.Fragment>
