@@ -44,10 +44,14 @@ function Content(props) {
 
   const populateQuestion =  (changedValue,questionSet,subject,chapter) => {
      setQuestionHeaderPopulated(changedValue);
+     console.log(changedValue);
      setQuestionSet(questionSet);
+     console.log(questionSet);
      setRetestStarted(false);
      setSubject(subject);
+     console.log(subject);
      setChapter(chapter);
+     console.log(chapter);
   }
 
   const startNewExam = () => {
@@ -56,6 +60,8 @@ function Content(props) {
   }
 
   if(questionHeaderPopulated){
+    console.log(questionHeaderPopulated);
+    console.log("hi");
   return (
     <Paper className={classes.paper}>
       <AppBar
@@ -80,6 +86,7 @@ function Content(props) {
     </Paper>
   );
 }else {
+  console.log("hello i am only!!!!");
   return (
     <Paper className={classes.paper}>
       <AppBar
@@ -91,7 +98,7 @@ function Content(props) {
         <Toolbar>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs>
-            <QuestionHeader boardHeaderName={props.boardHeaderName} retestStarted = {retestStarted}  onQuestionSetSelected = {populateQuestion} selectedBoard = {props.selectedBoard} selectedClass = {console.log(props.selectedClass)}/>
+            <QuestionHeader boardHeaderName={props.boardHeaderName} retestStarted = {retestStarted}  onQuestionSetSelected = {populateQuestion} selectedBoard = {props.selectedBoard} selectedClass = {props.selectedClass}/>
             </Grid>
           </Grid>
         </Toolbar>

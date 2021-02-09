@@ -41,6 +41,7 @@ export default function Question(props) {
   const [wrongAnswer, setWrongAnswer] = React.useState(0);
   const [skipAnswer, setSkipAnswer] = React.useState(0);
   const [grade, setGrade] = React.useState("");
+  console.log(props.questionList);
 
   const startNewExam = () => {
     props.startNewExam();

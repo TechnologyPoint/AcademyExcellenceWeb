@@ -70,6 +70,8 @@ export default function Question(props) {
 
   const totalTime = (questionDetails.length) * 3;
   console.log(questionDetails.length);
+  console.log(questionAnswer.length);
+  console.log(questionIndex);
 
   const populateExamCompleteStatus =  (examStatus) => {
      setExamCompleted(examStatus);

@@ -203,6 +203,7 @@ function Paperbase(props) {
 
   const setTab = (tab) => {
     setSelectedTab(tab);
+    console.log(tab);
   }
 
   const handleDrawerToggle = () => {

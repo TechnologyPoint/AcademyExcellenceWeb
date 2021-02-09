@@ -113,6 +113,7 @@ export default function QuestionHeader(props) {
   function displayQuestionSet() {
     if (selectedQuestionSet !== null && selectedQuestionSet !== ''){
       props.onQuestionSetSelected(true,selectedQuestionSet,inputSubjectValue.name,inputChapterValue.name);
+      //console.log(inputSubjectValue.name);
     }else{
       props.onQuestionSetSelected(false,selectedQuestionSet);
 
@@ -138,6 +139,7 @@ export default function QuestionHeader(props) {
 
   const selectQuestionSet = (value) => {
    setSelectedQuestionSet(value.id);
+   console.log(value.id);
   }
 
   const loadClassList = () => {
