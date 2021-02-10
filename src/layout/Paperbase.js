@@ -8,6 +8,7 @@ import Link from '@material-ui/core/Link';
 import Navigator from './Navigator';
 import Content from './Content';
 import ManagedQuestionContent from '../managedQuestion/ManagedQuestionContent';
+import ExamHistory from '../examhistory/ExamHistory';
 
 import Header from './Header';
 
@@ -272,6 +273,39 @@ if (selectedTab === "manageQuestion"){
        </ThemeProvider>
      );
 }
+if (selectedTab === "resultHistory"){
+     return (
+       <ThemeProvider theme={theme}>
+         <div className={classes.root}>
+           <CssBaseline />
+           <nav className={classes.drawer}>
+             <Hidden smUp implementation="js">
+               <Navigator
+                 PaperProps={{ style: { width: drawerWidth } }}
+                 variant="temporary"
+                 open={mobileOpen}
+                 onClose={handleDrawerToggle}
+                 setNavigation = {setNavigation}
+               />
+             </Hidden>
+             <Hidden smDown implementation="css">
+               <Navigator PaperProps={{ style: { width: drawerWidth } }} setNavigation = {setNavigation}/>
+             </Hidden>
+           </nav>
+           <div className={classes.app}>
+             <Header onDrawerToggle={handleDrawerToggle} selectedLeftNavigation = {selectedLeftNavigationDescription} loggedInUser = {props.loggedInUser} setTab = {setTab}/>
+             <main className={classes.main}>
+             <ExamHistory loggedInUser = {props.loggedInUser}/>
+             </main>
+             <footer className={classes.footer}>
+               <Copyright />
+             </footer>
+           </div>
+         </div>
+       </ThemeProvider>
+     );
+}
+
 }
 
 Paperbase.propTypes = {

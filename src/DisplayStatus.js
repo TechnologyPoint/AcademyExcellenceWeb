@@ -41,6 +41,7 @@ export default function Question(props) {
   const [wrongAnswer, setWrongAnswer] = React.useState(0);
   const [skipAnswer, setSkipAnswer] = React.useState(0);
   const [grade, setGrade] = React.useState("");
+  const [percentage, setPercentage] = React.useState();
 
   const startNewExam = () => {
     props.startNewExam();
@@ -79,6 +80,10 @@ export default function Question(props) {
      setWrongAnswer(wrngAnswer);
      setAnsweredQuestion(totalAnsweredQuestion);
      setSkipAnswer(skippedAnswer);
+     var number = (crctAnswer/props.questionList.length)*100;
+     setPercentage(Math.round((number + Number.EPSILON) * 100) / 100);
+
+
      if (((crctAnswer/props.questionList.length)*100) > 90){
        setGrade("Pass. Excellent!!!");
      }if (((crctAnswer/props.questionList.length)*100) > 80){
@@ -88,6 +93,7 @@ export default function Question(props) {
      }else {
        setGrade("Fail");
      }
+     alert()
        fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/submitExamResult/', {
        method: 'POST',
        headers: {
@@ -99,8 +105,10 @@ export default function Question(props) {
          board:props.boardHeaderName,
          subject:props.subject,
          chapter:props.chapter,
+         grade:Math.round((number + Number.EPSILON) * 100) / 100,
          questionList:props.questionList,
          questionAnswer:props.questionAnswer
+
        })
      });
     }
@@ -115,6 +123,7 @@ export default function Question(props) {
     createData('Question Skipped', skipAnswer),
     createData('Correct Answer', correctAnswer),
     createData('Wrong Answer', wrongAnswer),
+    createData('Percentage', percentage),
     createData("Grade", grade)
   ];
 

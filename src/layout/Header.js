@@ -138,7 +138,9 @@ const handleChange = (event, newValue) => {
         <Tabs value={selectedTab} textColor="inherit" onChange={handleChange}>
           <Tab label="Knowledge Test" value = "knowledgeTest"/>
           <Tab label="Managed Question" value = "manageQuestion"/>
+          <Tab label="Result History" value = "resultHistory"/>
         </Tabs>
+
       </AppBar>
     </React.Fragment>
   );
