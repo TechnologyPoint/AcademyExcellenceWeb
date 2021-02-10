@@ -48,6 +48,7 @@ export default function ManagedQuestionHeader(props) {
   const [selectedChapter, setSelectedChapter] = React.useState([]);
   const [selectedQuestionSet, setSelectedQuestionSet] = React.useState("");
   const [addQuestionSetValue , setAddedQuestionSetValue] = React.useState("");
+  const [inputValue , setInputValue] = React.useState('');
   const loading = loaded && subjectList.length === 0;
   const chapterLoading = chapterLoaded && chapterList.length === 0;
   const questionSetLoading = questionSetLoaded && questionSet != null && questionSet.length === 0;
@@ -58,6 +59,7 @@ export default function ManagedQuestionHeader(props) {
   const [changeNavigation, setChangeNavigation] = React.useState(false);
   const [readyToCancel, setReadyToCancel] = React.useState(true);
   const [chpterInactive,setChapterInactive] = React.useState(false);
+
 
   const displayConfirmation = () => {
       setOpenConfirmation(true);
@@ -79,6 +81,8 @@ export default function ManagedQuestionHeader(props) {
        setSelectedSubject(null);
        setSelectedChapter(null);
        setSelectedQuestionSet(null);
+       setAddedQuestionSetValue(null);
+       setInputValue('');
        setClassList([]);
        setSubjectDetails([]);
        setChapterList([]);
@@ -111,14 +115,21 @@ export default function ManagedQuestionHeader(props) {
    }
   };
 
+
+
+
   function displayQuestionSet() {
-    if (addQuestionSetValue !== null && addQuestionSetValue !== ''){
-      props.onQuestionSetSelected(true,selectedQuestionSet,inputSubjectValue.name,inputChapterValue.name);
+    if (addQuestionSetValue !== null && addQuestionSetValue !== '' && (props.boardHeaderName != "Olympiad")){
+      props.onQuestionSetSelected(true,addQuestionSetValue,inputSubjectValue.name,inputChapterValue.name);
+    }else if(addQuestionSetValue !== null && addQuestionSetValue !== '' ){
+      props.onQuestionSetSelected(true,addQuestionSetValue);
     }else{
-      props.onQuestionSetSelected(false,selectedQuestionSet);
+      props.onQuestionSetSelected(false,addQuestionSetValue);
 
     }
   }
+
+
 
   const populateQuestionSet = ( value) => {
     if (props.boardHeaderName != "Olympiad") {
@@ -137,8 +148,10 @@ export default function ManagedQuestionHeader(props) {
     //setFormData({headerPopulated: true });
   }
 
-  const addQuestionSet = (value) => {
-   setAddedQuestionSetValue(value);
+  const addQuestionSet = (event,value) => {
+   setAddedQuestionSetValue(event.target.value);
+   setInputValue(event.target.value);
+   //console.log(event.target.value);
   }
 
   const loadClassList = () => {
@@ -175,6 +188,8 @@ const populateSubject = () => {
         setSubjectList(subjectData[0].subjectList);
         if (props.boardHeaderName === "Olympiad") {
           setSelectedSubject(subjectData[0].subjectList[0].id);
+          setInputSubjectValue(subjectData[0].subjectList);
+          console.log(subjectData[0].subjectList);
           setQuestionSet(subjectData[0].subjectList[0].questionset);
         }
     })();
@@ -318,10 +333,9 @@ const populateSubject = () => {
   <TextField
     id="chapter-list"
     style={{ width: 200 }}
+    value = {inputValue}
     disabled = {((props.boardHeaderName === "Olympiad" && selectedClass === null || selectedClass === '') || (props.boardHeaderName !== "Olympiad" && selectedChapter === null || selectedChapter === '') || (startedExam && !props.retestStarted)) ? true : false  }
-    onChange={(event, newValue) => {
-        addQuestionSet(newValue);
-      }}
+    onChange={addQuestionSet}
     label="No.of Questions"
     variant="outlined"
   />

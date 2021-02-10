@@ -111,14 +111,15 @@ export default function QuestionHeader(props) {
   };
 
   function displayQuestionSet() {
-    if (selectedQuestionSet !== null && selectedQuestionSet !== ''){
+    if (selectedQuestionSet !== null && selectedQuestionSet !== '' && (props.boardHeaderName != "Olympiad")){
       props.onQuestionSetSelected(true,selectedQuestionSet,inputSubjectValue.name,inputChapterValue.name);
-      //console.log(inputSubjectValue.name);
+    }else if(selectedQuestionSet !== null && selectedQuestionSet !== '' ){
+      props.onQuestionSetSelected(true,selectedQuestionSet,inputSubjectValue.name);
     }else{
       props.onQuestionSetSelected(false,selectedQuestionSet);
 
     }
-  }
+}
 
   const populateQuestionSet = ( value) => {
     if (props.boardHeaderName != "Olympiad") {
@@ -176,6 +177,7 @@ const populateSubject = () => {
         setSubjectList(subjectData[0].subjectList);
         if (props.boardHeaderName === "Olympiad") {
           setSelectedSubject(subjectData[0].subjectList[0].id);
+          setInputSubjectValue(subjectData[0].subjectList);
           setQuestionSet(subjectData[0].subjectList[0].questionset);
         }
     })();
