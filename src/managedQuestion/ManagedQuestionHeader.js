@@ -47,6 +47,7 @@ export default function ManagedQuestionHeader(props) {
   const [inputClassValue, setInputClassValue] = React.useState([]);
   const [selectedChapter, setSelectedChapter] = React.useState([]);
   const [selectedQuestionSet, setSelectedQuestionSet] = React.useState("");
+  const [addQuestionSetValue , setAddedQuestionSetValue] = React.useState("");
   const loading = loaded && subjectList.length === 0;
   const chapterLoading = chapterLoaded && chapterList.length === 0;
   const questionSetLoading = questionSetLoaded && questionSet != null && questionSet.length === 0;
@@ -111,7 +112,7 @@ export default function ManagedQuestionHeader(props) {
   };
 
   function displayQuestionSet() {
-    if (selectedQuestionSet !== null && selectedQuestionSet !== ''){
+    if (addQuestionSetValue !== null && addQuestionSetValue !== ''){
       props.onQuestionSetSelected(true,selectedQuestionSet,inputSubjectValue.name,inputChapterValue.name);
     }else{
       props.onQuestionSetSelected(false,selectedQuestionSet);
@@ -136,8 +137,8 @@ export default function ManagedQuestionHeader(props) {
     //setFormData({headerPopulated: true });
   }
 
-  const selectQuestionSet = (value) => {
-   setSelectedQuestionSet(value.id);
+  const addQuestionSet = (value) => {
+   setAddedQuestionSetValue(value);
   }
 
   const loadClassList = () => {
@@ -313,7 +314,19 @@ const populateSubject = () => {
     )}
   />
   </FormControl>
-<Button variant="contained" color="primary" onClick = {displayConfirmation} disabled = {((selectedQuestionSet === '' || selectedQuestionSet === null) ||(startedExam)) }>Add Question Set</Button>
+  <FormControl variant="outlined" className={classes.formControl}>
+  <TextField
+    id="chapter-list"
+    style={{ width: 200 }}
+    disabled = {((props.boardHeaderName === "Olympiad" && selectedClass === null || selectedClass === '') || (props.boardHeaderName !== "Olympiad" && selectedChapter === null || selectedChapter === '') || (startedExam && !props.retestStarted)) ? true : false  }
+    onChange={(event, newValue) => {
+        addQuestionSet(newValue);
+      }}
+    label="No.of Questions"
+    variant="outlined"
+  />
+  </FormControl>
+<Button variant="contained" color="primary" onClick = {displayConfirmation} disabled = {((addQuestionSetValue === '' || addQuestionSetValue === null) ||(startedExam)) }>Add Question Set</Button>
 <Dialog
     open={openConfirmation}
     onClose={closeConfirmation}

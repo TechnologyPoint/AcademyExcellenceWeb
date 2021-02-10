@@ -7,6 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import QuestionHeader from '../managedQuestion/ManagedQuestionHeader.js';
+import ManagedQuestionAdd from '../managedQuestion/ManagedQuestionAdd.js';
 
 const styles = (theme) => ({
   paper: {
@@ -39,14 +40,17 @@ function ManagedQuestionContent(props) {
   const [retestStarted, setRetestStarted] = React.useState(false);
   const [subject, setSubject] = React.useState("");
   const [chapter, setChapter] = React.useState("");
+  const [getValue , setGetValue] = React.useState('');
   //console.log(props.boardHeaderName);
 
-  const populateQuestion =  (changedValue,questionSet,subject,chapter) => {
+
+  const populateQuestion =  (changedValue,questionSet,subject,chapter,send) => {
      setQuestionHeaderPopulated(changedValue);
      setQuestionSet(questionSet);
      setRetestStarted(false);
      setSubject(subject);
      setChapter(chapter);
+     setGetValue(send);
   }
 
   const startNewExam = () => {
@@ -66,13 +70,14 @@ function ManagedQuestionContent(props) {
         <Toolbar>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs>
-            <QuestionHeader boardHeaderName={props.boardHeaderName} retestStarted = {retestStarted} onQuestionSetSelected = {populateQuestion} selectedBoard = {props.selectedBoard} selectedClass = {props.selectedClass}/>
+            <QuestionHeader boardHeaderName={props.boardHeaderName} retestStarted = {retestStarted} onQuestionSetSelected = {populateQuestion} selectedBoard = {props.selectedBoard} selectedClass = {props.selectedClass} />
             </Grid>
         </Grid>
         </Toolbar>
       </AppBar>
         <div className={classes.contentWrapper}>
           <Typography color="textSecondary" align="center">
+          <ManagedQuestionAdd />
           </Typography>
         </div>
     </Paper>
