@@ -61,6 +61,7 @@ export default function ManagedQuestionHeader(props) {
   const [chpterInactive,setChapterInactive] = React.useState(false);
 
 
+
   const displayConfirmation = () => {
       setOpenConfirmation(true);
   };
@@ -149,8 +150,9 @@ export default function ManagedQuestionHeader(props) {
   }
 
   const addQuestionSet = (event,value) => {
-   setAddedQuestionSetValue(event.target.value);
-   setInputValue(event.target.value);
+   const valueAdd = event.target.value.replace(/\D/g, "");
+   setAddedQuestionSetValue(valueAdd);
+   setInputValue(valueAdd);
    //console.log(event.target.value);
   }
 
