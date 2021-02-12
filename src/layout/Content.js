@@ -61,7 +61,7 @@ function Content(props) {
 
   if(questionHeaderPopulated){
     console.log(questionHeaderPopulated);
-    console.log("hi");
+    console.log("hello");
   return (
     <Paper className={classes.paper}>
       <AppBar
@@ -86,7 +86,7 @@ function Content(props) {
     </Paper>
   );
 }else {
-  console.log("hello i am only!!!!");
+  console.log("hi i am here!");
   return (
     <Paper className={classes.paper}>
       <AppBar

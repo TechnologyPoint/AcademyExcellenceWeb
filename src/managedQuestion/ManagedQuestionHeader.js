@@ -10,6 +10,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
+import '../App.css';
 
 function sleep(delay = 0) {
   return new Promise((resolve) => {
@@ -48,7 +51,7 @@ export default function ManagedQuestionHeader(props) {
   const [selectedChapter, setSelectedChapter] = React.useState([]);
   const [selectedQuestionSet, setSelectedQuestionSet] = React.useState("");
   const [addQuestionSetValue , setAddedQuestionSetValue] = React.useState("");
-  const [inputValue , setInputValue] = React.useState('');
+  const [inputValue , setInputValue] = React.useState("");
   const loading = loaded && subjectList.length === 0;
   const chapterLoading = chapterLoaded && chapterList.length === 0;
   const questionSetLoading = questionSetLoaded && questionSet != null && questionSet.length === 0;
@@ -59,6 +62,11 @@ export default function ManagedQuestionHeader(props) {
   const [changeNavigation, setChangeNavigation] = React.useState(false);
   const [readyToCancel, setReadyToCancel] = React.useState(true);
   const [chpterInactive,setChapterInactive] = React.useState(false);
+  const options = [
+  '1', '2', '3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','20'
+];
+const defaultOption = options[0];
+
 
 
 
@@ -149,12 +157,17 @@ export default function ManagedQuestionHeader(props) {
     //setFormData({headerPopulated: true });
   }
 
-  const addQuestionSet = (event,value) => {
-   const valueAdd = event.target.value.replace(/\D/g, "");
-   setAddedQuestionSetValue(valueAdd);
-   setInputValue(valueAdd);
-   //console.log(event.target.value);
-  }
+  const addQuestionSet = (event) => {
+     console.log(event);
+     if(event.value >= 10){
+       const valueAdd = event.value;
+       setInputValue(valueAdd);
+       setAddedQuestionSetValue(valueAdd);
+     }else{
+       alert("Please Enter Minimum 10 Question");
+       setAddedQuestionSetValue("");
+     }
+}
 
   const loadClassList = () => {
     setStartedExam(false);
@@ -204,7 +217,6 @@ const populateSubject = () => {
       cancelExamination();
     }
   });
-
 
   return (
     <div>
@@ -332,15 +344,16 @@ const populateSubject = () => {
   />
   </FormControl>
   <FormControl variant="outlined" className={classes.formControl}>
-  <TextField
+  <Dropdown
+    options={options}
     id="chapter-list"
     style={{ width: 200 }}
-    value = {inputValue}
+    value={inputValue}
     disabled = {((props.boardHeaderName === "Olympiad" && selectedClass === null || selectedClass === '') || (props.boardHeaderName !== "Olympiad" && selectedChapter === null || selectedChapter === '') || (startedExam && !props.retestStarted)) ? true : false  }
     onChange={addQuestionSet}
-    label="No.of Questions"
     variant="outlined"
-  />
+    placeholder="No. Of Questions" />
+
   </FormControl>
 <Button variant="contained" color="primary" onClick = {displayConfirmation} disabled = {((addQuestionSetValue === '' || addQuestionSetValue === null) ||(startedExam)) }>Add Question Set</Button>
 <Dialog

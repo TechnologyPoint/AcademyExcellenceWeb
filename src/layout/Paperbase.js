@@ -211,6 +211,7 @@ function Paperbase(props) {
     setMobileOpen(!mobileOpen);
   };
   if (selectedTab === "knowledgeTest"){
+    console.log("know");
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
@@ -243,6 +244,7 @@ function Paperbase(props) {
   );
 }
 if (selectedTab === "manageQuestion"){
+  console.log("manage");
      return (
        <ThemeProvider theme={theme}>
          <div className={classes.root}>
@@ -275,6 +277,7 @@ if (selectedTab === "manageQuestion"){
      );
 }
 if (selectedTab === "resultHistory"){
+  console.log("result");
      return (
        <ThemeProvider theme={theme}>
          <div className={classes.root}>

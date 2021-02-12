@@ -117,7 +117,6 @@ export default function QuestionHeader(props) {
       props.onQuestionSetSelected(true,selectedQuestionSet,inputSubjectValue.name);
     }else{
       props.onQuestionSetSelected(false,selectedQuestionSet);
-
     }
 }
 
