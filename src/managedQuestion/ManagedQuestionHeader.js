@@ -161,6 +161,7 @@ const defaultOption = options[0];
      console.log(event);
      if(event.value >= 10){
        const valueAdd = event.value;
+       console.log(event.value);
        setInputValue(valueAdd);
        setAddedQuestionSetValue(valueAdd);
      }else{
@@ -352,7 +353,7 @@ const populateSubject = () => {
     disabled = {((props.boardHeaderName === "Olympiad" && selectedClass === null || selectedClass === '') || (props.boardHeaderName !== "Olympiad" && selectedChapter === null || selectedChapter === '') || (startedExam && !props.retestStarted)) ? true : false  }
     onChange={addQuestionSet}
     variant="outlined"
-    placeholder="No. Of Questions" />
+    placeholder="Questions Number" />
 
   </FormControl>
 <Button variant="contained" color="primary" onClick = {displayConfirmation} disabled = {((addQuestionSetValue === '' || addQuestionSetValue === null) ||(startedExam)) }>Add Question Set</Button>
