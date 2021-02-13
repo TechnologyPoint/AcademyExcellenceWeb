@@ -65,7 +65,7 @@ export default function ManagedQuestionHeader(props) {
   const options = [
   '1', '2', '3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','20'
 ];
-const defaultOption = options[0];
+
 
 
 
@@ -133,8 +133,7 @@ const defaultOption = options[0];
     }else if(addQuestionSetValue !== null && addQuestionSetValue !== '' ){
       props.onQuestionSetSelected(true,addQuestionSetValue);
     }else{
-      props.onQuestionSetSelected(false,addQuestionSetValue);
-
+      props.onQuestionSetSelected(false,addQuestionSetValue)
     }
   }
 
@@ -165,8 +164,9 @@ const defaultOption = options[0];
        setInputValue(valueAdd);
        setAddedQuestionSetValue(valueAdd);
      }else{
-       alert("Please Enter Minimum 10 Question");
+       alert("Please Enter Minimum Question Number 10");
        setAddedQuestionSetValue("");
+       setInputValue("Enter valid number");
      }
 }
 
