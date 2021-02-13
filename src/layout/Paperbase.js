@@ -9,7 +9,6 @@ import Navigator from './Navigator';
 import Content from './Content';
 import ManagedQuestionContent from '../managedQuestion/ManagedQuestionContent';
 import ExamHistory from '../examhistory/ExamHistory';
-
 import Header from './Header';
 
 function Copyright() {

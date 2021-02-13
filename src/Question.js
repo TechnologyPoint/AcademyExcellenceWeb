@@ -69,13 +69,7 @@ export default function Question(props) {
   const [add, setAdd] = React.useState('');
 
   const totalTime = (questionDetails.length) * 3;
-  console.log(props.questionSet);
-  console.log(questionDetails.length);
-  console.log(questionAnswer.length);
-  console.log(questionIndex);
-  console.log(questionAnswer);
-  console.log(questionAnswer[questionIndex]);
-  console.log(questionDetails[questionIndex]);
+  
 
 
   const populateExamCompleteStatus =  (examStatus) => {

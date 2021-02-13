@@ -11,7 +11,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
 import '../App.css';
 
 function sleep(delay = 0) {
@@ -156,18 +155,16 @@ export default function ManagedQuestionHeader(props) {
     //setFormData({headerPopulated: true });
   }
 
-  const addQuestionSet = (event) => {
-     console.log(event);
-     if(event.value >= 10){
-       const valueAdd = event.value;
-       console.log(event.value);
-       setInputValue(valueAdd);
-       setAddedQuestionSetValue(valueAdd);
-     }else{
-       alert("Please Enter Minimum Question Number 10");
+  const addQuestionSet = (value) => {
+     console.log(value);
+     if(value >= 10){
+       setInputValue(value);
+       setAddedQuestionSetValue(value);
+    }else{
+      alert("Please Enter Minimum Question Number 10");
        setAddedQuestionSetValue("");
-     }
-}
+    }
+  }
 
   const loadClassList = () => {
     setStartedExam(false);
@@ -344,15 +341,18 @@ const populateSubject = () => {
   />
   </FormControl>
   <FormControl variant="outlined" className={classes.formControl}>
-  <Dropdown
-    options={options}
-    id="chapter-list"
-    style={{ width: 200 }}
-    value={inputValue}
-    disabled = {((props.boardHeaderName === "Olympiad" && selectedClass === null || selectedClass === '') || (props.boardHeaderName !== "Olympiad" && selectedChapter === null || selectedChapter === '') || (startedExam && !props.retestStarted)) ? true : false  }
-    onChange={addQuestionSet}
-    variant="outlined"
-    placeholder="Questions Number" />
+    <Autocomplete
+     id="chapter-list"
+     value={inputValue}
+     disabled = {((props.boardHeaderName === "Olympiad" && selectedClass === null || selectedClass === '') || (props.boardHeaderName !== "Olympiad" && selectedChapter === null || selectedChapter === '') || (startedExam && !props.retestStarted)) ? true : false  }
+     onChange={(event, newValue) => {
+       addQuestionSet(newValue)
+       setInputValue(newValue);
+     }}
+     options={options}
+     style={{ width: 200 }}
+     renderInput={(params) => <TextField {...params} label="Questions Number" variant="outlined" />}
+     />
 
   </FormControl>
 <Button variant="contained" color="primary" onClick = {displayConfirmation} disabled = {((addQuestionSetValue === '' || addQuestionSetValue === null) ||(startedExam)) }>Add Question Set</Button>

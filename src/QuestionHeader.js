@@ -58,6 +58,11 @@ export default function QuestionHeader(props) {
   const [readyToCancel, setReadyToCancel] = React.useState(true);
   const [chpterInactive,setChapterInactive] = React.useState(false);
 
+
+
+  console.log(startedExam);
+  console.log(!props.retestStarted);
+
   const displayConfirmation = () => {
       setOpenConfirmation(true);
   };
@@ -151,7 +156,7 @@ export default function QuestionHeader(props) {
       await sleep(1e3);
       const classListData = await response.json();
       if (classListData.length > 0){
-        //console.log(classListData);
+        console.log(classListData);
         setClassList(classListData);
       }
     }}
@@ -159,7 +164,9 @@ export default function QuestionHeader(props) {
   setClassListLoaded(true);
 
   }
+
 const selectClass = (classValue) => {
+  console.log(classValue);
   setSelectedClass(classValue.classId);
   setInputSubjectValue(null);
   setInputChapterValue(null);
