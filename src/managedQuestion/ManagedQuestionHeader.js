@@ -163,10 +163,9 @@ export default function ManagedQuestionHeader(props) {
        console.log(event.value);
        setInputValue(valueAdd);
        setAddedQuestionSetValue(valueAdd);
-     }else{
+     }else if(event.value < 10){
        alert("Please Enter Minimum Question Number 10");
        setAddedQuestionSetValue("");
-       setInputValue("Enter valid number");
      }
 }
 
