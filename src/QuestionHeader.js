@@ -166,7 +166,7 @@ export default function QuestionHeader(props) {
   }
 
 const selectClass = (classValue) => {
-  console.log(classValue);
+  console.log(classValue.classId);
   setSelectedClass(classValue.classId);
   setInputSubjectValue(null);
   setInputChapterValue(null);
@@ -336,7 +336,7 @@ const populateSubject = () => {
     setQuestionSetLoaded(false);
   }}
   disableClearable
-  disabled = {((props.boardHeaderName === "Olympiad" && selectedClass === null || selectedClass === '') || (props.boardHeaderName !== "Olympiad" && selectedChapter === null || selectedChapter === '') || (startedExam && !props.retestStarted)) ? true : false  }
+  disabled = {((props.boardHeaderName === "Olympiad" && selectedClass === null || selectedClass === '') || (selectedChapter === null || selectedChapter === '') || (startedExam && !props.retestStarted)) ? true : false  }
   value = {inputQuestionSetValue}
   onChange={(event, newValue) => {
       selectQuestionSet(newValue);

@@ -87,6 +87,7 @@ function Content(props) {
   );
 }else {
   console.log("hi i am here!");
+  console.log(questionHeaderPopulated);
   return (
     <Paper className={classes.paper}>
       <AppBar

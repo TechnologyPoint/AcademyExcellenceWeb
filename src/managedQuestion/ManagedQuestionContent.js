@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import QuestionHeader from '../managedQuestion/ManagedQuestionHeader.js';
+import ManagedQuestionHeader from '../managedQuestion/ManagedQuestionHeader.js';
 import ManagedQuestionAdd from '../managedQuestion/ManagedQuestionAdd.js';
 
 const styles = (theme) => ({
@@ -70,14 +70,14 @@ function ManagedQuestionContent(props) {
         <Toolbar>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs>
-            <QuestionHeader boardHeaderName={props.boardHeaderName} retestStarted = {retestStarted} onQuestionSetSelected = {populateQuestion} selectedBoard = {props.selectedBoard} selectedClass = {props.selectedClass} />
+            <ManagedQuestionHeader sendData={props.inputValue} boardHeaderName={props.boardHeaderName} retestStarted = {retestStarted} onQuestionSetSelected = {populateQuestion} selectedBoard = {props.selectedBoard} selectedClass = {props.selectedClass} />
             </Grid>
         </Grid>
         </Toolbar>
       </AppBar>
         <div className={classes.contentWrapper}>
           <Typography color="textSecondary" align="center">
-          <ManagedQuestionAdd />
+          <ManagedQuestionAdd sendData={getValue}/>
           </Typography>
         </div>
     </Paper>
@@ -94,7 +94,7 @@ function ManagedQuestionContent(props) {
         <Toolbar>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs>
-            <QuestionHeader boardHeaderName={props.boardHeaderName} retestStarted = {retestStarted}  onQuestionSetSelected = {populateQuestion} selectedBoard = {props.selectedBoard} selectedClass = {console.log(props.selectedClass)}/>
+            <ManagedQuestionHeader boardHeaderName={props.boardHeaderName} retestStarted = {retestStarted}  onQuestionSetSelected = {populateQuestion} selectedBoard = {props.selectedBoard} selectedClass = {console.log(props.selectedClass)}/>
             </Grid>
           </Grid>
         </Toolbar>

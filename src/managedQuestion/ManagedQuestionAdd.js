@@ -1,60 +1,42 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormLabel from '@material-ui/core/FormLabel';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import PropTypes from 'prop-types';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dropdown from 'react-dropdown';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    margin: theme.spacing(3),
+    margin: theme.spacing(1),
+    padding:'15px',
   },
-  button: {
-    margin: theme.spacing(1, 1, 0, 0),
-  },
-  root: {
-    width: '100%',
-  },
-  activeClass:{
-    color:'green',
+  selectEmpty: {
+    marginTop: theme.spacing(2),
   },
 }));
 
-function LinearProgressWithLabel(props) {
-  return (
-    <Box display="flex" alignItems="center">
-      <Box width="100%" mr={1}>
-        <LinearProgress variant="determinate" {...props} />
-      </Box>
-      <Box minWidth={35}>
-        <Typography variant="body2" color="textSecondary">{`${Math.round(
-          props.value,
-        )}%`}</Typography>
-      </Box>
-    </Box>
-  );
-}
-LinearProgressWithLabel.propTypes = {
-  /**
-   * The value of the progress indicator for the determinate and buffer variants.
-   * Value between 0 and 100.
-   */
-  value: PropTypes.number.isRequired,
-};
+
 
 const ManagedQuestionAdd = (props) =>{
+  const classes = useStyles();
   return(
-    <div>Welcome This Page</div>
+    <div>
+    <div>Total Questions : {props.sendData}</div>
+    <FormControl className={classes.formControl} noValidate autoComplete="off">
+      <TextField
+      id="outlined-basic"
+      style={{width:500}}
+      label="Enter question"
+      variant="outlined" />
+    </FormControl>
+    </div>
   )
 }
 

@@ -128,7 +128,7 @@ export default function ManagedQuestionHeader(props) {
 
   function displayQuestionSet() {
     if (addQuestionSetValue !== null && addQuestionSetValue !== '' && (props.boardHeaderName != "Olympiad")){
-      props.onQuestionSetSelected(true,addQuestionSetValue,inputSubjectValue.name,inputChapterValue.name);
+      props.onQuestionSetSelected(true,addQuestionSetValue,inputSubjectValue.name,inputChapterValue.name,inputValue);
     }else if(addQuestionSetValue !== null && addQuestionSetValue !== '' ){
       props.onQuestionSetSelected(true,addQuestionSetValue);
     }else{
