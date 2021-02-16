@@ -112,7 +112,7 @@ export default function QuestionHeader(props) {
 
   function displayQuestionSet() {
     if (selectedQuestionSet !== null && selectedQuestionSet !== ''){
-      props.onQuestionSetSelected(true,selectedQuestionSet,inputSubjectValue.name,inputChapterValue.name);
+      props.onQuestionSetSelected(true,selectedQuestionSet,inputSubjectValue.name,inputChapterValue.name,inputQuestionSetValue.name);
       //console.log(inputSubjectValue.name);
     }else{
       props.onQuestionSetSelected(false,selectedQuestionSet);

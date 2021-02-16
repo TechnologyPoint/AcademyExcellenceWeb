@@ -14,8 +14,6 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import DisplayStatus from './DisplayStatus.js';
-import DisplayTimer from './DisplayTimer.js';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,27 +31,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function LinearProgressWithLabel(props) {
-  return (
-    <Box display="flex" alignItems="center">
-      <Box width="100%" mr={1}>
-        <LinearProgress variant="determinate" {...props} />
-      </Box>
-      <Box minWidth={35}>
-        <Typography variant="body2" color="textSecondary">{`${Math.round(
-          props.value,
-        )}%`}</Typography>
-      </Box>
-    </Box>
-  );
-}
-LinearProgressWithLabel.propTypes = {
-  /**
-   * The value of the progress indicator for the determinate and buffer variants.
-   * Value between 0 and 100.
-   */
-  value: PropTypes.number.isRequired,
-};
 
 export default function Question(props) {
   const [progress, setProgress] = React.useState(0);
@@ -62,13 +39,11 @@ export default function Question(props) {
   const [error, setError] = React.useState(false);
   const [helperText, setHelperText] = React.useState('Choose wisely');
   const [questionIndex, setQuestionIndex] = React.useState(0);
-  const [questionAnswer,setQuestionAnswer] = React.useState(['']);
-  const [questionDetails, setQuestionDetails] = React.useState([]);
-  const [isLoaded, setIsLoaded] = React.useState(false);
+  const [questionAnswer,setQuestionAnswer] = React.useState(props.questionAnswer);
+  const [questionDetails, setQuestionDetails] = React.useState(props.questionList);
+  const [isLoaded, setIsLoaded] = React.useState(true);
   const [examCompleted,setExamCompleted] = React.useState(false);
   const [add, setAdd] = React.useState('');
-
-  const totalTime = 30;//(questionDetails.length) * 3;
 
   const populateExamCompleteStatus =  (examStatus) => {
      setExamCompleted(examStatus);
@@ -79,23 +54,7 @@ export default function Question(props) {
   }
 
 React.useEffect(() => {
-  fetch("https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getQuestionSet?questionSet=" + props.questionSet)
-    .then(res => res.json())
-    .then(
-      (result) => {
-        setQuestionDetails(result.questionList);
-        setIsLoaded(true);
-      },
-      // Note: it's important to handle errors here
-      // instead of a catch() block so that we don't swallow
-      // exceptions from actual bugs in components.
-      (error) => {
-        setIsLoaded(false);
-        alert(error);
-        alert("https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getQuestionSet?questionSet=" + props.questionSet);
-      }
-    )
-},[])
+})
 
 
   const prevNextQuestion = (event, newValue) => {
@@ -115,9 +74,8 @@ React.useEffect(() => {
       if (questionAnswer.length === questionIndex) {
         questionAnswer[questionIndex] = '';
       }
-      if(examCompleted){
       showAnswerStatus(questionAnswer[curIndex]);
-    }
+
     };
 
   const selectAnswer = (event) => {
@@ -138,14 +96,14 @@ React.useEffect(() => {
 
   const showAnswerStatus = (value) => {
       if (value != null && value.startsWith("Y")) {
-        setHelperText('Correct!');
+        setHelperText('Correct.');
         setError(false);
         setAdd(classes.activeClass);
       } else if (value != null && value.startsWith("N")) {
-        setHelperText('Sorry, wrong answer!');
+        setHelperText('Wrong.');
         setError(true);
       } else {
-        setHelperText('Please select an option.');
+        setHelperText('Skipped.');
         setError(true);
       }
    };
@@ -155,20 +113,18 @@ React.useEffect(() => {
      } else {
     return (
     <div className={classes.root}>
-    <DisplayTimer totalTime={totalTime} totalQuestion = {questionDetails.length}/>
-    <LinearProgressWithLabel value={progress} />
     <form>
+    <p>Total Question:{questionDetails.length}</p>
       <FormControl component="fieldset" error={error} className={classes.formControl}>
         <FormLabel component="legend">Q{questionIndex + 1}. {questionDetails[questionIndex].question}</FormLabel>
         <RadioGroup  aria-label="quiz" name="quiz" value={questionAnswer[questionIndex]} onChange={selectAnswer}>
         {questionDetails[questionIndex].options.map(({ id, correct,option }) => (
         <React.Fragment key={id}>
-          <FormControlLabel value={correct + id} control={<Radio disabled = {examCompleted}/>} label={option} />
+          <FormControlLabel value={correct + id} control={<Radio disabled = {true}/>} label={option} />
           </React.Fragment>
         ))}
         </RadioGroup>
         <FormHelperText className={add}>{helperText}</FormHelperText>
-        <DisplayStatus subject = {props.subject} chapter = {props.chapter} boardHeaderName={props.selectedBoard} loggedInUser = {props.loggedInUser} startNewExam = {startNewExam} questionList = {questionDetails} currentIndex = {questionIndex} questionAnswer = {questionAnswer} setExamStatus = {populateExamCompleteStatus} questionSetDisplay = {props.questionSetDisplay}/>
       </FormControl>
 
     </form>
