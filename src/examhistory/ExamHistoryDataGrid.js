@@ -18,13 +18,6 @@ const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
-  root: {
-    '& .resultHeader': {
-      backgroundColor: 'gray',
-      fontWeight: 'strong',
-
-    }
-  }
 });
 
 
@@ -56,24 +49,16 @@ const styles = (theme) => ({
   table: {
     minWidth: 650,
   },
-  resultHeader:{
-    backgroundColor: 'rgba(255, 7, 0, 0.55)',
-  }
 });
-
-
 
 function ExamHistory(props) {
   const { classes } = props;
-  const styleClasses = useStyles();
-
   const [examHistory, setExamHistory] = React.useState([]);
   const [examHistoryChecked, setExamHistoryChecked] = React.useState(false);
   const [objectKey, setObjectKey] = React.useState("");
   const [examResult1, setExamResult1] = React.useState(
     {"user":"sujit.tah@gmail.com","board":"WBBSE","subject":"Mathmatics","chapter":"Addition","questionList":[{"id":"1","question":"You have 15 chocolates. Your father has given 20 more chocolates. How many total chocolates you will have?","options":[{"id":"1","option":"35","correct":"Y"},{"id":"2","option":"36","correct":"N"}]},{"id":"2","question":"You have 16 balls and your sister has given another 12 balls. How many total balls you will have ?","options":[{"id":"1","option":"27","correct":"N"},{"id":"2","option":"28","correct":"Y"}]},{"id":"3","question":"You have 10 flowers. Your sister has taken 8 flowers from you. Your brother has given 12 flowers more. How many total flowers you will have?","options":[{"id":"1","option":"15","correct":"N"},{"id":"2","option":"14","correct":"Y"}]},{"id":"4","question":"You have 5 bats. Your father has given another 4 bats to you. How many total bats you will have?","options":[{"id":"1","option":"9","correct":"Y"},{"id":"2","option":"8","correct":"N"}]},{"id":"5","question":"You have 25 flowers. Your sister has taken 18 flowers from you. Your brother has given 12 flowers more. How many total flowers you will have?","options":[{"id":"1","option":"19","correct":"Y"},{"id":"2","option":"18","correct":"N"}]},{"id":"6","question":"You have 35 chocolates. Your father has given 20 more chocolates. How many total chocolates you will have?","options":[{"id":"1","option":"54","correct":"N"},{"id":"2","option":"55","correct":"Y"}]},{"id":"7","question":"You have 25 flowers. Your sister has given 18 flowers to you. Your brother has given 12 flowers more. How many total flowers you will have?","options":[{"id":"1","option":"54","correct":"N"},{"id":"2","option":"55","correct":"Y"}]},{"id":"8","question":"You have 50 flowers. Your sister has given 20 flowers to you. Your brother has given 30 flowers more. How many total flowers you will have?","options":[{"id":"1","option":"90","correct":"N"},{"id":"2","option":"100","correct":"Y"}]},{"id":"9","question":"You have 50 flowers. Your sister has given 20 flowers to you. Your brother has taken 30 flowers from you. How many total flowers you will have?","options":[{"id":"1","option":"45","correct":"N"},{"id":"2","option":"40","correct":"Y"}]},{"id":"10","question":"You have 50 flowers. Your sister has given 20 flowers to you. Your brother has taken 20 flowers from you. How many total flowers you will have?","options":[{"id":"1","option":"50","correct":"Y"},{"id":"2","option":"40","correct":"N"}]},{"id":"11","question":"You have 50 flowers. Your sister has given 20 flowers to you. Your brother has taken 50 flowers from you. How many total flowers you will have?","options":[{"id":"1","option":"20","correct":"Y"},{"id":"2","option":"30","correct":"N"}]},{"id":"12","question":"You have 100 flowers. Your sister has given 20 flowers to you. Your brother has taken 50 flowers from you. How many total flowers you will have?","options":[{"id":"1","option":"60","correct":"N"},{"id":"2","option":"70","correct":"Y"}]}]}
   );
-
   const [examResult, setExamResult] = React.useState([]);
   const [resultKey, setResultKey] = React.useState("");
   const [examResultContentLoaded, setExamResultContentLoaded] = React.useState(false);
@@ -81,20 +66,13 @@ function ExamHistory(props) {
   const examResultLoaded = examHistory.length === 0;
 
   const columns: ColDef[] = [
-    { field: 'board', headerName: 'Board', flex: 0.75, headerClassName: 'resultHeader',
-    headerAlign: 'center'},
-    { field: 'subject', headerName: 'Subject' , flex: 1.2,  headerClassName: 'resultHeader',
-    headerAlign: 'center'},
-    { field: 'chapter', headerName: 'Chapter' , flex: 1.5,  headerClassName: 'resultHeader',
-    headerAlign: 'center'},
-    { field: 'questionSet', headerName: 'Question Set', flex: 1.5,  headerClassName: 'resultHeader',
-    headerAlign: 'center'},
-    { field: 'examDate',  headerName: 'Exam Date', flex: 1,  headerClassName: 'resultHeader',
-    headerAlign: 'center'},
-    { field: 'percentage',  headerName: 'Percentage', flex: 1,  headerClassName: 'resultHeader',
-    headerAlign: 'center'},
-    { field: 'objectKey',  headerName: 'View Result', flex: 1, sortable: false,filterable: false, headerClassName: 'resultHeader',
-    headerAlign: 'center',
+    { field: 'board', headerName: 'Board', flex: 0.75},
+    { field: 'subject', headerName: 'Subject' , flex: 1.2},
+    { field: 'chapter', headerName: 'Chapter' , flex: 1.5},
+    { field: 'questionSet', headerName: 'Question Set', flex: 1.5},
+    { field: 'examDate',  headerName: 'Exam Date', flex: 1},
+    { field: 'percentage',  headerName: 'Percentage', flex: 1},
+    { field: 'objectKey',  headerName: 'View Result', flex: 1, sortable: false,filterable: false,
       renderCell: (params: CellParams) => (
           <strong>
             <Button
@@ -161,11 +139,13 @@ function ExamHistory(props) {
   (async () => {
     if(examHistory != null && examHistory.length === 0){
     const response = await fetch("https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/GetExamResultHistory?user=" + props.loggedInUser );
+    alert("https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/GetExamResultHistory?user=" + props.loggedInUser);
     await sleep(1e3);
     const examHistoryData = await response.json();
     setExamHistoryChecked(true);
     if (examHistoryData.length > 0){
       setExamHistory(examHistoryData);
+      alert(examHistoryData[0].objectKey);
     }
   }})();
   }, [examResultLoaded]);
@@ -190,7 +170,7 @@ function ExamHistory(props) {
   }
   if (examHistory.length > 0){
   return (
-    <div style={{ height: '70%', width: '100%' }} className={styleClasses.root}>
+    <div style={{ height: '70%', width: '100%' }}>
     <DataGrid rows={examHistory} columns={columns} pageSize={4} components={{
         Toolbar: GridToolbar,
     }} />

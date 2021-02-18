@@ -10,6 +10,7 @@ import { createStyles,withStyles,makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Link from '@material-ui/core/Link';
 import DisplayResultContent from './DisplayResultContent.js';
+import Divider from '@material-ui/core/Divider';
 
 
 const useStyles = makeStyles({
@@ -79,6 +80,7 @@ function ExamResult(props) {
   if (props.examResultLoaded){
   return (
     <div>
+      <Divider />
       <DisplayResultContent startNewExam = {true} questionList = {props.questionList} questionAnswer = {props.questionAnswer}/>
     </div>
   );

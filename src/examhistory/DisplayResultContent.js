@@ -14,6 +14,8 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import Avatar from '@material-ui/core/Avatar';
+import { deepOrange, deepPurple } from '@material-ui/core/colors';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +46,7 @@ export default function Question(props) {
   const [isLoaded, setIsLoaded] = React.useState(true);
   const [examCompleted,setExamCompleted] = React.useState(false);
   const [add, setAdd] = React.useState('');
+  const [answerImage,setAnswerImage] = React.useState("");
 
   const populateExamCompleteStatus =  (examStatus) => {
      setExamCompleted(examStatus);
@@ -54,6 +57,9 @@ export default function Question(props) {
   }
 
 React.useEffect(() => {
+  if(answerImage == null || answerImage == ""){
+    showAnswerStatus(questionAnswer[questionIndex]);
+  }
 })
 
 
@@ -78,31 +84,19 @@ React.useEffect(() => {
 
     };
 
-  const selectAnswer = (event) => {
-    setValue(event.target.value);
-    setHelperText(' ');
-    setError(false);
-    questionAnswer[questionIndex] = event.target.value;
-    setQuestionAnswer(questionAnswer)
-    var answered = 0;
-    for (var i = 0; i<questionAnswer.length ; i++){
-      if (questionAnswer[i] !== ''){
-        answered = answered + 1;
-      }
-    }
-    setProgress((answered/questionDetails.length)*100);
-
-  };
-
   const showAnswerStatus = (value) => {
+    setAnswerImage("");
       if (value != null && value.startsWith("Y")) {
         setHelperText('Correct.');
+        setAnswerImage("/static/image/checked.jpg");
         setError(false);
         setAdd(classes.activeClass);
       } else if (value != null && value.startsWith("N")) {
         setHelperText('Wrong.');
+        setAnswerImage("/static/image/incorrect.jpg");
         setError(true);
       } else {
+        setAnswerImage("/static/image/incorrect.jpg");
         setHelperText('Skipped.');
         setError(true);
       }
@@ -117,21 +111,21 @@ React.useEffect(() => {
     <p>Total Question:{questionDetails.length}</p>
       <FormControl component="fieldset" error={error} className={classes.formControl}>
         <FormLabel component="legend">Q{questionIndex + 1}. {questionDetails[questionIndex].question}</FormLabel>
-        <RadioGroup  aria-label="quiz" name="quiz" value={questionAnswer[questionIndex]} onChange={selectAnswer}>
+        <RadioGroup  aria-label="quiz" name="quiz" value={questionAnswer[questionIndex]}>
         {questionDetails[questionIndex].options.map(({ id, correct,option }) => (
         <React.Fragment key={id}>
           <FormControlLabel value={correct + id} control={<Radio disabled = {true}/>} label={option} />
           </React.Fragment>
         ))}
         </RadioGroup>
-        <FormHelperText className={add}>{helperText}</FormHelperText>
+          <Avatar variant = "circle" src={answerImage} alt="Correct" >{helperText} </Avatar>
       </FormControl>
 
-    </form>
     <BottomNavigation value={value} onChange={prevNextQuestion} className={classes.root} showLabels>
         <BottomNavigationAction label="Previous" value="previous" icon={<ArrowBackIosIcon />}/>
         <BottomNavigationAction label="Next" value="next" icon={<ArrowForwardIosIcon />} />
       </BottomNavigation>
+          </form>
     </div>
   );
 }

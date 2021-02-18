@@ -299,7 +299,7 @@ if (selectedTab === "resultHistory"){
              <ExamHistory loggedInUser = {props.loggedInUser}/>
              </main>
              <footer className={classes.footer}>
-               <Copyright />
+               
              </footer>
            </div>
          </div>
