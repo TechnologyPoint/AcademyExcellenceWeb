@@ -58,6 +58,11 @@ export default function QuestionHeader(props) {
   const [readyToCancel, setReadyToCancel] = React.useState(true);
   const [chpterInactive,setChapterInactive] = React.useState(false);
 
+
+
+  console.log(startedExam);
+  console.log(!props.retestStarted);
+
   const displayConfirmation = () => {
       setOpenConfirmation(true);
   };
@@ -113,12 +118,10 @@ export default function QuestionHeader(props) {
   function displayQuestionSet() {
     if (selectedQuestionSet !== null && selectedQuestionSet !== ''){
       props.onQuestionSetSelected(true,selectedQuestionSet,inputSubjectValue.name,inputChapterValue.name,inputQuestionSetValue.name);
-      //console.log(inputSubjectValue.name);
     }else{
       props.onQuestionSetSelected(false,selectedQuestionSet);
-
     }
-  }
+}
 
   const populateQuestionSet = ( value) => {
     if (props.boardHeaderName != "Olympiad") {
@@ -151,7 +154,7 @@ export default function QuestionHeader(props) {
       await sleep(1e3);
       const classListData = await response.json();
       if (classListData.length > 0){
-        //console.log(classListData);
+        console.log(classListData);
         setClassList(classListData);
       }
     }}
@@ -159,7 +162,9 @@ export default function QuestionHeader(props) {
   setClassListLoaded(true);
 
   }
+
 const selectClass = (classValue) => {
+  console.log(classValue.classId);
   setSelectedClass(classValue.classId);
   setInputSubjectValue(null);
   setInputChapterValue(null);
@@ -176,6 +181,7 @@ const populateSubject = () => {
         setSubjectList(subjectData[0].subjectList);
         if (props.boardHeaderName === "Olympiad") {
           setSelectedSubject(subjectData[0].subjectList[0].id);
+          setInputSubjectValue(subjectData[0].subjectList);
           setQuestionSet(subjectData[0].subjectList[0].questionset);
         }
     })();
@@ -328,7 +334,7 @@ const populateSubject = () => {
     setQuestionSetLoaded(false);
   }}
   disableClearable
-  disabled = {((props.boardHeaderName === "Olympiad" && selectedClass === null || selectedClass === '') || (props.boardHeaderName !== "Olympiad" && selectedChapter === null || selectedChapter === '') || (startedExam && !props.retestStarted)) ? true : false  }
+  disabled = {((props.boardHeaderName === "Olympiad" && selectedClass === null || selectedClass === '') || (selectedChapter === null || selectedChapter === '') || (startedExam && !props.retestStarted)) ? true : false  }
   value = {inputQuestionSetValue}
   onChange={(event, newValue) => {
       selectQuestionSet(newValue);

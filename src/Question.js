@@ -114,6 +114,7 @@ React.useEffect(() => {
       }
       if (questionAnswer.length === questionIndex) {
         questionAnswer[questionIndex] = '';
+        alert("ok");
       }
       if(examCompleted){
       showAnswerStatus(questionAnswer[curIndex]);

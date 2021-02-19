@@ -83,6 +83,51 @@
 .itemActiveItem{
   color:#4fc3f7;
 }
+.Dropdown-control {
+    position: relative;
+    overflow: hidden;
+    background-color: #f5f2f2;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    box-sizing: border-box;
+    color: #333;
+    cursor: default;
+    outline: none;
+    /* padding: 20px 52px 9px 10px; */
+    transition: all 200ms ease;
+    border-radius: 6px;
+    height: 53px;
+}
+.Dropdown-root {
+    position: relative;
+    width: 200px;
+    height: 38px;
+}
+.ManagedQuestionContent-paper-50 {
+    margin: auto;
+    overflow: visible!important;
+    max-width: 936px;
+}
+.Dropdown-control {
+    position: relative;
+    overflow: hidden;
+    background-color: #f3f3f3 !important;
+    border: 1px solid #d0d0d0 !important;
+    border-radius: 2px !important;
+    box-sizing: border-box;
+    color: #333;
+    cursor: default;
+    outline: none;
+    border-radius: 5px !important;
+    padding: 17px 52px 8px 10px !important;
+    transition: all 200ms ease;
+  }
+  .Dropdown-arrow {
+    top: 26px !important;
+}
+.MuiSvgIcon-fontSizeSmall {
+    display: none !important;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
