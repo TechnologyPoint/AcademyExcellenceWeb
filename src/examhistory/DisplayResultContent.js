@@ -48,6 +48,8 @@ export default function Question(props) {
   const [add, setAdd] = React.useState('');
   const [answerImage,setAnswerImage] = React.useState("");
 
+   console.log(props.questionAnswer);
+   console.log(props.questionList);
   const populateExamCompleteStatus =  (examStatus) => {
      setExamCompleted(examStatus);
      showAnswerStatus(questionAnswer[questionIndex]);
