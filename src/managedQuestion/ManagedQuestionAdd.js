@@ -30,19 +30,27 @@ const ManagedQuestionAdd = (props) =>{
   const [inputValue , setInputValue] = React.useState("");
   const [textfiledshow , setTextfieldshow] = React.useState(false);
   const [optionsValue , setOptionsvalue] = React.useState("");
+  const [optionArray , setOptionArray] = React.useState([]);
 
   const getValue = (event)=>{
     setInputValue(event.target.value);
   }
   const getOption = (event)=>{
     setOptionsvalue(event.target.value);
+    const optionAdd = {
+      id:Date.now(),
+      options:optionsValue
+    }
+    setOptionArray(optionAdd);
   }
+
+
 
   const createQuestion = ()=>{
     const createQuestionset = {
       id:Date.now(),
       question:inputValue,
-      option:optionsValue
+      option:optionArray
     }
    setQuestionvalue(createQuestionset);
    console.log(questionValue);
