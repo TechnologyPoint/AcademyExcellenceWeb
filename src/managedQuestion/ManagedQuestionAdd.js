@@ -40,9 +40,7 @@ const ManagedQuestionAdd = (props) =>{
       options:optionsValue
     }])
   }
-   if(optionArray.length > 0){
-     console.log(optionArray);
-   }
+   
 
 
   const createQuestion = ()=>{
@@ -52,7 +50,7 @@ const ManagedQuestionAdd = (props) =>{
       option:optionArray
     }])
   }
-  if(questionValue.length > 0){
+  if(questionValue.length > 0 && createQuestion){
     console.log(questionValue);
   }
 
