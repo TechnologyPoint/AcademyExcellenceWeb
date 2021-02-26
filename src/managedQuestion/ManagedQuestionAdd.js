@@ -39,8 +39,9 @@ const ManagedQuestionAdd = (props) =>{
       id:optionArray.length,
       options:optionsValue
     }])
+    setOptionsvalue("");
   }
-   
+
 
 
   const createQuestion = ()=>{
@@ -49,6 +50,8 @@ const ManagedQuestionAdd = (props) =>{
       questions:inputValue,
       option:optionArray
     }])
+    setInputValue("");
+    setOptionArray([]);
   }
   if(questionValue.length > 0 && createQuestion){
     console.log(questionValue);
