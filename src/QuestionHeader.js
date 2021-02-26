@@ -154,6 +154,7 @@ export default function QuestionHeader(props) {
       await sleep(1e3);
       const classListData = await response.json();
       if (classListData.length > 0){
+        console.log(classListData.length);
         console.log(classListData);
         setClassList(classListData);
       }

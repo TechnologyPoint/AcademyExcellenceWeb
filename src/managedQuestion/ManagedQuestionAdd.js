@@ -11,6 +11,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dropdown from 'react-dropdown';
+import { v1 as uuidv1 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -32,33 +33,36 @@ const ManagedQuestionAdd = (props) =>{
   const [optionsValue , setOptionsvalue] = React.useState("");
   const [optionArray , setOptionArray] = React.useState([]);
 
-  const getValue = (event)=>{
-    setInputValue(event.target.value);
-  }
-  const getOption = (event)=>{
-    setOptionsvalue(event.target.value);
-    const optionAdd = {
-      id:Date.now(),
-      options:optionsValue
-    }
-    setOptionArray(optionAdd);
-  }
 
+  const addOptions = ()=>{
+    setOptionArray([...optionArray,{
+      id:optionArray.length,
+      options:optionsValue
+    }])
+  }
+   if(optionArray.length > 0){
+     console.log(optionArray);
+   }
 
 
   const createQuestion = ()=>{
-    const createQuestionset = {
-      id:Date.now(),
-      question:inputValue,
+    setQuestionvalue([...questionValue,{
+      id:questionValue.length,
+      questions:inputValue,
       option:optionArray
-    }
-   setQuestionvalue(createQuestionset);
-   console.log(questionValue);
+    }])
   }
+  if(questionValue.length > 0){
+    console.log(questionValue);
+  }
+
   return(
     <div>
     <div>Total Questions : {props.sendData}</div>
     <div>
+    <div>{questionValue.map((item)=>(
+      <div key={item.id}></div>
+    ))}</div>
     <FormControl className={classes.formControl} noValidate autoComplete="off">
       <TextField
       id="question"
@@ -66,23 +70,29 @@ const ManagedQuestionAdd = (props) =>{
       label="Enter question"
       variant="outlined"
       value={inputValue}
-      onChange={getValue}
-      />
+      onChange={(e)=>{setInputValue(e.target.value)}}/>
+
     </FormControl>
-    <FormControl className={classes.formControl}>
-    <Button variant="contained" color="primary" onClick={()=>{setTextfieldshow(true)}}>Add Options</Button>
-    { textfiledshow && <TextField
+    <div>
+
+    <div>{optionArray.map((oa)=>(
+      <div key={oa.id}></div>
+    ))}</div>
+<FormControl className={classes.formControl}>
+    <TextField
     id="question"
     style={{width:500}}
     label="Enter Options"
     variant="outlined"
     value={optionsValue}
-    onChange={getOption}
+    onChange={(e)=>{setOptionsvalue(e.target.value)}}
     />
-    }
+
     </FormControl>
-
-
+    <FormControl className={classes.formControl}>
+    <Button variant="contained" color="primary" onClick={addOptions}>Add Options</Button>
+    </FormControl>
+     </div>
     </div>
     <div>
     <FormControl className={classes.formControl}>
