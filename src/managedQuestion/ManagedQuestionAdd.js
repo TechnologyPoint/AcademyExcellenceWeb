@@ -44,6 +44,8 @@ const ManagedQuestionAdd = (props) =>{
 
 
 
+
+
   const createQuestion = ()=>{
     setQuestionvalue([...questionValue,{
       id:questionValue.length,
@@ -53,9 +55,13 @@ const ManagedQuestionAdd = (props) =>{
     setInputValue("");
     setOptionArray([]);
   }
-  if(questionValue.length > 0 && createQuestion){
+
+React.useEffect(()=>{
+  if(questionValue.length > 0){
     console.log(questionValue);
   }
+},[questionValue])
+
 
   return(
     <div>
