@@ -18,9 +18,11 @@ function App() {
   (async () => {
       const user = await Auth.currentAuthenticatedUser();
       await sleep(1e3);
+
       if (user) {
         setLoggedInUserLoaded(true);
         setLoggedInUser(user.username);
+        console.log(loggedInUser);
       }
   })();
 }, [loggedInUserLoaded]);

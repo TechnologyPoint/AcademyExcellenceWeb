@@ -165,7 +165,6 @@ function ExamHistory(props) {
     const response = await fetch("https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/GetExamResultHistory?user=" + props.loggedInUser );
     await sleep(1e3);
     const examHistoryData = await response.json();
-    console.log(examHistoryData);
     setExamHistoryChecked(true);
     if (examHistoryData.length > 0){
       setExamHistory(examHistoryData);
@@ -174,7 +173,6 @@ function ExamHistory(props) {
   }, [examResultLoaded]);
 
   const preventDefault = (key) => {
-  console.log(key);
     setObjectKey(key)
    }
   if (examHistoryChecked  && examHistory.length === 0){

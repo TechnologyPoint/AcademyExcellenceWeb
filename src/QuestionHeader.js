@@ -60,9 +60,7 @@ export default function QuestionHeader(props) {
 
 
 
-  console.log(startedExam);
-  console.log(!props.retestStarted);
-
+  console.log(classList);
   const displayConfirmation = () => {
       setOpenConfirmation(true);
   };
@@ -122,7 +120,6 @@ export default function QuestionHeader(props) {
       props.onQuestionSetSelected(false,selectedQuestionSet);
     }
 }
-
   const populateQuestionSet = ( value) => {
     if (props.boardHeaderName != "Olympiad") {
     for(var k in chapterList) {
@@ -142,7 +139,6 @@ export default function QuestionHeader(props) {
 
   const selectQuestionSet = (value) => {
    setSelectedQuestionSet(value.id);
-   console.log(value.id);
   }
 
   const loadClassList = () => {
@@ -153,9 +149,8 @@ export default function QuestionHeader(props) {
       const response = await fetch('https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getClassList?board=' + props.selectedBoard);
       await sleep(1e3);
       const classListData = await response.json();
+      console.log(classListData);
       if (classListData.length > 0){
-        console.log(classListData.length);
-        console.log(classListData);
         setClassList(classListData);
       }
     }}
@@ -165,7 +160,6 @@ export default function QuestionHeader(props) {
   }
 
 const selectClass = (classValue) => {
-  console.log(classValue.classId);
   setSelectedClass(classValue.classId);
   setInputSubjectValue(null);
   setInputChapterValue(null);

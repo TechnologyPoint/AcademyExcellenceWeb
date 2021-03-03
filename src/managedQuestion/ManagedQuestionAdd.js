@@ -11,7 +11,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dropdown from 'react-dropdown';
-import { v1 as uuidv1 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -34,17 +33,6 @@ const ManagedQuestionAdd = (props) =>{
   const [optionArray , setOptionArray] = React.useState([]);
 
 
-  const addOptions = ()=>{
-    setOptionArray([...optionArray,{
-      id:optionArray.length,
-      options:optionsValue
-    }])
-    setOptionsvalue("");
-  }
-
-
-
-
 
   const createQuestion = ()=>{
     setQuestionvalue([...questionValue,{
@@ -56,6 +44,15 @@ const ManagedQuestionAdd = (props) =>{
     setOptionArray([]);
   }
 
+
+  const addOptions = ()=>{
+    setOptionArray([...optionArray,{
+      id:optionArray.length,
+      options:optionsValue
+    }])
+    setOptionsvalue("");
+  }
+
 React.useEffect(()=>{
   if(questionValue.length > 0){
     console.log(questionValue);
@@ -63,13 +60,12 @@ React.useEffect(()=>{
 },[questionValue])
 
 
+
+
   return(
     <div>
     <div>Total Questions : {props.sendData}</div>
     <div>
-    <div>{questionValue.map((item)=>(
-      <div key={item.id}></div>
-    ))}</div>
     <FormControl className={classes.formControl} noValidate autoComplete="off">
       <TextField
       id="question"
@@ -78,13 +74,8 @@ React.useEffect(()=>{
       variant="outlined"
       value={inputValue}
       onChange={(e)=>{setInputValue(e.target.value)}}/>
-
     </FormControl>
     <div>
-
-    <div>{optionArray.map((oa)=>(
-      <div key={oa.id}></div>
-    ))}</div>
 <FormControl className={classes.formControl}>
     <TextField
     id="question"
@@ -94,7 +85,6 @@ React.useEffect(()=>{
     value={optionsValue}
     onChange={(e)=>{setOptionsvalue(e.target.value)}}
     />
-
     </FormControl>
     <FormControl className={classes.formControl}>
     <Button variant="contained" color="primary" onClick={addOptions}>Add Options</Button>

@@ -41,7 +41,6 @@ function Content(props) {
   const [retestStarted, setRetestStarted] = React.useState(false);
   const [subject, setSubject] = React.useState("");
   const [chapter, setChapter] = React.useState("");
-  //console.log(props.boardHeaderName);
 
   const populateQuestion =  (changedValue,questionSet,subject,chapter,questionSetDisplay) => {
      setQuestionHeaderPopulated(changedValue);
@@ -58,8 +57,7 @@ function Content(props) {
   }
 
   if(questionHeaderPopulated){
-    console.log(questionHeaderPopulated);
-    console.log("hello");
+   console.log(questionHeaderPopulated);
   return (
     <Paper className={classes.paper}>
       <AppBar
@@ -84,8 +82,7 @@ function Content(props) {
     </Paper>
   );
 }else {
-  console.log("hi i am here!");
-  console.log(questionHeaderPopulated);
+console.log(questionHeaderPopulated);
   return (
     <Paper className={classes.paper}>
       <AppBar

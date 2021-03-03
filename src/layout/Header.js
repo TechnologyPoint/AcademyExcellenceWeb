@@ -65,7 +65,7 @@ function Header(props) {
   }})();
 }, [loading]);
 
-const handleChange = (event, newValue) => {
+const handleChange = (event,newValue) => {
     setSelectedTab(newValue);
     console.log(newValue);
     props.setTab(newValue);
