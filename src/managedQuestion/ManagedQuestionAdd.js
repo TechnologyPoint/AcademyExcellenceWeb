@@ -31,6 +31,7 @@ const ManagedQuestionAdd = (props) =>{
   const [textfiledshow , setTextfieldshow] = React.useState(false);
   const [optionsValue , setOptionsvalue] = React.useState("");
   const [optionArray , setOptionArray] = React.useState([]);
+  const [correctValue , setCorrectValue] = React.useState("");
 
 
 
@@ -48,9 +49,11 @@ const ManagedQuestionAdd = (props) =>{
   const addOptions = ()=>{
     setOptionArray([...optionArray,{
       id:optionArray.length,
-      options:optionsValue
+      options:optionsValue,
+      correct:correctValue
     }])
     setOptionsvalue("");
+    setCorrectValue("");
   }
 
 React.useEffect(()=>{
@@ -84,6 +87,14 @@ React.useEffect(()=>{
     variant="outlined"
     value={optionsValue}
     onChange={(e)=>{setOptionsvalue(e.target.value)}}
+    />
+    <TextField
+    id="question"
+    style={{width:500,marginTop:10}}
+    label="Enter Correct"
+    variant="outlined"
+    value={correctValue}
+    onChange={(e)=>{setCorrectValue(e.target.value)}}
     />
     </FormControl>
     <FormControl className={classes.formControl}>

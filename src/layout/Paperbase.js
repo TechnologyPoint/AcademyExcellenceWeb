@@ -194,7 +194,7 @@ function Paperbase(props) {
   const [selectHeaderName, setSelectHeaderName] = React.useState('');
   const [selectedTab, setSelectedTab] = React.useState("knowledgeTest");
 
-  
+
 
   const setNavigation = (navigation,headerName,navigationDescription) => {
       setSelectedLeftNavigation(navigation);
@@ -211,7 +211,6 @@ function Paperbase(props) {
     setMobileOpen(!mobileOpen);
   };
   if (selectedTab === "knowledgeTest"){
-  console.log("kt");
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
@@ -244,7 +243,6 @@ function Paperbase(props) {
   );
 }
 if (selectedTab === "manageQuestion"){
-console.log("mq");
      return (
        <ThemeProvider theme={theme}>
          <div className={classes.root}>
@@ -277,7 +275,6 @@ console.log("mq");
      );
 }
 if (selectedTab === "resultHistory"){
-console.log("rh");
      return (
        <ThemeProvider theme={theme}>
          <div className={classes.root}>

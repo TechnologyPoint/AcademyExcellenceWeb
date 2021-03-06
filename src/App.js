@@ -22,7 +22,6 @@ function App() {
       if (user) {
         setLoggedInUserLoaded(true);
         setLoggedInUser(user.username);
-        console.log(loggedInUser);
       }
   })();
 }, [loggedInUserLoaded]);

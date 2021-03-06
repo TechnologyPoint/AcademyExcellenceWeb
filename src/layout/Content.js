@@ -45,10 +45,14 @@ function Content(props) {
   const populateQuestion =  (changedValue,questionSet,subject,chapter,questionSetDisplay) => {
      setQuestionHeaderPopulated(changedValue);
      setQuestionSet(questionSet);
+     console.log(questionSet);
      setQuestionSetDisplay(questionSetDisplay);
+     console.log(questionSetDisplay);
      setRetestStarted(false);
      setSubject(subject);
+     console.log(subject);
      setChapter(chapter);
+     console.log(chapter);
   }
 
   const startNewExam = () => {

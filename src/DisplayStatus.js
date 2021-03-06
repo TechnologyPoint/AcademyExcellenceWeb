@@ -43,6 +43,11 @@ export default function Question(props) {
   const [grade, setGrade] = React.useState("");
   const [percentage, setPercentage] = React.useState();
 
+  console.log(props.currentIndex +1);
+  console.log(props.questionList.length);
+  console.log(props.currentIndex + 1=== props.questionList.length);
+  console.log(props.questionAnswer);
+
   const startNewExam = () => {
     props.startNewExam();
   }
@@ -127,6 +132,7 @@ export default function Question(props) {
   ];
 
   React.useEffect(() => {
+    alert();
   },[])
 if(completedExam){
   return (
