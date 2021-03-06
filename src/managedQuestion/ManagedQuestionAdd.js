@@ -26,16 +26,87 @@ const useStyles = makeStyles((theme) => ({
 
 const ManagedQuestionAdd = (props) =>{
   const classes = useStyles();
+  const [questionValue ,setQuestionvalue] = React.useState([]);
+  const [inputValue , setInputValue] = React.useState("");
+  const [textfiledshow , setTextfieldshow] = React.useState(false);
+  const [optionsValue , setOptionsvalue] = React.useState("");
+  const [optionArray , setOptionArray] = React.useState([]);
+  const [correctValue , setCorrectValue] = React.useState("");
+
+
+
+  const createQuestion = ()=>{
+    setQuestionvalue([...questionValue,{
+      id:questionValue.length,
+      questions:inputValue,
+      option:optionArray
+    }])
+    setInputValue("");
+    setOptionArray([]);
+  }
+
+
+  const addOptions = ()=>{
+    setOptionArray([...optionArray,{
+      id:optionArray.length,
+      options:optionsValue,
+      correct:correctValue
+    }])
+    setOptionsvalue("");
+    setCorrectValue("");
+  }
+
+React.useEffect(()=>{
+  if(questionValue.length > 0){
+    console.log(questionValue);
+  }
+},[questionValue])
+
+
+
+
   return(
     <div>
     <div>Total Questions : {props.sendData}</div>
+    <div>
     <FormControl className={classes.formControl} noValidate autoComplete="off">
       <TextField
-      id="outlined-basic"
+      id="question"
       style={{width:500}}
       label="Enter question"
-      variant="outlined" />
+      variant="outlined"
+      value={inputValue}
+      onChange={(e)=>{setInputValue(e.target.value)}}/>
     </FormControl>
+    <div>
+<FormControl className={classes.formControl}>
+    <TextField
+    id="question"
+    style={{width:500}}
+    label="Enter Options"
+    variant="outlined"
+    value={optionsValue}
+    onChange={(e)=>{setOptionsvalue(e.target.value)}}
+    />
+    <TextField
+    id="question"
+    style={{width:500,marginTop:10}}
+    label="Enter Correct"
+    variant="outlined"
+    value={correctValue}
+    onChange={(e)=>{setCorrectValue(e.target.value)}}
+    />
+    </FormControl>
+    <FormControl className={classes.formControl}>
+    <Button variant="contained" color="primary" onClick={addOptions}>Add Options</Button>
+    </FormControl>
+     </div>
+    </div>
+    <div>
+    <FormControl className={classes.formControl}>
+    <Button variant="contained" color="primary" onClick={createQuestion}>click add</Button>
+    </FormControl>
+    </div>
     </div>
   )
 }

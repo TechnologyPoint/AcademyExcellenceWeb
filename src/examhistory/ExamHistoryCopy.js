@@ -92,6 +92,7 @@ function ExamHistory(props) {
  }
 
  const fetchExamResult = (resultKey) => {
+   alert("here i am");
    setObjectKey(resultKey);
    setExamResultContentLoaded(false);
    setExamResult([]);

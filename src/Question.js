@@ -70,6 +70,8 @@ export default function Question(props) {
 
   const totalTime = 30;//(questionDetails.length) * 3;
 
+
+
   const populateExamCompleteStatus =  (examStatus) => {
      setExamCompleted(examStatus);
      showAnswerStatus(questionAnswer[questionIndex]);
@@ -99,11 +101,13 @@ React.useEffect(() => {
 
 
   const prevNextQuestion = (event, newValue) => {
+    console.log(newValue);
     var curIndex = questionIndex;
       if (newValue === 'next') {
         if (questionIndex + 1 < questionDetails.length){
           setQuestionIndex(questionIndex + 1);
           curIndex = questionIndex + 1;
+          console.log(curIndex);
         }
       }
       if (newValue === 'previous') {
@@ -118,6 +122,7 @@ React.useEffect(() => {
       }
       if(examCompleted){
       showAnswerStatus(questionAnswer[curIndex]);
+      console.log(questionAnswer[curIndex]);
     }
     };
 
@@ -126,6 +131,7 @@ React.useEffect(() => {
     setHelperText(' ');
     setError(false);
     questionAnswer[questionIndex] = event.target.value;
+    console.log(event.target.value);
     setQuestionAnswer(questionAnswer)
     var answered = 0;
     for (var i = 0; i<questionAnswer.length ; i++){
@@ -138,6 +144,7 @@ React.useEffect(() => {
   };
 
   const showAnswerStatus = (value) => {
+    console.log(value);
       if (value != null && value.startsWith("Y")) {
         setHelperText('Correct!');
         setError(false);

@@ -135,6 +135,7 @@ function ExamHistory(props) {
  }
 
  const fetchExamResult = (resultKey) => {
+   console.log(resultKey);
    setObjectKey(resultKey);
    setExamResultContentLoaded(false);
    setExamResult([]);
@@ -142,6 +143,7 @@ function ExamHistory(props) {
    const response = await fetch("https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getExamHistoryContent?objectKey=" + resultKey );
    await sleep(1e3);
    const examResultData = await response.json();
+   console.log(examResultData);
    setExamResult(examResultData);
    setExamResultContentLoaded(true);
  })();
@@ -153,8 +155,6 @@ function ExamHistory(props) {
     const response = await fetch("https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/GetExamResultHistory?user=" + props.loggedInUser );
     await sleep(1e3);
     const examHistoryData = await response.json();
-    console.log(props.loggedInUser);
-    console.log(examHistoryData);
     setExamHistoryChecked(true);
     if (examHistoryData.length > 0){
       setExamHistory(examHistoryData);

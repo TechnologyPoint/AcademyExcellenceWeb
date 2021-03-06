@@ -50,7 +50,6 @@ function ExamResult(props) {
   const [examResult, setExamResult] = React.useState([]);
   const [resultKey, setResultKey] = React.useState("");
   const [examResultLoaded, setExamResultLoaded] = React.useState(false);
-
   function sleep(delay = 0) {
     return new Promise((resolve) => {
       setTimeout(resolve, delay);
