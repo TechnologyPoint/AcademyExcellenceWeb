@@ -103,10 +103,14 @@ export default function QuestionHeader(props) {
   }
 
   const populateChapter = (value) => {
+    if (props.boardHeaderName === "Olympiad") {
+      populateSubject();
+    }else{
+      setSelectedSubject(value.id);
+    }
    for(var k in subjectList) {
-      if (subjectList[k].id === value.id){
+      if (subjectList[k].id === selectedSubject){
           setChapterList(subjectList[k].chapterList);
-          setSelectedSubject(value.id);
       }
    }
   };
@@ -120,7 +124,6 @@ export default function QuestionHeader(props) {
 }
   const populateQuestionSet = ( value) => {
     console.log(value.id);
-    if (props.boardHeaderName != "Olympiad") {
     for(var k in chapterList) {
        if (chapterList[k].id === value.id){
            setQuestionSet(chapterList[k].questionset);
@@ -128,12 +131,6 @@ export default function QuestionHeader(props) {
            setSelectedChapter(value.id);
        }
     }
-  }else{
-    //setQuestionSet(['']);
-    //setQuestionSetLoaded(false);
-    populateSubject();
-  }
-    //setFormData({headerPopulated: true });
   }
 
   const selectQuestionSet = (value) => {
@@ -178,11 +175,6 @@ const populateSubject = () => {
         console.log(subjectData[0].subjectList);
         if (props.boardHeaderName === "Olympiad") {
           setSelectedSubject(subjectData[0].subjectList[0].id);
-          console.log(subjectData[0].subjectList);
-          console.log(subjectData[0].subjectList[0].id);
-          setInputSubjectValue(subjectData[0].subjectList);
-          setQuestionSet(subjectData[0].subjectList[0].questionset);
-          console.log(subjectData[0].subjectList[0].questionset);
         }
     })();
 }
@@ -291,8 +283,8 @@ const populateSubject = () => {
       setChapterLoaded(false);
     }}
     disableClearable
-    disabled = {(selectedSubject === null || selectedSubject === ''|| (startedExam && !props.retestStarted)) ? true : false  }
-    hidden={(props.boardHeaderName === "Olympiad") ? true : false }
+    disabled = {((selectedClass === null && props.boardHeaderName === "Olympiad") || (props.boardHeaderName != "Olympiad" && (selectedSubject === null || selectedSubject === ''))|| (startedExam && !props.retestStarted)) ? true : false  }
+    hidden={(props.boardHeaderName === "Olympiad") ? false : false }
     value = {inputChapterValue}
     onChange={(event, newValue) => {
         populateQuestionSet(newValue);
@@ -334,7 +326,7 @@ const populateSubject = () => {
     setQuestionSetLoaded(false);
   }}
   disableClearable
-  disabled = {((props.boardHeaderName === "Olympiad" && selectedClass === null || selectedClass === '') || (props.boardHeaderName !== "Olympiad" && selectedChapter === null || selectedChapter === '') || (startedExam && !props.retestStarted)) ? true : false  }
+  disabled = {((props.boardHeaderName === "Olympiad" && selectedClass === null || selectedClass === '') || (props.boardHeaderName !== "Olympiad" && selectedChapter === null || selectedChapter === '')) ? true : false  }
   value = {inputQuestionSetValue}
   onChange={(event, newValue) => {
       selectQuestionSet(newValue);
