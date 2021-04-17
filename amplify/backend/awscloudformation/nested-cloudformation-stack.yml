@@ -74,7 +74,7 @@
 				"TemplateURL": "https://s3.amazonaws.com/amplify-academyexcellence-dev-115125-deployment/amplify-cfn-templates/auth/academyexcellence04837ae5-cloudformation-template.yml",
 				"Parameters": {
 					"identityPoolName": "academyexcellence04837ae5_identitypool_04837ae5",
-					"allowUnauthenticatedIdentities": false,
+					"allowUnauthenticatedIdentities": true,
 					"resourceNameTruncated": "academ04837ae5",
 					"userPoolName": "academyexcellence04837ae5_userpool_04837ae5",
 					"autoVerifiedAttributes": "email",
@@ -124,6 +124,40 @@
 				"Parameters": {
 					"appId": "d6zmzyllu121y",
 					"type": "manual",
+					"env": "dev"
+				}
+			}
+		},
+		"storages3academyexcellence": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/amplify-academyexcellence-dev-115125-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+				"Parameters": {
+					"bucketName": "academyexcellenceqstnimage",
+					"authPolicyName": "s3_amplify_8bafeac6",
+					"unauthPolicyName": "s3_amplify_8bafeac6",
+					"authRoleName": {
+						"Ref": "AuthRoleName"
+					},
+					"unauthRoleName": {
+						"Ref": "UnauthRoleName"
+					},
+					"selectedGuestPermissions": "s3:GetObject,s3:ListBucket",
+					"selectedAuthenticatedPermissions": "s3:GetObject,s3:ListBucket",
+					"s3PermissionsAuthenticatedPublic": "s3:GetObject",
+					"s3PublicPolicy": "Public_policy_035f75b8",
+					"s3PermissionsAuthenticatedUploads": "DISALLOW",
+					"s3UploadsPolicy": "Uploads_policy_035f75b8",
+					"s3PermissionsAuthenticatedProtected": "s3:GetObject",
+					"s3ProtectedPolicy": "Protected_policy_53385a6c",
+					"s3PermissionsAuthenticatedPrivate": "s3:GetObject",
+					"s3PrivatePolicy": "Private_policy_53385a6c",
+					"AuthenticatedAllowList": "ALLOW",
+					"s3ReadPolicy": "read_policy_035f75b8",
+					"s3PermissionsGuestPublic": "s3:GetObject",
+					"s3PermissionsGuestUploads": "DISALLOW",
+					"GuestAllowList": "ALLOW",
+					"triggerFunction": "NONE",
 					"env": "dev"
 				}
 			}

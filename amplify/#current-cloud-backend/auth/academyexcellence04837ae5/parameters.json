@@ -1,6 +1,6 @@
 {
     "identityPoolName": "academyexcellence04837ae5_identitypool_04837ae5",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "academ04837ae5",
     "userPoolName": "academyexcellence04837ae5_userpool_04837ae5",
     "autoVerifiedAttributes": [

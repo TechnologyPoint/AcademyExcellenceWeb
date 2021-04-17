@@ -16,6 +16,8 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import DisplayStatus from './DisplayStatus.js';
 import DisplayTimer from './DisplayTimer.js';
+import { Storage } from 'aws-amplify';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -67,6 +69,8 @@ export default function Question(props) {
   const [isLoaded, setIsLoaded] = React.useState(false);
   const [examCompleted,setExamCompleted] = React.useState(false);
   const [add, setAdd] = React.useState('');
+  const [imageUrl,setImageUrl] = React.useState("");
+
 
   const totalTime = 30;//(questionDetails.length) * 3;
 
@@ -118,7 +122,6 @@ React.useEffect(() => {
       }
       if (questionAnswer.length === questionIndex) {
         questionAnswer[questionIndex] = '';
-        alert("ok");
       }
       if(examCompleted){
       showAnswerStatus(questionAnswer[curIndex]);
@@ -160,14 +163,41 @@ React.useEffect(() => {
 
   if (!isLoaded) {
        return <div>Loading...</div>;
-     } else {
+     }
+     if (questionDetails[questionIndex].s3Url != null) {
+       return (<div className={classes.root}>
+       <DisplayTimer totalTime={totalTime} totalQuestion = {questionDetails.length}/>
+       <LinearProgressWithLabel value={progress} />
+       <form>
+         <FormControl component="fieldset" error={error} className={classes.formControl}>
+           <img src={questionDetails[questionIndex].s3Url} alt=""/>
+
+           <RadioGroup  aria-label="quiz" name="quiz" value={questionAnswer[questionIndex]} onChange={selectAnswer}>
+           {questionDetails[questionIndex].options.map(({ id, correct,option }) => (
+           <React.Fragment key={id}>
+             <FormControlLabel value={correct + id} control={<Radio disabled = {examCompleted}/>} label={option} />
+             </React.Fragment>
+           ))}
+           </RadioGroup>
+           <FormHelperText className={add}>{helperText}</FormHelperText>
+           <DisplayStatus subject = {props.subject} chapter = {props.chapter} boardHeaderName={props.selectedBoard} loggedInUser = {props.loggedInUser} startNewExam = {startNewExam} questionList = {questionDetails} currentIndex = {questionIndex} questionAnswer = {questionAnswer} setExamStatus = {populateExamCompleteStatus} questionSetDisplay = {props.questionSetDisplay}/>
+         </FormControl>
+
+       </form>
+       <BottomNavigation value={value} onChange={prevNextQuestion} className={classes.root} showLabels>
+           <BottomNavigationAction label="Previous" value="previous" icon={<ArrowBackIosIcon />}/>
+           <BottomNavigationAction label="Next" value="next" icon={<ArrowForwardIosIcon />} />
+         </BottomNavigation>
+       </div>)
+        } else {
     return (
     <div className={classes.root}>
     <DisplayTimer totalTime={totalTime} totalQuestion = {questionDetails.length}/>
     <LinearProgressWithLabel value={progress} />
     <form>
       <FormControl component="fieldset" error={error} className={classes.formControl}>
-        <FormLabel component="legend">Q{questionIndex + 1}. {questionDetails[questionIndex].question}</FormLabel>
+        <FormLabel component="legend">Q{questionIndex + 1} {questionDetails[questionIndex].question}</FormLabel>
+
         <RadioGroup  aria-label="quiz" name="quiz" value={questionAnswer[questionIndex]} onChange={selectAnswer}>
         {questionDetails[questionIndex].options.map(({ id, correct,option }) => (
         <React.Fragment key={id}>

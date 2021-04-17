@@ -13,5 +13,11 @@
       "providerPlugin": "awscloudformation",
       "type": "manual"
     }
+  },
+  "storage": {
+    "s3academyexcellence": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }

@@ -1,26 +1,26 @@
 {
-    "dev": {
-        "awscloudformation": {
-            "AuthRoleName": "amplify-academyexcellence-dev-115125-authRole",
-            "UnauthRoleArn": "arn:aws:iam::978440663651:role/amplify-academyexcellence-dev-115125-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::978440663651:role/amplify-academyexcellence-dev-115125-authRole",
-            "Region": "ap-south-1",
-            "DeploymentBucketName": "amplify-academyexcellence-dev-115125-deployment",
-            "UnauthRoleName": "amplify-academyexcellence-dev-115125-unauthRole",
-            "StackName": "amplify-academyexcellence-dev-115125",
-            "StackId": "arn:aws:cloudformation:ap-south-1:978440663651:stack/amplify-academyexcellence-dev-115125/cb89bd10-270a-11eb-ba3e-02153b7bf71a",
-            "AmplifyAppId": "d6zmzyllu121y"
-        },
-        "categories": {
-            "auth": {
-                "academyexcellence04837ae5": {}
-            },
-            "hosting": {
-                "amplifyhosting": {
-                    "appId": "d6zmzyllu121y",
-                    "type": "manual"
-                }
-            }
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-academyexcellence-dev-115125-authRole",
+      "UnauthRoleArn": "arn:aws:iam::978440663651:role/amplify-academyexcellence-dev-115125-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::978440663651:role/amplify-academyexcellence-dev-115125-authRole",
+      "Region": "ap-south-1",
+      "DeploymentBucketName": "amplify-academyexcellence-dev-115125-deployment",
+      "UnauthRoleName": "amplify-academyexcellence-dev-115125-unauthRole",
+      "StackName": "amplify-academyexcellence-dev-115125",
+      "StackId": "arn:aws:cloudformation:ap-south-1:978440663651:stack/amplify-academyexcellence-dev-115125/cb89bd10-270a-11eb-ba3e-02153b7bf71a",
+      "AmplifyAppId": "d6zmzyllu121y"
+    },
+    "categories": {
+      "auth": {
+        "academyexcellence04837ae5": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d6zmzyllu121y",
+          "type": "manual"
         }
+      }
     }
+  }
 }

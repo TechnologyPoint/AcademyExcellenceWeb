@@ -22,7 +22,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-academyexcellence-dev-115125-deployment/amplify-cfn-templates/auth/academyexcellence04837ae5-cloudformation-template.yml",
         "logicalId": "authacademyexcellence04837ae5"
       },
-      "lastPushTimeStamp": "2020-11-15T09:18:46.765Z",
+      "lastPushTimeStamp": "2021-04-13T14:03:52.630Z",
       "output": {
         "AppClientSecret": "1lp4v5156i2um9ki10j3ng33003oov3sbcr5nbg6l6ii2lmjuj1j",
         "UserPoolId": "ap-south-1_7PetQLyMJ",
@@ -32,7 +32,7 @@
         "IdentityPoolName": "academyexcellence04837ae5_identitypool_04837ae5__dev",
         "UserPoolName": "academyexcellence04837ae5_userpool_04837ae5"
       },
-      "lastPushDirHash": "+e8bGEz10h1D2L7u2IBVMWviHsM="
+      "lastPushDirHash": "ZOLg5WsKQqAAccXBO9zKDSOzC2c="
     }
   },
   "hosting": {
@@ -44,9 +44,25 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-academyexcellence-dev-115125-deployment/amplify-cfn-templates/hosting/amplifyhosting-template.json",
         "logicalId": "hostingamplifyhosting"
       },
-      "lastPushTimeStamp": "2020-11-15T09:18:46.801Z",
+      "lastPushTimeStamp": "2021-04-13T14:03:52.603Z",
       "output": {},
       "lastPushDirHash": "/+VZ33seFFqAr6wbtptwbINUfSA="
+    }
+  },
+  "storage": {
+    "s3academyexcellence": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-academyexcellence-dev-115125-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+        "logicalId": "storages3academyexcellence"
+      },
+      "lastPushTimeStamp": "2021-04-13T14:03:52.630Z",
+      "output": {
+        "BucketName": "academyexcellenceqstnimage115125-dev",
+        "Region": "ap-south-1"
+      },
+      "lastPushDirHash": "8DE83aaw8/e0FlBt4LNg/jCGpTw="
     }
   }
 }

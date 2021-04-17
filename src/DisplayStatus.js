@@ -132,7 +132,6 @@ export default function Question(props) {
   ];
 
   React.useEffect(() => {
-    alert();
   },[])
 if(completedExam){
   return (
