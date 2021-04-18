@@ -106,7 +106,31 @@ React.useEffect(() => {
 
   if (!isLoaded) {
        return <div>Loading...</div>;
-     } else {
+     } if (questionDetails[questionIndex].s3Url != null) {
+       return (<div className={classes.root}>
+       <form>
+       <p>Total Question:{questionDetails.length}</p>
+
+         <FormControl component="fieldset" error={error} className={classes.formControl}>
+           <img src={questionDetails[questionIndex].s3Url} alt=""/>
+
+           <RadioGroup  aria-label="quiz" name="quiz" value={questionAnswer[questionIndex]}>
+           {questionDetails[questionIndex].options.map(({ id, correct,option }) => (
+           <React.Fragment key={id}>
+             <FormControlLabel value={correct + id} control={<Radio disabled = {true}/>} label={option} />
+             </React.Fragment>
+           ))}
+           </RadioGroup>
+           <FormHelperText className={add}>{helperText}</FormHelperText>
+           </FormControl>
+
+       </form>
+       <BottomNavigation value={value} onChange={prevNextQuestion} className={classes.root} showLabels>
+           <BottomNavigationAction label="Previous" value="previous" icon={<ArrowBackIosIcon />}/>
+           <BottomNavigationAction label="Next" value="next" icon={<ArrowForwardIosIcon />} />
+         </BottomNavigation>
+       </div>)
+        } else {
     return (
     <div className={classes.root}>
     <form>
