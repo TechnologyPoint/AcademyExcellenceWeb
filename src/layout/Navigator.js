@@ -61,6 +61,17 @@ const categories = [
         subCategoryDescription: 'Olympiad - Computer',
       },
     ],
+  },
+  {
+    categoryId: 'Technical Questions',
+    categoryDescription: 'Technical',
+    subCategoryList: [
+      {
+        subCategoryId: 'Technical Interview Questions',
+        subCategory:'Technical Interview Questions',
+        subCategoryDescription: 'Technical Interview Questions',
+      },
+    ],
   }
 ];
 
@@ -111,6 +122,7 @@ const styles = (theme) => ({
 function Navigator(props) {
   const { classes, ...other } = props;
   const [activeLink, setActiveLink] = React.useState("WBBSE");
+  const [tabShow , setTabShow] = React.useState(true);
   const setLeftNavigation = (parentId, childId) => {
   for(var header in categories) {
        if(categories[header].categoryId === parentId){
@@ -118,8 +130,11 @@ function Navigator(props) {
            if (categories[header].subCategoryList[child].subCategoryId === childId){
              categories[header].subCategoryList[child].active = true;
              setActiveLink(childId);
+             console.log(childId);
+             console.log(parentId);
+             console.log(categories[header].subCategoryList[child].subCategoryDescription);
              props.setNavigation(childId,parentId,categories[header].subCategoryList[child].subCategoryDescription);
-           }else {
+           }else{
              categories[header].subCategoryList[child].active = false;
            }
        }

@@ -58,7 +58,11 @@ export default function QuestionHeader(props) {
   const [readyToCancel, setReadyToCancel] = React.useState(true);
   const [chpterInactive,setChapterInactive] = React.useState(false);
 
-
+  console.log(startedExam);
+  console.log(classListLoaded);
+  console.log(props.retestStarted);
+  console.log(subjectDetails);
+  console.log(selectedSubject);
 
   const displayConfirmation = () => {
       setOpenConfirmation(true);
@@ -146,8 +150,10 @@ export default function QuestionHeader(props) {
       await sleep(1e3);
       const classListData = await response.json();
       console.log(classListData);
+      console.log(classListData.length);
       if (classListData.length > 0){
         setClassList(classListData);
+        console.log(classList);
       }
     }}
   )();
@@ -172,7 +178,7 @@ const populateSubject = () => {
         setSubjectDetails(subjectData);
         console.log(subjectDetails);
         setSubjectList(subjectData[0].subjectList);
-        console.log(subjectData[0].subjectList);
+        console.log(subjectData[0].subjectList[0].id);
         if (props.boardHeaderName === "Olympiad") {
           setSelectedSubject(subjectData[0].subjectList[0].id);
         }
@@ -199,6 +205,7 @@ const populateSubject = () => {
     disableClearable
     value = {inputClassValue}
     onChange={(event, newValue) => {
+      console.log(event);
         selectClass(newValue);
         setInputClassValue(newValue);
       }}
@@ -326,7 +333,7 @@ const populateSubject = () => {
     setQuestionSetLoaded(false);
   }}
   disableClearable
-  disabled = {((props.boardHeaderName === "Olympiad" && selectedClass === null || selectedClass === '') || (props.boardHeaderName !== "Olympiad" && selectedChapter === null || selectedChapter === '')) ? true : false  }
+  disabled = {((props.boardHeaderName === "Olympiad" && selectedClass === null || selectedClass === '') || (props.boardHeaderName !== "Olympiad" && selectedChapter === null || selectedChapter === '') || (startedExam && !props.retestStarted)) ? true : false  }
   value = {inputQuestionSetValue}
   onChange={(event, newValue) => {
       selectQuestionSet(newValue);

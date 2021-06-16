@@ -10,6 +10,8 @@ import Content from './Content';
 import ManagedQuestionContent from '../managedQuestion/ManagedQuestionContent';
 import ExamHistory from '../examhistory/ExamHistory';
 import Header from './Header';
+import InterviewHeader from '../Interview/InterviewHeader';
+import InterContent from '../Interview/InterContent';
 
 function Copyright() {
   return (
@@ -193,13 +195,17 @@ function Paperbase(props) {
   const [selectedLeftNavigationDescription,setSelectedLeftNavigationDescription] = React.useState("West Bengal Board of Secondary Education");
   const [selectHeaderName, setSelectHeaderName] = React.useState('');
   const [selectedTab, setSelectedTab] = React.useState("knowledgeTest");
+  const [tabShow , setTabShow] = React.useState(true);
 
 
 
   const setNavigation = (navigation,headerName,navigationDescription) => {
       setSelectedLeftNavigation(navigation);
+      console.log(navigation);
       setSelectHeaderName(headerName);
+      console.log(headerName);
       setSelectedLeftNavigationDescription(navigationDescription);
+      console.log(navigationDescription);
       setMobileOpen(false);
     }
 
@@ -210,6 +216,41 @@ function Paperbase(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+
+  if(selectedLeftNavigation === "Technical Interview Questions"){
+    return (
+      <ThemeProvider theme={theme}>
+        <div className={classes.root}>
+          <CssBaseline />
+          <nav className={classes.drawer}>
+            <Hidden smUp implementation="js">
+              <Navigator
+                PaperProps={{ style: { width: drawerWidth } }}
+                variant="temporary"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+                setNavigation = {setNavigation}
+              />
+            </Hidden>
+            <Hidden smDown implementation="css">
+              <Navigator PaperProps={{ style: { width: drawerWidth } }} setNavigation = {setNavigation}/>
+            </Hidden>
+          </nav>
+          <div className={classes.app}>
+            <InterviewHeader onDrawerToggle={handleDrawerToggle} selectedLeftNavigation = {selectedLeftNavigationDescription} loggedInUser = {props.loggedInUser} setTab = {setTab}/>
+            <main className={classes.main}>
+              <InterContent boardHeaderName={selectHeaderName} headerPopulated = {headerPopulated} selectedBoard = {selectedLeftNavigation}  selectedClass = {selectedClass} loggedInUser = {props.loggedInUser}/>
+            </main>
+            <footer className={classes.footer}>
+              <Copyright />
+            </footer>
+          </div>
+        </div>
+      </ThemeProvider>
+    );
+  }
+
   if (selectedTab === "knowledgeTest"){
   return (
     <ThemeProvider theme={theme}>
@@ -307,7 +348,7 @@ if (selectedTab === "resultHistory"){
      );
 }
 
-}
+  }
 
 Paperbase.propTypes = {
   classes: PropTypes.object.isRequired,
