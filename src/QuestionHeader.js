@@ -139,6 +139,7 @@ export default function QuestionHeader(props) {
 
   const selectQuestionSet = (value) => {
    setSelectedQuestionSet(value.id);
+   console.log(value.id);
   }
 
   const loadClassList = () => {

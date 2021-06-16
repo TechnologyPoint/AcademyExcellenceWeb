@@ -10,6 +10,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import DisplayQuestion from './DisplayQuestion';
 
 function sleep(delay = 0) {
   return new Promise((resolve) => {
@@ -57,21 +58,44 @@ export default function QuestionHeader(props) {
   const [changeNavigation, setChangeNavigation] = React.useState(false);
   const [readyToCancel, setReadyToCancel] = React.useState(true);
   const [chpterInactive,setChapterInactive] = React.useState(false);
+  const [inputValue , setInputValue] = React.useState("");
   const options = ['React Js', 'Java', 'Aws','Javascript','J2ee','Spring','Jquery'];
 
-
-
-  return (
-    <div>
-    <FormControl variant="outlined" className={classes.formControl}>
-    <Autocomplete
-     id="chapter-list"
-     style={{ width: 200 }}
-     options={options}
-     renderInput={(params) => <TextField {...params} label="Select Language" variant="outlined" />}
-     />
-  </FormControl>
-
-    </div>
-  );
+  console.log(inputValue);
+  if(inputValue === null || inputValue === ""){
+    return (
+      <div>
+      <FormControl variant="outlined" className={classes.formControl}>
+      <Autocomplete
+       id="chapter-list"
+       style={{ width: 200 }}
+       value={inputValue}
+       onChange={(event, newValue) => {
+         setInputValue(newValue);
+       }}
+       options={options}
+       renderInput={(params) => <TextField {...params} label="Select Language" variant="outlined" />}
+       />
+    </FormControl>
+      </div>
+    );
+  }else{
+    return (
+      <div>
+      <FormControl variant="outlined" className={classes.formControl}>
+      <Autocomplete
+       id="chapter-list"
+       style={{ width: 200 }}
+       value={inputValue}
+       onChange={(event, newValue) => {
+         setInputValue(newValue);
+       }}
+       options={options}
+       renderInput={(params) => <TextField {...params} label="Select Language" variant="outlined" />}
+       />
+    </FormControl>
+      <DisplayQuestion displayData={inputValue}/>
+      </div>
+    );
+  }
 }

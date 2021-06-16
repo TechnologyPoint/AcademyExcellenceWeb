@@ -86,7 +86,7 @@ export default function Question(props) {
 
 React.useEffect(() => {
   fetch("https://pznmdvakt6.execute-api.ap-south-1.amazonaws.com/dev/getQuestionSet?questionSet=" + props.questionSet)
-    .then(res => res.json())
+    .then(res =>res.json())
     .then(
       (result) => {
         setQuestionDetails(result.questionList);

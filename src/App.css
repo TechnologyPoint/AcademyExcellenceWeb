@@ -128,6 +128,18 @@
 .MuiSvgIcon-fontSizeSmall {
     display: none !important;
 }
+.manual_class{
+    text-align: center !important;
+    padding-top: 60px !important;
+    font-size: 18px !important;
+    padding-bottom: 60px !important;
+}
+
+.manual_question{
+    text-align: center !important;
+    padding-bottom: 10px !important;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
